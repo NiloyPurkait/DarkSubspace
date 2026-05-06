@@ -1,0 +1,162 @@
+# Paper 5. Section to data mapping.
+# Maintained per paper section structure
+# Updated: when section structure or data dependencies change
+#
+# Maps each paper section to the experiments, data files, and claims it depends on.
+
+sections:
+  intro:
+    file: paper5/intro.tex
+    claims:
+      - C-6 (SAE features miss signal, random null)
+      - C-12 (dark subspace, L2-normalized)
+      - C-17 (detection-extraction asymmetry)
+    key_stats:
+      - "less than 16%" FSC
+      - "AUROC 0.62 to 0.93" dark subspace
+      - "6-15 percentage points" mixed SAE drop
+
+  methods:
+    file: paper5/methods.tex
+    experiments:
+      - BCD (behavioral channel decomposition), covariance-difference cPCA per Abid et al. 2018
+      - DD (double dissociation)
+      - SAE reconstruction experiment (Section 3.5)
+      - Privacy-aware SAE fine-tuning (Section 3.5)
+    data:
+      - data/memcirc_ctrl_ft/
+      - data/memcirc_pile_subset/
+      - data/memcirc_ctrl_disjoint/ 
+    method_details:
+      bcd:
+        # methods.tex L43-54 now describes
+        # covariance-difference cPCA per \citep{abid2018exploring}. Center each population
+        # by its own mean, form per-class covariance matrices C_mem and C_non, eigendecompose
+        # the contrastive covariance C_mem - alpha * C_non with alpha=1.0, take top n_c=10
+        # eigenvectors. The previous paired-difference cPCA prose has been removed.
+        prose_anchor: "paper5/methods.tex:43-54"
+        citation: "\\citep{abid2018exploring}"
+        alpha: 1.0
+        n_c: 10
+    key_stats:
+      - "Spearman rho -0.32 to -0.67 across eight models (all p < 10^{-24})"
+
+  results:
+    file: paper5/results.tex
+    experiments:
+      - BCD core (9 models)
+      - DD core (9 models)
+      - Cross-model transfer
+      - Nonlinear probes
+      - Statistical controls (bootstrap CI, permutation, label-shuffled null)
+      - SAE Dark Subspace (7/9 models)
+      - Feature Ablation (P69 k-sweep + random-k null)
+      - Privacy-aware SAE FT (P69 + Neo)
+      - FSC random null baseline (9 models)
+      - L2-normalized residual AUROC (7 models)
+      - Detection-extraction asymmetry (4 models)
+      - TPR at 0.1% FPR for residual d_K, 4 models
+    tables:
+      - Table 1 (BCD main, 9 models)
+      - Table 2 (DD, 8 models)
+      - Table 2 (dark subspace, 9 models + controls)
+      - Table 3 (norm baseline, 9 models)
+    figures:
+      - paper5/figures/double_dissociation.pdf
+      - paper5/figures/epoch_comparison.pdf
+      - paper5/figures/layer_trajectories.pdf
+      - paper5/figures/intrinsic_dimensionality.pdf
+      - paper5/figures/ksweep_ablation.pdf
+      - paper5/figures/fsc_summary.pdf
+      - paper5/figures/method_overview.pdf
+      - paper5/figures/privacy_aware.pdf
+    paragraph_data_sources:
+      tpr_at_0p1pct_fpr_paragraph:
+        # scripts/memcirc/tpr_at_low_fpr.py computed
+        # the previously-missing TPR-at-0.1%-FPR claims with n_boot=10000 from
+        # baseline_attacks/<model>/per_text_scores.json (residual_d_K stream).
+        # The point estimates and 95 percent CIs are written into the new
+        # tpr_at_0p1pct_fpr.json artifacts and quoted at results.tex:349.
+        # Old per_text_scores.json source is the input; new tpr_at_0p1pct_fpr.json
+        # is the canonical paragraph source.
+        prose_anchor: "paper5/results.tex:349"
+        json_sources:
+          - "runs/memcirc/baseline_attacks/p69/tpr_at_0p1pct_fpr.json"     # 0.015 [0.005, 0.050]
+          - "runs/memcirc/baseline_attacks/p12b/tpr_at_0p1pct_fpr.json"    # 0.032 [0.020, 0.071]
+          - "runs/memcirc/baseline_attacks/neo/tpr_at_0p1pct_fpr.json"     # 0.025 [0.014, 0.042]
+          - "runs/memcirc/baseline_attacks/qwen2/tpr_at_0p1pct_fpr.json"   # 0.010 [0.000, 0.023]
+        n_boot: 10000
+        seed: 12345
+        method: residual_d_K
+        n_member: 1000
+        n_nonmember: 1000
+        script: "scripts/memcirc/tpr_at_low_fpr.py"
+      bootstrap_ci_paragraphs:
+        # all paper-paragraphed CIs standardised at
+        # n_boot=10000 (previously a mix of 1000 and 10000). The methods disclosure at
+        # methods.tex:209 now states n_boot=10000. Cross-paper grep for n_boot=1000
+        # returns zero hits. JSONs were updated in place; the audit trail is the
+        # *.pre_n10k_backup files alongside each updated artifact.
+        n_boot: 10000
+        affected_streams:
+          - paraphrase_sensitivity (per-model results.json)
+          - standard_probes
+          - bow_baseline (BCD vocabulary-confound paragraph)
+          - new_bootstrap_cis.json (dark-subspace CIs, already at 10000)
+        audit_trail: "*.pre_n10k_backup"
+        methods_disclosure: "paper5/methods.tex:209"
+      figure_data_pipeline:
+        # plotting refactored to consume
+        # JSON via figure_data_loader.py rather than re-running the pipeline. Three
+        # plot scripts reload disk-verified JSON; the F5 hardcoded-CI-band issue is
+        # closed.
+        loader: "scripts/memcirc/figure_data_loader.py"
+
+  related:
+    file: paper5/related.tex
+    references: paper5/references.bib
+
+  appendix:
+    file: paper5/appendix.tex
+    experiments:
+      - Rank sweep
+      - Pile generalization
+      - Random DD controls
+      - Pretraining BCD
+      - FSC random null baseline (Table A6)
+      - L2-normalized residual AUROC (Table tab:l2_normalized)
+      - Recall label validation (Spearman rho + partial correlations)
+      - Same-SAE consistency check (P12B K=10 errPC ablation on the Pythia-12B mixed-data SAE seed 47, drop +0.018 vs body cell +0.176, C2/C4 controls fail) under app:additional_controls
+    appendix_entries:
+      app_additional_controls_same_sae:
+        prose_anchor: "paper5/appendix.tex:1069-1083"
+        question: "Does the K=10 PC subspace effect survive a rerun on the Pythia-12B mixed-data SAE used for the dark-subspace evaluation?"
+        method: "Rerun body K=10 ablation on Pythia-12B mixed-data SAE seed 47, all other settings unchanged. K=10, n_folds=5, probe seeds [0,1,2], n_boot=10000."
+        result_path: "runs/memcirc/causal_ablation/p12b_errPC_K10_schemaA_seed47/p12b_schemaA_seed47_errPC_K10/results.json"
+        result_summary:
+          delta_auroc: 0.018
+          delta_ci95: [0.015, 0.022]
+          auroc_h: 0.729
+          auroc_ablated: 0.711
+          c2_pct95: 0.623
+          c4_mean: 0.711
+          c4_std: 0.003
+          recon_cos: 0.991
+          err_ratio: 0.308
+          err_ratio_pass: false
+          err_ratio_gate_bypassed: true
+          beats_c1: true
+          beats_c2: false
+          beats_c4_3sigma: false
+          passes_decisive: false
+        body_anchor_cell:
+          path: "runs/memcirc/causal_ablation/p12b_errPC_K10/results.json"
+          delta_auroc: 0.176
+          sae_path: "runs/sae/memcirc_p12b_epoch5_layer18_4x_l1_5e4_member/sae_final.pt"
+          note: "member-only SAE, used for body cell in tab:kpc_kten_cells"
+        body_disclosure_anchors:
+          - "paper5/intro.tex:16"
+          - "paper5/results.tex:194-195"
+          - "paper5/main.tex:118"
+          - "paper5/main.tex:121"
+

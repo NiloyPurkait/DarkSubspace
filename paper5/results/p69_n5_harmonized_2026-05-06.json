@@ -1,0 +1,412 @@
+{
+  "harmonisation_pattern": "A",
+  "harmonisation_pattern_description": "Pattern A: drop seed 47, keep [42_postfix, 43, 44, 45, 46]. Aligns the Pythia-6.9B mixed cohort to the same five seed labels as the Pythia-1B multi-seed cohort. The seed_label '42_postfix' is the post-fix re-train of the original seed 42; it is canonically labelled '42' in the cohort.",
+  "seeds_kept": [
+    "42_postfix",
+    "43",
+    "44",
+    "45",
+    "46"
+  ],
+  "seeds_dropped": [
+    "47"
+  ],
+  "rows_kept": [
+    {
+      "seed_dir": "p69_mixed_sae_seed42_postfix",
+      "seed_label": "42_postfix",
+      "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed42_postfix/results.json",
+      "original_score_K_auroc": 0.803197,
+      "reconstructed_score_K_auroc": 0.590669,
+      "residual_score_K_auroc": 0.7834289999999999,
+      "recon_cos": 0.9767528176307678,
+      "drop_original_minus_reconstructed": 0.21252800000000005
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed43",
+      "seed_label": "43",
+      "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed43/results.json",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.5900989999999999,
+      "residual_score_K_auroc": 0.7850170000000001,
+      "recon_cos": 0.9790783524513245,
+      "drop_original_minus_reconstructed": 0.2128660000000001
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed44",
+      "seed_label": "44",
+      "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed44/results.json",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.597069,
+      "residual_score_K_auroc": 0.77948,
+      "recon_cos": 0.9758415818214417,
+      "drop_original_minus_reconstructed": 0.20589600000000008
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed45",
+      "seed_label": "45",
+      "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed45/results.json",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.598114,
+      "residual_score_K_auroc": 0.772269,
+      "recon_cos": 0.9728530049324036,
+      "drop_original_minus_reconstructed": 0.204851
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed46",
+      "seed_label": "46",
+      "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed46/results.json",
+      "original_score_K_auroc": 0.803088,
+      "reconstructed_score_K_auroc": 0.5923280000000001,
+      "residual_score_K_auroc": 0.7835460000000001,
+      "recon_cos": 0.976436197757721,
+      "drop_original_minus_reconstructed": 0.21075999999999995
+    }
+  ],
+  "rows_dropped": [
+    {
+      "seed_dir": "p69_mixed_sae_seed47",
+      "seed_label": "47",
+      "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed47/results.json",
+      "original_score_K_auroc": 0.803088,
+      "reconstructed_score_K_auroc": 0.5941000000000001,
+      "residual_score_K_auroc": 0.7686320000000001,
+      "recon_cos": 0.9742370843887329,
+      "drop_original_minus_reconstructed": 0.20898799999999995
+    }
+  ],
+  "cluster_summary_n5": {
+    "original_score_K_auroc": {
+      "mean": 0.803036,
+      "std": 0.00010458011283222252,
+      "min": 0.802965,
+      "max": 0.803197,
+      "n": 5,
+      "values": [
+        0.803197,
+        0.802965,
+        0.802965,
+        0.802965,
+        0.803088
+      ]
+    },
+    "reconstructed_score_K_auroc": {
+      "mean": 0.5936558,
+      "std": 0.0037033881379083242,
+      "min": 0.5900989999999999,
+      "max": 0.598114,
+      "n": 5,
+      "values": [
+        0.590669,
+        0.5900989999999999,
+        0.597069,
+        0.598114,
+        0.5923280000000001
+      ]
+    },
+    "residual_score_K_auroc": {
+      "mean": 0.7807482,
+      "std": 0.005165805619649299,
+      "min": 0.772269,
+      "max": 0.7850170000000001,
+      "n": 5,
+      "values": [
+        0.7834289999999999,
+        0.7850170000000001,
+        0.77948,
+        0.772269,
+        0.7835460000000001
+      ]
+    },
+    "drop_original_minus_reconstructed": {
+      "mean": 0.20938020000000002,
+      "std": 0.0037622000478443576,
+      "min": 0.204851,
+      "max": 0.2128660000000001,
+      "n": 5,
+      "values": [
+        0.21252800000000005,
+        0.2128660000000001,
+        0.20589600000000008,
+        0.204851,
+        0.21075999999999995
+      ]
+    },
+    "recon_cos": {
+      "mean": 0.9761923909187317,
+      "std": 0.0022347740171174417,
+      "min": 0.9728530049324036,
+      "max": 0.9790783524513245,
+      "n": 5,
+      "values": [
+        0.9767528176307678,
+        0.9790783524513245,
+        0.9758415818214417,
+        0.9728530049324036,
+        0.976436197757721
+      ]
+    }
+  },
+  "n6_reference": {
+    "rows": [
+      {
+        "seed_dir": "p69_mixed_sae_seed42_postfix",
+        "seed_label": "42_postfix",
+        "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed42_postfix/results.json",
+        "original_score_K_auroc": 0.803197,
+        "reconstructed_score_K_auroc": 0.590669,
+        "residual_score_K_auroc": 0.7834289999999999,
+        "recon_cos": 0.9767528176307678,
+        "drop_original_minus_reconstructed": 0.21252800000000005
+      },
+      {
+        "seed_dir": "p69_mixed_sae_seed43",
+        "seed_label": "43",
+        "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed43/results.json",
+        "original_score_K_auroc": 0.802965,
+        "reconstructed_score_K_auroc": 0.5900989999999999,
+        "residual_score_K_auroc": 0.7850170000000001,
+        "recon_cos": 0.9790783524513245,
+        "drop_original_minus_reconstructed": 0.2128660000000001
+      },
+      {
+        "seed_dir": "p69_mixed_sae_seed44",
+        "seed_label": "44",
+        "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed44/results.json",
+        "original_score_K_auroc": 0.802965,
+        "reconstructed_score_K_auroc": 0.597069,
+        "residual_score_K_auroc": 0.77948,
+        "recon_cos": 0.9758415818214417,
+        "drop_original_minus_reconstructed": 0.20589600000000008
+      },
+      {
+        "seed_dir": "p69_mixed_sae_seed45",
+        "seed_label": "45",
+        "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed45/results.json",
+        "original_score_K_auroc": 0.802965,
+        "reconstructed_score_K_auroc": 0.598114,
+        "residual_score_K_auroc": 0.772269,
+        "recon_cos": 0.9728530049324036,
+        "drop_original_minus_reconstructed": 0.204851
+      },
+      {
+        "seed_dir": "p69_mixed_sae_seed46",
+        "seed_label": "46",
+        "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed46/results.json",
+        "original_score_K_auroc": 0.803088,
+        "reconstructed_score_K_auroc": 0.5923280000000001,
+        "residual_score_K_auroc": 0.7835460000000001,
+        "recon_cos": 0.976436197757721,
+        "drop_original_minus_reconstructed": 0.21075999999999995
+      },
+      {
+        "seed_dir": "p69_mixed_sae_seed47",
+        "seed_label": "47",
+        "results_path": "runs/memcirc/sae_dark_subspace/p69_mixed_sae_seed47/results.json",
+        "original_score_K_auroc": 0.803088,
+        "reconstructed_score_K_auroc": 0.5941000000000001,
+        "residual_score_K_auroc": 0.7686320000000001,
+        "recon_cos": 0.9742370843887329,
+        "drop_original_minus_reconstructed": 0.20898799999999995
+      }
+    ],
+    "summary_recomputed": {
+      "original_score_K_auroc": {
+        "mean": 0.8030446666666666,
+        "std": 9.591802055227542e-05,
+        "min": 0.802965,
+        "max": 0.803197,
+        "n": 6,
+        "values": [
+          0.803197,
+          0.802965,
+          0.802965,
+          0.802965,
+          0.803088,
+          0.803088
+        ]
+      },
+      "reconstructed_score_K_auroc": {
+        "mean": 0.5937298333333333,
+        "std": 0.003317371333852565,
+        "min": 0.5900989999999999,
+        "max": 0.598114,
+        "n": 6,
+        "values": [
+          0.590669,
+          0.5900989999999999,
+          0.597069,
+          0.598114,
+          0.5923280000000001,
+          0.5941000000000001
+        ]
+      },
+      "residual_score_K_auroc": {
+        "mean": 0.7787288333333334,
+        "std": 0.006768713952197014,
+        "min": 0.7686320000000001,
+        "max": 0.7850170000000001,
+        "n": 6,
+        "values": [
+          0.7834289999999999,
+          0.7850170000000001,
+          0.77948,
+          0.772269,
+          0.7835460000000001,
+          0.7686320000000001
+        ]
+      },
+      "drop_original_minus_reconstructed": {
+        "mean": 0.20931483333333334,
+        "std": 0.0033688211835398367,
+        "min": 0.204851,
+        "max": 0.2128660000000001,
+        "n": 6,
+        "values": [
+          0.21252800000000005,
+          0.2128660000000001,
+          0.20589600000000008,
+          0.204851,
+          0.21075999999999995,
+          0.20898799999999995
+        ]
+      },
+      "recon_cos": {
+        "mean": 0.9758665064970652,
+        "std": 0.0021523419486168768,
+        "min": 0.9728530049324036,
+        "max": 0.9790783524513245,
+        "n": 6,
+        "values": [
+          0.9767528176307678,
+          0.9790783524513245,
+          0.9758415818214417,
+          0.9728530049324036,
+          0.976436197757721,
+          0.9742370843887329
+        ]
+      }
+    },
+    "cached_aggregate_path": "runs/memcirc/sae_noise_floor/p69_aggregate.json",
+    "cached_aggregate_summary": {
+      "original_score_K_auroc": {
+        "mean": 0.8030446666666666,
+        "std": 9.591802055227542e-05,
+        "min": 0.802965,
+        "max": 0.803197,
+        "n": 6
+      },
+      "reconstructed_score_K_auroc": {
+        "mean": 0.5937298333333333,
+        "std": 0.003317371333852565,
+        "min": 0.5900989999999999,
+        "max": 0.598114,
+        "n": 6
+      },
+      "residual_score_K_auroc": {
+        "mean": 0.7787288333333334,
+        "std": 0.006768713952197014,
+        "min": 0.7686320000000001,
+        "max": 0.7850170000000001,
+        "n": 6
+      },
+      "recon_cos": {
+        "mean": 0.9758665064970652,
+        "std": 0.0021523419486168768,
+        "min": 0.9728530049324036,
+        "max": 0.9790783524513245,
+        "n": 6
+      },
+      "L0": {
+        "mean": null,
+        "std": null,
+        "min": null,
+        "max": null,
+        "n": 0
+      },
+      "drop_original_minus_reconstructed": {
+        "mean": 0.20931483333333334,
+        "std": 0.0033688211835398367,
+        "min": 0.204851,
+        "max": 0.2128660000000001,
+        "n": 6
+      }
+    }
+  },
+  "n5_minus_n6_delta": {
+    "original_score_K_auroc": {
+      "n5_mean": 0.803036,
+      "n6_mean": 0.8030446666666666,
+      "delta_mean_n5_minus_n6": -8.66666666665683e-06,
+      "abs_delta_mean": 8.66666666665683e-06,
+      "n5_std": 0.00010458011283222252,
+      "n6_std": 9.591802055227542e-05,
+      "delta_std_n5_minus_n6": 8.662092279947104e-06
+    },
+    "reconstructed_score_K_auroc": {
+      "n5_mean": 0.5936558,
+      "n6_mean": 0.5937298333333333,
+      "delta_mean_n5_minus_n6": -7.403333333333428e-05,
+      "abs_delta_mean": 7.403333333333428e-05,
+      "n5_std": 0.0037033881379083242,
+      "n6_std": 0.003317371333852565,
+      "delta_std_n5_minus_n6": 0.00038601680405575935
+    },
+    "residual_score_K_auroc": {
+      "n5_mean": 0.7807482,
+      "n6_mean": 0.7787288333333334,
+      "delta_mean_n5_minus_n6": 0.0020193666666665777,
+      "abs_delta_mean": 0.0020193666666665777,
+      "n5_std": 0.005165805619649299,
+      "n6_std": 0.006768713952197014,
+      "delta_std_n5_minus_n6": -0.0016029083325477152
+    },
+    "drop_original_minus_reconstructed": {
+      "n5_mean": 0.20938020000000002,
+      "n6_mean": 0.20931483333333334,
+      "delta_mean_n5_minus_n6": 6.536666666667745e-05,
+      "abs_delta_mean": 6.536666666667745e-05,
+      "n5_std": 0.0037622000478443576,
+      "n6_std": 0.0033688211835398367,
+      "delta_std_n5_minus_n6": 0.00039337886430452097
+    },
+    "recon_cos": {
+      "n5_mean": 0.9761923909187317,
+      "n6_mean": 0.9758665064970652,
+      "delta_mean_n5_minus_n6": 0.000325884421666478,
+      "abs_delta_mean": 0.000325884421666478,
+      "n5_std": 0.0022347740171174417,
+      "n6_std": 0.0021523419486168768,
+      "delta_std_n5_minus_n6": 8.243206850056493e-05
+    }
+  },
+  "materiality": {
+    "verdict": "NEGLIGIBLE",
+    "threshold": 0.005,
+    "abs_delta_mean_per_metric": {
+      "original_score_K_auroc": 8.66666666665683e-06,
+      "reconstructed_score_K_auroc": 7.403333333333428e-05,
+      "residual_score_K_auroc": 0.0020193666666665777,
+      "drop_original_minus_reconstructed": 6.536666666667745e-05,
+      "recon_cos": 0.000325884421666478
+    },
+    "reason": "all per-metric |\u0394_mean| < 0.005 across 5 metrics",
+    "metrics_checked": [
+      "original_score_K_auroc",
+      "reconstructed_score_K_auroc",
+      "residual_score_K_auroc",
+      "drop_original_minus_reconstructed",
+      "recon_cos"
+    ]
+  },
+  "thresholds": {
+    "delta_threshold": 0.005
+  },
+  "notes": [
+    "All 6 P69 SAEs share identical HP (layer=16, d_mult=4, L1=5e-4, 200M tokens, dead-feat resample).",
+    "Different random init per SAE training run.",
+    "Eval seed=42 on every cohort member; score computation deterministic given SAE.",
+    "Cohort mirrors the noise-floor aggregator at runs/memcirc/sae_noise_floor/p69_aggregate.json.",
+    "Pattern A drops seed 47 (chronological tail of the cohort, training timestamp 20260416_155229) and aligns to the Pythia-1B multi-seed cohort seed list {42, 43, 44, 45, 46}."
+  ]
+}

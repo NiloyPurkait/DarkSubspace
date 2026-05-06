@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+title: "The Dark Subspace of Fine-Tuning Memorisation"
+message: "Anonymous double-blind submission to the ICML 2026 Mechanistic Interpretability Workshop."
+authors:
+  - name: "Anonymous"
+abstract: |
+  Cross-architecture residual concentration with Pythia-6.9B and 12B causal reference points.
+license: MIT
+version: 0.1.0
+date-released: 2026-05-08
+type: software
