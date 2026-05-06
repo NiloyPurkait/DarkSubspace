@@ -2,7 +2,7 @@
 
 Anonymous reviewer artifact for an ICML 2026 Mechanistic Interpretability Workshop submission.
 
-This repository contains the manuscript source, the paper-specific experiment code, a curated set of generated JSON results, and a CPU-only verifier that checks the paper-cited numerical claims against the shipped JSONs.
+This repository contains the paper-specific experiment code, a curated set of generated JSON results, and a CPU-only verifier that checks the paper-cited numerical claims against the shipped JSONs. The manuscript is distributed separately for review and is not included in this code/results artifact.
 
 ## Quickstart
 
@@ -31,14 +31,13 @@ python3 -m venv .venv
 
 | Path | Contents |
 | --- | --- |
-| `manuscript/` | LaTeX source, bibliography, figures, style files, and pre-registration. |
 | `results/dark_subspace/` | Shipped JSON records used by the verifier and reviewer-facing claim map. |
 | `scripts/dark_subspace/` | Paper-specific experiment, aggregation, plotting, and verification scripts. |
 | `scripts/dark_subspace/shell/` | SLURM wrappers for GPU jobs and multi-seed arrays. |
 | `scripts/shared/` | Shared SAE training, plotting style, path bootstrap, and utility code. |
 | `src/sae_mia_audit/` | Reusable Python package used by the paper scripts. |
 
-Large inputs and generated checkpoints are not included in the repository. Full reproduction expects the controlled fine-tuning corpora, model checkpoints, and SAE checkpoints at the paths documented in the relevant scripts.
+Large inputs, generated checkpoints, and manuscript source are not included in the repository. Full reproduction expects the controlled fine-tuning corpora, model checkpoints, and SAE checkpoints at the paths documented in the relevant scripts.
 
 ## Reviewer Verification
 
@@ -50,7 +49,6 @@ Large inputs and generated checkpoints are not included in the repository. Full 
 - Pythia-12B three-init mixed-SAE replication.
 - Norm-baseline and scaling-table source values.
 - Standard MIA probe result availability.
-- Required bibliography keys.
 
 The verifier does not load models, require GPUs, submit SLURM jobs, access the network, or write files.
 
@@ -94,7 +92,7 @@ python3 scripts/dark_subspace/subspace_ablation_eval.py --help
 python3 scripts/dark_subspace/figure_data_loader.py
 ```
 
-SLURM wrappers in `scripts/dark_subspace/shell/` document the cluster commands used for the main multi-seed and control jobs. The wrappers create generated outputs under `runs/dark_subspace/` and SAE checkpoints under `runs/sae/`.
+Figure plotting scripts write generated figures under `outputs/figures/` by default; set `FIGDIR=/path/to/figures` to target a manuscript checkout. SLURM wrappers in `scripts/dark_subspace/shell/` document the cluster commands used for the main multi-seed and control jobs. The wrappers create generated outputs under `runs/dark_subspace/` and SAE checkpoints under `runs/sae/`.
 
 Some historical corpus and checkpoint labels still contain `memcirc` in paths such as `data/memcirc_ctrl_ft/` or `runs/sae/memcirc_*`. Those names are retained because they are embedded in provenance records from the experiment campaign. The reviewer-facing code and result layout use `dark_subspace`.
 

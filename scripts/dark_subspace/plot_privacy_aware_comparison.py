@@ -9,7 +9,7 @@ Original, SAE-Recon, and Residual bars.
 
 Used in Results of the paper.
 Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_privacy_aware_comparison.py``
-(writes PDF and PNG, 300 DPI, to ``manuscript/figures/``).
+(writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 """
 
 import matplotlib
@@ -158,7 +158,7 @@ ax.legend(
 
 # ── Save ───────────────────────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parents[2]
-out_dir = ROOT / "manuscript" / "figures"
+out_dir = Path(os.environ.get("FIGDIR", ROOT / "outputs" / "figures"))
 out_dir.mkdir(parents=True, exist_ok=True)
 
 fig.savefig(out_dir / "privacy_aware_comparison.pdf")

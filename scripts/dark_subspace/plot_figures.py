@@ -8,7 +8,7 @@ Generates the body and appendix headline figures (``score_distributions_simple.p
 
 Used in Methods, Results, and Appendix of the paper.
 Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_figures.py``
-(writes PDF and PNG, 300 DPI, to ``manuscript/figures/``).
+(writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 
 All numeric values are sourced via ``figure_data_loader`` (no hardcoded
 AUROCs). The only literals that remain are style choices (Okabe-Ito hex codes,
@@ -58,7 +58,7 @@ plt.rcParams.update({
     "ps.fonttype": 42,
 })
 
-OUT = pathlib.Path(os.environ.get("FIGDIR", REPO_ROOT / "manuscript" / "figures"))
+OUT = pathlib.Path(os.environ.get("FIGDIR", REPO_ROOT / "outputs" / "figures"))
 OUT.mkdir(parents=True, exist_ok=True)
 
 # ── Colorblind-friendly palette (Okabe-Ito).STYLE ONLY ──────────────────

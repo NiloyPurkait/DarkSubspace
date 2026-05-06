@@ -6,11 +6,11 @@ version for the Pythia-6.9B mixed-data SAE pooled score distribution comparison.
 
 Used in Results (main body) and Appendix of the paper.
 Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_score_distributions.py``
-(writes PDF and PNG, 300 DPI, to ``manuscript/figures/``).
+(writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 
 Outputs:
-  manuscript/figures/score_distributions.pdf         2x3 full version (appendix)
-  manuscript/figures/score_distributions_simple.pdf  1x3 simple version (main body)
+  outputs/figures/score_distributions.pdf         2x3 full version (appendix)
+  outputs/figures/score_distributions_simple.pdf  1x3 simple version (main body)
 """
 
 import json
@@ -39,7 +39,7 @@ MIXED_SAE_SEEDS = [
     ROOT / f"runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed{s}/results.json"
     for s in ["42_postfix", "43", "44", "45", "46", "47"]
 ]
-OUT_DIR     = ROOT / "manuscript/figures"
+OUT_DIR     = Path(os.environ.get("FIGDIR", ROOT / "outputs" / "figures"))
 
 BLUE      = "#0072B2"   # Okabe-Ito blue  (member)
 VERMILLION = "#D55E00"  # Okabe-Ito vermillion (nonmember)

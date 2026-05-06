@@ -6,7 +6,7 @@ overlays, layer heatmaps with annotations) from JSON via ``figure_data_loader``.
 
 Used in the Appendix of the paper (advanced and supplementary figure variants).
 Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_advanced_figures.py``
-(writes PDF and PNG, 300 DPI, to ``manuscript/figures/``).
+(writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 
 All numeric values are sourced via ``figure_data_loader``. Style choices
 (IBM Design palette, figure sizes, label offsets, ellipse policy) remain
@@ -68,7 +68,7 @@ plt.rcParams.update({
 })
 
 ROOT = pathlib.Path(os.environ.get("REPO_ROOT", REPO_ROOT))
-FIGDIR = pathlib.Path(os.environ.get("FIGDIR", ROOT / "manuscript" / "figures"))
+FIGDIR = pathlib.Path(os.environ.get("FIGDIR", ROOT / "outputs" / "figures"))
 FIGDIR.mkdir(parents=True, exist_ok=True)
 
 # Colorblind-friendly palette (IBM Design).STYLE ONLY

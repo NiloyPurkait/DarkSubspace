@@ -427,7 +427,7 @@ else:
 
 
 # -----------------------------------------------------------------------------
-# Bibliography references check
+# Bibliography references check, when the manuscript checkout is present.
 # -----------------------------------------------------------------------------
 banner("Bibliography sanity check")
 
@@ -456,6 +456,8 @@ if bib.exists():
     for key in required_keys:
         present = key in text
         print(f"  {'PASS' if present else 'MISSING'}: {key}")
+else:
+    print("  manuscript/references.bib not present in this code/results artifact; bibliography check skipped.")
 
 
 print()
