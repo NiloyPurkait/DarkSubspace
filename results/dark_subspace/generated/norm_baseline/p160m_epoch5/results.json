@@ -1,0 +1,66 @@
+{
+  "per_layer": {
+    "0": {
+      "auroc": 0.5055729999999999,
+      "direction": "positive",
+      "mean_member_norm": 0.19049877986311914,
+      "mean_nonmember_norm": 0.19055315364897252,
+      "std_member_norm": 0.011189392233933863,
+      "std_nonmember_norm": 0.01205931029967198
+    },
+    "2": {
+      "auroc": 0.5065719999999999,
+      "direction": "negative",
+      "mean_member_norm": 5.715887636184692,
+      "mean_nonmember_norm": 5.717701261520386,
+      "std_member_norm": 0.2629865126536828,
+      "std_nonmember_norm": 0.25915209513827664
+    },
+    "4": {
+      "auroc": 0.508511,
+      "direction": "negative",
+      "mean_member_norm": 7.427022010803222,
+      "mean_nonmember_norm": 7.431108117580414,
+      "std_member_norm": 0.43383020146641676,
+      "std_nonmember_norm": 0.40751530781575035
+    },
+    "6": {
+      "auroc": 0.5024744999999999,
+      "direction": "negative",
+      "mean_member_norm": 11.596290975570678,
+      "mean_nonmember_norm": 11.589072044372559,
+      "std_member_norm": 0.6173660446305971,
+      "std_nonmember_norm": 0.5854992141752722
+    },
+    "8": {
+      "auroc": 0.510325,
+      "direction": "negative",
+      "mean_member_norm": 18.969950517654418,
+      "mean_nonmember_norm": 18.976958590507508,
+      "std_member_norm": 0.7734316007998198,
+      "std_nonmember_norm": 0.7155360775048702
+    },
+    "10": {
+      "auroc": 0.516163,
+      "direction": "negative",
+      "mean_member_norm": 15.86050092792511,
+      "mean_nonmember_norm": 15.912520892143249,
+      "std_member_norm": 1.1371563165239946,
+      "std_nonmember_norm": 1.1468282442946551
+    },
+    "11": {
+      "auroc": 0.519108,
+      "direction": "negative",
+      "mean_member_norm": 17.23255230140686,
+      "mean_nonmember_norm": 17.308926136016847,
+      "std_member_norm": 1.3552391896977274,
+      "std_nonmember_norm": 1.3716149692942692
+    }
+  },
+  "best_layer": 11,
+  "best_auroc": 0.519108,
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "timestamp": "2026-03-26 15:33:31 UTC",
+  "elapsed_sec": 6.75
+}

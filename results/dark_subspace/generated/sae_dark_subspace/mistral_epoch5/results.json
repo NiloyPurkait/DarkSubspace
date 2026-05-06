@@ -1,0 +1,34 @@
+{
+  "model": "mistral",
+  "layer": 16,
+  "sae_path": "runs/sae/memcirc_mistral_epoch5_layer16_4x_l1_5e4_member_v2/sae_final.pt",
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "original": {
+    "score_K_auroc": 0.926662,
+    "norm_auroc": 0.6917789999999999
+  },
+  "sae_reconstructed": {
+    "score_K_auroc": 0.5788509999999999,
+    "norm_auroc": 0.533909
+  },
+  "residual": {
+    "score_K_auroc": 0.925537,
+    "norm_auroc": 0.692429
+  },
+  "sae_quality": {
+    "reconstruction_mse": 7.626494884490967,
+    "reconstruction_cosine": 0.7004724740982056,
+    "d_K_coverage_cosine": -0.0845189020037651,
+    "d_K_residual_fraction": 0.9928565621376038,
+    "mean_active_features": 3.7615,
+    "total_features": 16384,
+    "sparsity": 0.000229583740234375
+  },
+  "dark_subspace_effect": {
+    "auroc_drop_from_recon": 0.3478110000000001,
+    "auroc_preserved_in_residual": 0.925537,
+    "memorization_is_dark": true
+  },
+  "timestamp": "2026-03-26 10:39:56 UTC"
+}

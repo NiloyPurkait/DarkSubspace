@@ -1,0 +1,54 @@
+{
+  "model_tag": "qwen2",
+  "mode": "word_shuffle",
+  "layer": 16,
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "original": {
+    "residual_d_K_auroc": 0.6582189999999999,
+    "residual_d_K_tpr_at_1pct_fpr": 0.04,
+    "residual_d_K_tpr_at_5pct_fpr": 0.126,
+    "orientation_sign": 1
+  },
+  "paraphrased": {
+    "residual_d_K_auroc": 0.939215,
+    "residual_d_K_tpr_at_1pct_fpr": 0.37,
+    "residual_d_K_tpr_at_5pct_fpr": 0.688,
+    "orientation_sign": -1
+  },
+  "delta_paraphrased_minus_original": {
+    "auroc_mean": 0.5973944106597889,
+    "auroc_ci95_lo": 0.5765689947277853,
+    "auroc_ci95_hi": 0.6177304104239898,
+    "tpr1_mean": 0.036840214750538065,
+    "tpr1_ci95_lo": 0.016585365853658537,
+    "tpr1_ci95_hi": 0.06559289076137792
+  },
+  "per_member_cos_shift": {
+    "mean": 0.9473706576824188,
+    "p05": 0.919854810833931,
+    "p50": 0.9482132196426392,
+    "p95": 0.9706828236579895
+  },
+  "per_member_score_shift": {
+    "mean": -4.39264502120018,
+    "p05": -5.999554109573364,
+    "p50": -4.40741229057312,
+    "p95": -2.8257649898529054
+  },
+  "paraphrase_cache_file": "runs/memcirc/paraphrase_sensitivity/qwen2/paraphrase_cache_word_shuffle.jsonl",
+  "script": "paraphrase_sensitivity_c5.py",
+  "timestamp": "2026-04-21 15:49:43 UTC",
+  "seed": 42,
+  "bootstrap_history": [
+    {
+      "n_boot": 10000,
+      "seed": 12345,
+      "rerun_script": "scripts/memcirc/rerun_bootstrap_cis.py",
+      "rerun_target": "paraphrase",
+      "rerun_timestamp": "2026-05-02 10:12:56 UTC"
+    }
+  ],
+  "n_boot_canonical": 10000,
+  "bootstrap_seed_canonical": 12345
+}

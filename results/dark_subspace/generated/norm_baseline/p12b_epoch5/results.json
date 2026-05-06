@@ -1,0 +1,66 @@
+{
+  "per_layer": {
+    "0": {
+      "auroc": 0.5001019999999999,
+      "direction": "negative",
+      "mean_member_norm": 0.3927039700448513,
+      "mean_nonmember_norm": 0.39304748502373693,
+      "std_member_norm": 0.02311633658947095,
+      "std_nonmember_norm": 0.024160181324194976
+    },
+    "6": {
+      "auroc": 0.525998,
+      "direction": "negative",
+      "mean_member_norm": 116.63024542236329,
+      "mean_nonmember_norm": 116.88396118927002,
+      "std_member_norm": 3.101888834426114,
+      "std_nonmember_norm": 3.1977958831118922
+    },
+    "12": {
+      "auroc": 0.503949,
+      "direction": "positive",
+      "mean_member_norm": 176.4530153503418,
+      "mean_nonmember_norm": 176.30406916809082,
+      "std_member_norm": 4.291926627052329,
+      "std_nonmember_norm": 4.334502310648674
+    },
+    "18": {
+      "auroc": 0.5323819999999999,
+      "direction": "positive",
+      "mean_member_norm": 344.7072126159668,
+      "mean_nonmember_norm": 343.9145776367188,
+      "std_member_norm": 7.6985723208335095,
+      "std_nonmember_norm": 7.708288037922761
+    },
+    "24": {
+      "auroc": 0.532625,
+      "direction": "negative",
+      "mean_member_norm": 398.55787567138674,
+      "mean_nonmember_norm": 399.46505880737305,
+      "std_member_norm": 8.950016279812909,
+      "std_nonmember_norm": 9.064837252933007
+    },
+    "30": {
+      "auroc": 0.556157,
+      "direction": "negative",
+      "mean_member_norm": 340.1515665588379,
+      "mean_nonmember_norm": 341.92598724365234,
+      "std_member_norm": 9.569104175438104,
+      "std_nonmember_norm": 10.05980523830314
+    },
+    "35": {
+      "auroc": 0.598938,
+      "direction": "negative",
+      "mean_member_norm": 212.7255025024414,
+      "mean_nonmember_norm": 216.03022549438475,
+      "std_member_norm": 9.895408356862816,
+      "std_nonmember_norm": 10.93942385118904
+    }
+  },
+  "best_layer": 35,
+  "best_auroc": 0.598938,
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "timestamp": "2026-03-25 23:24:10 UTC",
+  "elapsed_sec": 260.02
+}

@@ -1,0 +1,129 @@
+%%%%%%%% ICML 2026 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2026} with \usepackage[nohyperref]{icml2026} above.
+\usepackage{hyperref}
+
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+\usepackage{icml2026}
+
+% For preprint, use
+% \usepackage[preprint]{icml2026}
+
+% If accepted, instead use the following line for the camera-ready submission:
+% \usepackage[accepted]{icml2026}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+
+% if you use cleveref..
+\usepackage[capitalize,noabbrev]{cleveref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Todonotes is useful during development. Uncomment the next line
+%    and comment out the line below the next line to turn off comments
+%\usepackage[disable,textsize=tiny]{todonotes}
+\usepackage[disable,textsize=tiny]{todonotes}
+
+% Paper-specific packages and macros (kept from prior preamble)
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{xspace}
+\newcommand{\ie}{\emph{i.e.}\xspace}
+\newcommand{\eg}{\emph{e.g.}\xspace}
+\newcommand{\SK}{\mathbf{S}_K}
+\newcommand{\SR}{\mathbf{S}_R}
+\newcommand{\dK}{\mathbf{d}_K}
+\newcommand{\dR}{\mathbf{d}_R}
+\newcommand{\hB}{\mathbf{h}_B}
+%\newcommand{\todo}[1]{\textcolor{red}{[Note: #1]}}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\icmltitlerunning{The Dark Subspace of Fine-Tuning Memorisation}
+
+\begin{document}
+
+\twocolumn[
+  \icmltitle{The Dark Subspace of Fine-Tuning Memorisation}
+
+  % It is OKAY to include author information, even for blind submissions: the
+  % style file will automatically remove it for you unless you've provided
+  % the [accepted] option to the icml2026 package above.
+  \icmlsetsymbol{equal}{*}
+
+  % Anonymous double-blind submission. Replace with author block at camera-ready.
+  \begin{icmlauthorlist}
+    \icmlauthor{Anonymous Submission}{anon}
+  \end{icmlauthorlist}
+
+  \icmlaffiliation{anon}{Anonymous Institution}
+
+  \icmlcorrespondingauthor{Anonymous Submission}{anon@example.com}
+
+  % You may provide any keywords that you find helpful for describing your
+  % paper. These are used to populate the "keywords" metadata in the PDF but
+  % will not be shown in the document
+  \icmlkeywords{Membership Inference, Sparse Autoencoders, Fine-Tuning, Memorisation, Mechanistic Interpretability, Privacy Auditing}
+
+  \vskip 0.3in
+]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+\printAffiliationsAndNotice{}  % no special notice (required even if empty)
+
+\begin{abstract}
+Sparse autoencoders (SAEs) are increasingly used to interpret and edit language-model activations, including in privacy applications that assume the information leaked by training data sits inside the learned dictionary. We test this assumption for fine-tuned transformers. We split the model's hidden-state activations into the SAE reconstruction and the reconstruction residual, and we train membership detectors on each part to ask which part actually carries the leakage signal. In controlled fine-tuning experiments on Pythia, detectors recover more membership signal from the reconstruction residual than from the SAE reconstruction. An evaluation across nine models with an explicit reconstruction-quality validity gate shows the same residual-over-reconstruction ordering wherever the SAE is reliable enough to interpret, and the ordering is not explained by SAE initialization, detector fitting, dictionary-training data, or simple lexical artifacts. SAE feature interventions that operate only on the dictionary may therefore leave membership evidence detectable in the reconstruction residual.
+\end{abstract}
+
+\input{intro}
+\input{related}
+\input{methods}
+\input{results}
+
+\section{Concluding Remarks}
+\label{sec:concluding}
+
+\textbf{SAE feature usefulness and membership privacy are different properties.}
+SAE reconstruction can weaken membership detection while the underlying evidence remains recoverable from the residual. Features remain useful sparse coordinates for interpreting or editing model outputs, but a reduction in measured detection does not mean the evidence has been removed. Any SAE feature-level intervention should therefore be paired with a residual audit before it supports a privacy claim.
+
+\textbf{Scope and limitations.}
+The controlled Pythia experiments carry the main causal evidence. The cross-architecture experiments support qualitative generality at the validity gate, and the norm-direction split and residual-PC ablation are descriptive, not causal. The audit is white-box and uses controlled OpenWebText fine-tuning with standard L1-regularized ReLU SAEs. Pre-training MIA, confounded by distribution shift~\citep{duan2024membership}, is not addressed here. Further limitations are in Appendix~\ref{app:limitations_detail}.
+
+\bibliography{references}
+\bibliographystyle{icml2026}
+
+\appendix
+\input{appendix}
+
+\end{document}

@@ -1,0 +1,88 @@
+{
+  "member_texts": "data/memcirc_ctrl_ft/member.jsonl",
+  "nonmember_texts": "data/memcirc_ctrl_ft/nonmember.jsonl",
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "n_folds": 5,
+  "n_boot": 10000,
+  "seed": 42,
+  "vectorizer_max_features": 50000,
+  "vectorizer_ngram_range": [
+    1,
+    2
+  ],
+  "variants": {
+    "tfidf_lr": {
+      "variant": "tfidf_lr",
+      "n_folds": 5,
+      "fold_aurocs": [
+        0.44899999999999995,
+        0.47329999999999994,
+        0.441725,
+        0.48747500000000005,
+        0.43765
+      ],
+      "fold_auroc_mean": 0.45782999999999996,
+      "fold_auroc_std": 0.019301395027303096,
+      "pooled_auroc": 0.456638,
+      "pooled_tpr_at_1pct_fpr": 0.004,
+      "pooled_tpr_at_5pct_fpr": 0.029,
+      "bootstrap": {
+        "n_boot": 10000,
+        "auroc_mean": 0.45688285089299097,
+        "auroc_ci95_lo": 0.43170439424694185,
+        "auroc_ci95_hi": 0.48179967133018026,
+        "tpr_at_1pct_mean": 0.0039010682105136006,
+        "tpr_at_1pct_ci95_lo": 0.0,
+        "tpr_at_1pct_ci95_hi": 0.011869729999706199,
+        "tpr_at_5pct_mean": 0.02899242798660716,
+        "tpr_at_5pct_ci95_lo": 0.01696667685173536,
+        "tpr_at_5pct_ci95_hi": 0.04329917201071515
+      },
+      "confound_level": "NEGLIGIBLE"
+    },
+    "count_lr": {
+      "variant": "count_lr",
+      "n_folds": 5,
+      "fold_aurocs": [
+        0.44307500000000005,
+        0.44530000000000003,
+        0.444875,
+        0.49092500000000006,
+        0.4385
+      ],
+      "fold_auroc_mean": 0.452535,
+      "fold_auroc_std": 0.019345726918366248,
+      "pooled_auroc": 0.450801,
+      "pooled_tpr_at_1pct_fpr": 0.006,
+      "pooled_tpr_at_5pct_fpr": 0.034,
+      "bootstrap": {
+        "n_boot": 10000,
+        "auroc_mean": 0.4510911397194323,
+        "auroc_ci95_lo": 0.42627438601156203,
+        "auroc_ci95_hi": 0.47581646322465737,
+        "tpr_at_1pct_mean": 0.0066886407335660526,
+        "tpr_at_1pct_ci95_lo": 0.0009765625,
+        "tpr_at_1pct_ci95_hi": 0.016782250701356666,
+        "tpr_at_5pct_mean": 0.035555273741362955,
+        "tpr_at_5pct_ci95_lo": 0.02104179441954361,
+        "tpr_at_5pct_ci95_hi": 0.05400066258919469
+      },
+      "confound_level": "NEGLIGIBLE"
+    }
+  },
+  "headline_confound_level": "NEGLIGIBLE",
+  "severe_confound_flag": false,
+  "bootstrap_history": [
+    {
+      "n_boot": 10000,
+      "seed": 12345,
+      "rerun_script": "scripts/memcirc/rerun_bootstrap_cis.py",
+      "rerun_target": "bow",
+      "rerun_timestamp": "2026-05-02 10:27:52 UTC",
+      "note": "bootstrap rerun used seed=12345; OOF score generation seed=42 (unchanged)"
+    }
+  ],
+  "n_boot_canonical": 10000,
+  "bootstrap_seed_canonical": 12345
+}

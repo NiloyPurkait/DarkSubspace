@@ -1,0 +1,34 @@
+{
+  "model": "opt67",
+  "layer": 24,
+  "sae_path": "runs/sae/memcirc_opt67_epoch5_layer24_8x_l1_2e4_member/sae_final.pt",
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "original": {
+    "score_K_auroc": 0.7735825,
+    "norm_auroc": 0.585126
+  },
+  "sae_reconstructed": {
+    "score_K_auroc": 0.5570629999999999,
+    "norm_auroc": 0.8556755
+  },
+  "residual": {
+    "score_K_auroc": 0.866324,
+    "norm_auroc": 0.958435
+  },
+  "sae_quality": {
+    "reconstruction_mse": 8188.7099609375,
+    "reconstruction_cosine": 0.5329936742782593,
+    "d_K_coverage_cosine": 0.19074569642543793,
+    "d_K_residual_fraction": 0.9636160731315613,
+    "mean_active_features": 23.723,
+    "total_features": 32768,
+    "sparsity": 0.000723968505859375
+  },
+  "dark_subspace_effect": {
+    "auroc_drop_from_recon": 0.2165195000000001,
+    "auroc_preserved_in_residual": 0.866324,
+    "memorization_is_dark": true
+  },
+  "timestamp": "2026-03-26 10:39:00 UTC"
+}

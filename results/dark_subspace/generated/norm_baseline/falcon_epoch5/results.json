@@ -1,0 +1,82 @@
+{
+  "per_layer": {
+    "0": {
+      "auroc": 0.512429,
+      "direction": "negative",
+      "mean_member_norm": 0.572346101641655,
+      "mean_nonmember_norm": 0.5735346352756023,
+      "std_member_norm": 0.04742965136960744,
+      "std_nonmember_norm": 0.04794815444707208
+    },
+    "4": {
+      "auroc": 0.5006010000000001,
+      "direction": "negative",
+      "mean_member_norm": 14.157682691574097,
+      "mean_nonmember_norm": 14.137323596954346,
+      "std_member_norm": 1.5066066596340324,
+      "std_nonmember_norm": 1.4860501626400429
+    },
+    "8": {
+      "auroc": 0.504845,
+      "direction": "positive",
+      "mean_member_norm": 19.090968711853026,
+      "mean_nonmember_norm": 19.033767013549806,
+      "std_member_norm": 1.9456487673914487,
+      "std_nonmember_norm": 1.9065713040106704
+    },
+    "12": {
+      "auroc": 0.5083355,
+      "direction": "positive",
+      "mean_member_norm": 19.754344140052794,
+      "mean_nonmember_norm": 19.672714861869814,
+      "std_member_norm": 1.8768396245330297,
+      "std_nonmember_norm": 1.8085601699848797
+    },
+    "16": {
+      "auroc": 0.541614,
+      "direction": "positive",
+      "mean_member_norm": 24.54973371887207,
+      "mean_nonmember_norm": 24.23672933769226,
+      "std_member_norm": 1.9481356070748679,
+      "std_nonmember_norm": 1.8861351889085864
+    },
+    "20": {
+      "auroc": 0.5404335,
+      "direction": "positive",
+      "mean_member_norm": 27.38253215408325,
+      "mean_nonmember_norm": 27.06479916572571,
+      "std_member_norm": 2.159560926282437,
+      "std_nonmember_norm": 2.110537894930938
+    },
+    "24": {
+      "auroc": 0.534074,
+      "direction": "positive",
+      "mean_member_norm": 33.34958790779114,
+      "mean_nonmember_norm": 33.04615758705139,
+      "std_member_norm": 2.497359077412486,
+      "std_nonmember_norm": 2.506398022146142
+    },
+    "28": {
+      "auroc": 0.5568690000000001,
+      "direction": "negative",
+      "mean_member_norm": 48.65549126815796,
+      "mean_nonmember_norm": 49.45925000762939,
+      "std_member_norm": 3.7927484227838013,
+      "std_nonmember_norm": 4.125188398569807
+    },
+    "31": {
+      "auroc": 0.516662,
+      "direction": "negative",
+      "mean_member_norm": 54.5431968460083,
+      "mean_nonmember_norm": 54.74140825653076,
+      "std_member_norm": 3.4064003334742465,
+      "std_nonmember_norm": 3.6051668031074406
+    }
+  },
+  "best_layer": 28,
+  "best_auroc": 0.5568690000000001,
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "timestamp": "2026-03-26 01:16:34 UTC",
+  "elapsed_sec": 187.39
+}

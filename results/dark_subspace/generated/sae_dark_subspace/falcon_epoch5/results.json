@@ -1,0 +1,34 @@
+{
+  "model": "falcon",
+  "layer": 16,
+  "sae_path": "runs/sae/memcirc_falcon7b_epoch5_layer16_4x_l1_5e4_member_v2/sae_final.pt",
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "original": {
+    "score_K_auroc": 0.689622,
+    "norm_auroc": 0.5592754999999999
+  },
+  "sae_reconstructed": {
+    "score_K_auroc": 0.694412,
+    "norm_auroc": 0.96714
+  },
+  "residual": {
+    "score_K_auroc": 0.827096,
+    "norm_auroc": 0.99925
+  },
+  "sae_quality": {
+    "reconstruction_mse": 247.3080596923828,
+    "reconstruction_cosine": 0.766907811164856,
+    "d_K_coverage_cosine": -0.09128476679325104,
+    "d_K_residual_fraction": 0.9916670918464661,
+    "mean_active_features": 9.1815,
+    "total_features": 18176,
+    "sparsity": 0.0005051441461267606
+  },
+  "dark_subspace_effect": {
+    "auroc_drop_from_recon": -0.004790000000000072,
+    "auroc_preserved_in_residual": 0.827096,
+    "memorization_is_dark": false
+  },
+  "timestamp": "2026-03-26 10:38:04 UTC"
+}

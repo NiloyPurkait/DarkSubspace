@@ -1,0 +1,879 @@
+% References for Paper 5: Knowledge and Recall Are Geometrically Separable
+% in Transformer Activations
+
+% ---- Memorization in language models ----
+
+@inproceedings{carlini2021extracting,
+  title={Extracting Training Data from Large Language Models},
+  author={Carlini, Nicholas and Tramer, Florian and Wallace, Eric and Jagielski, Matthew and Herbert-Voss, Ariel and Lee, Katherine and Roberts, Adam and Brown, Tom and Song, Dawn and Erlingsson, Ulfar and others},
+  booktitle={USENIX Security Symposium},
+  year={2021}
+}
+
+@inproceedings{carlini2023quantifying,
+  title={Quantifying Memorization Across Neural Language Models},
+  author={Carlini, Nicholas and Ippolito, Dario and Jagielski, Matthew and Lee, Katherine and Tramer, Florian and Zhang, Chiyuan},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2023}
+}
+
+@article{tirumala2022memorization,
+  title={Memorization Without Overfitting: Analyzing the Training Dynamics of Large Language Models},
+  author={Tirumala, Kushal and Markosyan, Aram and Zettlemoyer, Luke and Aghajanyan, Armen},
+  journal={Advances in Neural Information Processing Systems},
+  volume={35},
+  year={2022}
+}
+
+@inproceedings{feldman2020what,
+  title={Does Learning Require Memorization? {A} Short Tale About a Long Tail},
+  author={Feldman, Vitaly},
+  booktitle={ACM Symposium on Theory of Computing (STOC)},
+  pages={954--965},
+  year={2020}
+}
+
+@article{biderman2023emergent,
+  title={Emergent and Predictable Memorization in Large Language Models},
+  author={Biderman, Stella and Prashanth, USVSN Sai and Sutawika, Lintang and Schoelkopf, Hailey and Anthony, Quentin and Purohit, Shivanshu and Raff, Edward},
+  journal={Advances in Neural Information Processing Systems},
+  volume={36},
+  year={2023}
+}
+
+% ---- Membership inference and pretraining data detection ----
+
+@inproceedings{shokri2017membership,
+  title={Membership Inference Attacks Against Machine Learning Models},
+  author={Shokri, Reza and Stronati, Marco and Song, Congzheng and Shmatikov, Vitaly},
+  booktitle={IEEE Symposium on Security and Privacy},
+  pages={3--18},
+  year={2017}
+}
+
+@inproceedings{yeom2018privacy,
+  title={Privacy Risk in Machine Learning: Analyzing the Connection to Overfitting},
+  author={Yeom, Samuel and Giacomelli, Irene and Fredrikson, Matt and Jha, Somesh},
+  booktitle={IEEE Computer Security Foundations Symposium},
+  year={2018}
+}
+
+@article{shi2023detecting,
+  title={Detecting Pretraining Data from Large Language Models},
+  author={Shi, Weijia and Ajith, Anirudh and Xia, Mengzhou and Huang, Yangsibo and Liu, Daogao and Blevins, Terra and Chen, Danqi and Zettlemoyer, Luke},
+  journal={arXiv preprint arXiv:2310.16789},
+  year={2023}
+}
+
+@article{zhang2025minkpp,
+  title={{Min-K\%++}: Improved Baseline for Detecting Pre-Training Data from Large Language Models},
+  author={Zhang, Jingyang and Sun, Jingwei and Yeats, Eric and Ouyang, Yang and Kuo, Martin and Zhang, Jianyi and Yang, Hao and Li, Hai},
+  journal={arXiv preprint arXiv:2404.02936},
+  year={2025}
+}
+
+@article{xie2024recall,
+  title={{ReCaLL}: Membership Inference via Relative Conditional Log-Likelihoods},
+  author={Xie, Roy and Wang, Junlin and Huang, Ruomin and Zhang, Minxing and Ge, Rong and Pei, Jian and Gong, Neil Zhenqiang and Sistla, Prasad},
+  journal={arXiv preprint arXiv:2408.15694},
+  year={2024}
+}
+
+@article{wang2025recall,
+  title={{Con-ReCall}: Detecting Pre-training Data in {LLMs} via Contrastive Decoding},
+  author={Wang, Cheng and Liu, Yiwei and Hooi, Bryan},
+  journal={arXiv preprint arXiv:2409.03363},
+  year={2025}
+}
+
+@article{duan2024membership,
+  title={Do Membership Inference Attacks Work on Large Language Models?},
+  author={Duan, Michael and Suri, Anshuman and Mireshghallah, Niloofar and Min, Sewon and Shi, Weijia and Zettlemoyer, Luke and Tsvetkov, Yulia and Choi, Yejin and Evans, David and Hajishirzi, Hannaneh},
+  journal={arXiv preprint arXiv:2402.07841},
+  year={2024}
+}
+
+@inproceedings{maini2024dataset,
+  title={{LLM} Dataset Inference: Did you train on my dataset?},
+  author={Maini, Pratyush and Jia, Hengrui and Papernot, Nicolas and Dziedzic, Adam},
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2024},
+  note={arXiv preprint arXiv:2406.06443}
+}
+
+@inproceedings{meeus2025sok,
+  title={{SoK}: Membership Inference Attacks on {LLMs} are Rushing Nowhere (and How to Fix It)},
+  author={Meeus, Matthieu and Shilov, Igor and Jain, Shubham and Faysse, Manuel and Rei, Marek and de Montjoye, Yves-Alexandre},
+  booktitle={IEEE Conference on Secure and Trustworthy Machine Learning (SaTML)},
+  year={2025},
+  note={arXiv preprint arXiv:2406.17975}
+}
+
+@inproceedings{tang-etal-2025-identifying,
+  title={Identifying Training Data of Large Language Models via Full Gradient Analysis},
+  author={Tang, Jialin and Wan, Chenguang and Yang, Xiang and Zhang, Wenxin and Li, Yongkang and Zhou, Zhijie},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={39},
+  year={2025}
+}
+
+@inproceedings{liu-etal-2024-probing-membership,
+  title={Probing Language Models for Pre-training Data Detection},
+  author={Liu, Zhenhua and Zhu, Tong and Tan, Chuanyuan and Lu, Haonan and Liu, Bing and Chen, Wenliang},
+  booktitle={Findings of the Association for Computational Linguistics: ACL 2024},
+  pages={8698--8713},
+  year={2024}
+}
+
+% ---- Sparse autoencoders ----
+
+@article{cunningham2024sae,
+  title={Sparse Autoencoders Find Highly Interpretable Features in Language Models},
+  author={Cunningham, Hoagy and Ewart, Aidan and Riggs, Logan and Huben, Robert and Sharkey, Lee},
+  journal={arXiv preprint arXiv:2309.08600},
+  year={2024}
+}
+
+@article{bricken2023monosemanticity,
+  title={Towards Monosemanticity: Decomposing Language Models With Dictionary Learning},
+  author={Bricken, Trenton and Templeton, Adly and Batson, Joshua and Chen, Brian and Jermyn, Adam and Conerly, Tom and Turner, Nick and Anil, Cem and Denison, Carson and Askell, Amanda and others},
+  journal={Transformer Circuits Thread},
+  year={2023},
+  url={https://transformer-circuits.pub/2023/monosemantic-features/index.html}
+}
+
+@article{elhage2022toy,
+  title={Toy Models of Superposition},
+  author={Elhage, Nelson and Hume, Tristan and Olsson, Catherine and Schiefer, Nicholas and Henighan, Tom and Kravec, Shauna and Hatfield-Dodds, Zac and Lasenby, Robert and Drain, Dawn and Chen, Carol and Grosse, Roger and McCandlish, Sam and Kaplan, Jared and Amodei, Dario and Wattenberg, Martin and Olah, Christopher},
+  journal={Transformer Circuits Thread},
+  year={2022},
+  url={https://transformer-circuits.pub/2022/toy_model/index.html}
+}
+
+@article{templeton2024scaling,
+  title={Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet},
+  author={Templeton, Adly and Conerly, Tom and Marcus, Jonathan and Lindsey, Jack and Bricken, Trenton and Chen, Brian and Pearce, Adam and Citro, Craig and Ameisen, Emmanuel and Jones, Andy and others},
+  journal={Transformer Circuits Thread},
+  year={2024}
+}
+
+@article{gao2025scaling,
+  title={Scaling and Evaluating Sparse Autoencoders},
+  author={Gao, Leo and la Tour, Tom Dupr{\'e} and Tillman, Henk and Goh, Gabriel and Troll, Rajan and Radford, Alec and Sutskever, Ilya and Leike, Jan and Wu, Jeffrey},
+  journal={arXiv preprint arXiv:2406.04093},
+  year={2025}
+}
+
+@inproceedings{leask2025sparse,
+  title={Sparse Autoencoders Do Not Find Canonical Units of Analysis},
+  author={Leask, Patrick and Bussmann, Bart and Pearce, Michael and Bloom, Joseph and Tigges, Curt and Al Moubayed, Noura and Sharkey, Lee and Nanda, Neel},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2025},
+  note={arXiv preprint arXiv:2502.04878}
+}
+
+@article{frikha2025privacyscalpel,
+  title={{PrivacyScalpel}: Enhancing {LLM} Privacy via Interpretable Feature Intervention with Sparse Autoencoders},
+  author={Frikha, Ahmed and Ar Razi, Muhammad Reza and Nakka, Krishna Kanth and Mendes, Ricardo and Jiang, Xue and Zhou, Xuebing},
+  journal={arXiv preprint arXiv:2503.11232},
+  year={2025}
+}
+
+% zhang2025scope REMOVED: arXiv:2504.00254 is "ElaLoRA" by Chang et al. -- phantom citation
+
+@article{suri2025mitigating,
+  title={Mitigating Memorization in {LLMs} using Activation Steering},
+  author={Suri, Manan and Anand, Nishit and Bhaskar, Amisha},
+  journal={arXiv preprint arXiv:2503.06040},
+  year={2025}
+}
+
+@article{huang2024ravel,
+  title={{RAVEL}: Evaluating Interpretability Methods on Disentangling Language Model Representations},
+  author={Huang, Jing and Wu, Zhengxuan and Potts, Christopher and Geva, Mor and Geiger, Atticus},
+  journal={arXiv preprint arXiv:2402.17700},
+  year={2024}
+}
+
+% ---- Representation engineering and activation steering ----
+
+@article{zou2023representation,
+  title={Representation Engineering: A Top-Down Approach to {AI} Transparency},
+  author={Zou, Andy and Phan, Long and Chen, Sarah and Campbell, James and Guo, Phillip and Ren, Richard and Pan, Alexander and Yin, Xuwang and Mazeika, Mantas and Dombrowski, Ann-Kathrin and Goel, Shashwat and Li, Nathaniel and Byun, Michael and Wang, Zifan and Mallen, Alex and Basart, Steven and Koyejo, Sanmi and Song, Dawn and Fredrikson, Matt and Kolter, Zico and Hendrycks, Dan},
+  journal={arXiv preprint arXiv:2310.01405},
+  year={2023}
+}
+
+@inproceedings{rimsky2024steering,
+  title={Steering {Llama 2} via Contrastive Activation Addition},
+  author={Rimsky, Nina and Gabrieli, Nick and Schulz, Julian and Turner, Alexander Matt and Tong, Meg and Hubinger, Evan},
+  booktitle={Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics},
+  year={2024}
+}
+
+% ---- Sparse feature circuits and causal interpretability ----
+
+@inproceedings{marks2024sparse,
+  title={Sparse Feature Circuits: Discovering and Editing Interpretable Causal Graphs in Language Models},
+  author={Marks, Samuel and Rager, Can and Michaud, Eric J and Belinkov, Yonatan and Bau, David and Mueller, Aaron},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2025},
+  note={arXiv preprint arXiv:2403.19647}
+}
+
+@inproceedings{conmy2023automated,
+  title={Towards Automated Circuit Discovery for Mechanistic Interpretability},
+  author={Conmy, Arthur and Mavor-Parker, Augustine N and Lynch, Aengus and Heimersheim, Stefan and Garriga-Alonso, Adri{\`a}},
+  booktitle={NeurIPS},
+  year={2023}
+}
+
+@article{wang2023interpretability,
+  title={Interpretability in the Wild: A Circuit for Indirect Object Identification in {GPT-2} Small},
+  author={Wang, Kevin and Variengien, Alexandre and Conmy, Arthur and Shlegeris, Buck and Steinhardt, Jacob},
+  journal={arXiv preprint arXiv:2211.00593},
+  year={2023}
+}
+
+@article{olah2020zoom,
+  title={Zoom In: An Introduction to Circuits},
+  author={Olah, Chris and Cammarata, Nick and Schubert, Ludwig and Goh, Gabriel and Petrov, Michael and Carter, Shan},
+  journal={Distill},
+  year={2020}
+}
+
+@article{geva2022transformer,
+  title={Transformer Feed-Forward Layers Build Predictions by Promoting Concepts in the Vocabulary Space},
+  author={Geva, Mor and Caciularu, Avi and Wang, Kevin and Goldberg, Yoav},
+  journal={arXiv preprint arXiv:2203.14680},
+  year={2022}
+}
+
+% ---- Training dynamics and developmental accounts ----
+
+@article{olsson2022context,
+  title={In-context Learning and Induction Heads},
+  author={Olsson, Catherine and Elhage, Nelson and Neel, Nanda and Joseph, Nicholas and DasSarma, Nova and Henighan, Tom and Mann, Ben and Askell, Amanda and Bai, Yuntao and Chen, Anna and others},
+  journal={Transformer Circuits Thread},
+  year={2022}
+}
+
+@article{nanda2023progress,
+  title={Progress Measures for Grokking via Mechanistic Interpretability},
+  author={Nanda, Neel and Chan, Lawrence and Lieberum, Tom and Smith, Jess and Steinhardt, Jacob},
+  journal={arXiv preprint arXiv:2301.05217},
+  year={2023}
+}
+
+@article{chen2023sudden,
+  title={Sudden Drops in the Loss: Syntax Acquisition, Phase Transitions, and Simplicity Bias in {MLMs}},
+  author={Chen, Angelica and Dohan, David and So, David},
+  journal={arXiv preprint arXiv:2309.07311},
+  year={2023}
+}
+
+@article{saphra2019understanding,
+  title={Understanding Learning Dynamics of Language Models with {SVCCA}},
+  author={Saphra, Naomi and Lopez, Adam},
+  journal={NAACL},
+  year={2019}
+}
+
+@article{liu2021probing,
+  title={Probing Across Time: What Does {RoBERTa} Know and When?},
+  author={Liu, Leo Z and Schwartz, Roy and Smith, Noah A},
+  journal={Findings of ACL},
+  year={2021}
+}
+
+@article{xia2023training,
+  title={Training Trajectories of Language Models Across Scales},
+  author={Xia, Mengzhou and Artetxe, Mikel and Zhou, Chunting and Lin, Xi Victoria and Pasunuru, Ramakanth and Chen, Danqi and Zettlemoyer, Luke and Stoyanov, Veselin},
+  journal={ACL},
+  year={2023}
+}
+
+% ---- Model papers ----
+
+@article{biderman2023pythia,
+  title={Pythia: A Suite for Analyzing Large Language Models Across Training and Scaling},
+  author={Biderman, Stella and Schoelkopf, Hailey and Anthony, Quentin Gregory and Bradley, Herbie and O'Brien, Kyle and Hallahan, Eric and Khan, Mohammad Aflah and Purohit, Shivanshu and Prashanth, USVSN Sai and Raff, Edward and others},
+  journal={ICML},
+  year={2023}
+}
+
+@article{black2022gptneo,
+  title={{GPT-NeoX-20B}: An Open-Source Autoregressive Language Model},
+  author={Black, Sid and Biderman, Stella and Hallahan, Eric and Anthony, Quentin and Gao, Leo and Golding, Laurence and He, Horace and Leahy, Connor and McDonell, Kyle and Phang, Jason and others},
+  journal={arXiv preprint arXiv:2204.06745},
+  year={2022}
+}
+
+@article{zhang2022opt,
+  title={{OPT}: Open Pre-trained Transformer Language Models},
+  author={Zhang, Susan and Roller, Stephen and Goyal, Naman and Artetxe, Mikel and Chen, Moya and Chen, Shuohui and Dewan, Christopher and Diab, Mona and Li, Xian and Lin, Xi Victoria and others},
+  journal={arXiv preprint arXiv:2205.01068},
+  year={2022}
+}
+
+@article{jiang2023mistral,
+  title={Mistral 7B},
+  author={Jiang, Albert Q and Sablayrolles, Alexandre and Mensch, Arthur and Bamford, Chris and Chaplot, Devendra Singh and Casas, Diego de las and Bressand, Florian and Lengyel, Gianna and Lample, Guillaume and Saulnier, Lucile and others},
+  journal={arXiv preprint arXiv:2310.06825},
+  year={2023}
+}
+
+@article{penedo2023refinedweb,
+  title={The {RefinedWeb} Dataset for {Falcon} {LLM}: Outperforming Curated Corpora with Web Data, and Web Data Only},
+  author={Penedo, Guilherme and Malartic, Quentin and Hesslow, Daniel and Cojocaru, Ruxandra and Cappelli, Alessandro and Alobeidli, Hamza and Pannier, Baptiste and Almazrouei, Ebtesam and Launay, Julien},
+  journal={Advances in Neural Information Processing Systems},
+  volume={36},
+  year={2023}
+}
+
+% ---- Dataset papers ----
+
+@article{gao2020pile,
+  title={The Pile: An 800GB Dataset of Diverse Text for Language Modeling},
+  author={Gao, Leo and Biderman, Stella and Black, Sid and Golding, Laurence and Hoppe, Travis and Foster, Charles and Phang, Jason and He, Horace and Thite, Anish and Nabeshima, Noa and others},
+  journal={arXiv preprint arXiv:2101.00027},
+  year={2020}
+}
+
+@article{raffel2020c4,
+  title={Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer},
+  author={Raffel, Colin and Shazeer, Noam and Roberts, Adam and Lee, Katherine and Narang, Sharan and Matena, Michael and Zhou, Yanqi and Li, Wei and Liu, Peter J},
+  journal={Journal of Machine Learning Research},
+  volume={21},
+  number={140},
+  pages={1--67},
+  year={2020}
+}
+
+@article{gokaslan2019openwebtext,
+  title={OpenWebText Corpus},
+  author={Gokaslan, Aaron and Cohen, Vanya},
+  year={2019},
+  note={\url{http://Skylion007.github.io/OpenWebTextCorpus}}
+}
+
+% ---- SAE dark matter, limitations, and unlearning competitors ----
+
+@article{engels2024dark,
+  title={Decomposing The Dark Matter of Sparse Autoencoders},
+  author={Engels, Joshua and Riggs, Logan and Tegmark, Max},
+  journal={Transactions on Machine Learning Research},
+  year={2025},
+  note={arXiv preprint arXiv:2410.14670}
+}
+
+@article{wang2025sspu,
+  title={Model Unlearning via Sparse Autoencoder Subspace Guided Projections},
+  author={Wang, Xu and Li, Zihao and Wang, Benyou and Hu, Yan and Zou, Difan},
+  journal={arXiv preprint arXiv:2505.24428},
+  year={2025},
+  note={EMNLP 2025}
+}
+
+@article{muhamed2025dsg,
+  title={{SAEs} Can Improve Unlearning: Dynamic {SAE} Guardrails for Precision Unlearning in {LLMs}},
+  author={Muhamed, Aashiq and Bonato, Jacopo and Diab, Mona and Smith, Virginia},
+  journal={arXiv preprint arXiv:2504.08192},
+  year={2025},
+  note={COLM 2025}
+}
+
+@article{peng2025discover,
+  title={Use {SAEs} to Discover Unknown Concepts, Not to Act on Known Concepts},
+  author={Peng, Cheng and Movva, Rajiv and Kleinberg, Jon and Pierson, Emma and Garg, Nikhil},
+  journal={arXiv preprint arXiv:2506.23845},
+  year={2025}
+}
+
+@article{chen2025unlearning,
+  title={Unlearning Isn't Invisible: Detecting Unlearning Traces in {LLMs}},
+  author={Chen, Zhiwei and Pal, Saurabh and others},
+  journal={arXiv preprint arXiv:2506.14003},
+  year={2025},
+  note={MUGen Workshop at ICML 2025}
+}
+
+% ---- Self-citation (anonymized for review) ----
+
+
+
+% ---- Open problems and surveys ----
+
+@article{sharkey2025open,
+  title={Open Problems in Mechanistic Interpretability},
+  author={Sharkey, Lee and Braun, Dan and Millidge, Beren},
+  journal={arXiv preprint arXiv:2501.16496},
+  year={2025}
+}
+
+@article{abid2018exploring,
+  title={Exploring Patterns Enriched in a Dataset with Contrastive Principal Component Analysis},
+  author={Abid, Abubakar and Zhang, Martin J and Bagber-Rashidi, Vivek K and Zou, James},
+  journal={Nature Communications},
+  volume={9},
+  number={1},
+  pages={2134},
+  year={2018},
+  publisher={Nature Publishing Group}
+}
+
+@article{belinkov2022probing,
+  title={Probing Classifiers: Promises, Shortcomings, and Advances},
+  author={Belinkov, Yonatan},
+  journal={Computational Linguistics},
+  volume={48},
+  number={1},
+  pages={207--219},
+  year={2022},
+  publisher={MIT Press}
+}
+
+@inproceedings{bourtoule2021machine,
+  title={Machine Unlearning},
+  author={Bourtoule, Lucas and Chandrasekaran, Varun and Choquette-Choo, Christopher A and Jia, Hengrui and Travers, Adelin and Zhang, Baiwu and Lie, David and Papernot, Nicolas},
+  booktitle={2021 IEEE Symposium on Security and Privacy (SP)},
+  pages={141--159},
+  year={2021},
+  organization={IEEE}
+}
+
+@inproceedings{conneau2018probing,
+  title={What You Can Cram into a Single \$\&!\#* Vector: Probing Sentence Embeddings for Linguistic Properties},
+  author={Conneau, Alexis and Kruszewski, German and Lample, Guillaume and Barrault, Lo{\"\i}c and Baroni, Marco},
+  booktitle={Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics},
+  pages={2126--2136},
+  year={2018}
+}
+
+@article{grattafiori2024llama3,
+  title={The Llama 3 Herd of Models},
+  author={Grattafiori, Aaron and others},
+  journal={arXiv preprint arXiv:2407.21783},
+  year={2024}
+}
+
+@article{yang2024qwen2,
+  title={Qwen2 Technical Report},
+  author={Yang, An and Yang, Baosong and Hui, Binyuan and Zheng, Bo and Yu, Bowen and Zhou, Chang and Li, Chengpeng and Li, Chengyuan and Liu, Dayiheng and Huang, Fei and others},
+  journal={arXiv preprint arXiv:2407.10671},
+  year={2024}
+}
+
+@inproceedings{jang2023knowledge,
+  title={Knowledge Unlearning for Mitigating Language Models},
+  author={Jang, Joel and Yoon, Dongkeun and Yang, Sohee and Cha, Sungmin and Lee, Moontae and Logeswaran, Lajanugen and Seo, Minjoon},
+  booktitle={Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics},
+  pages={6276--6291},
+  year={2023}
+}
+
+@article{li2023emergent,
+  title={Emergent World Representations: Exploring a Sequence Model Trained on a Synthetic Task},
+  author={Li, Kenneth and Hopkins, Aspen K and Bau, David and Vi{\'e}gas, Fernanda and Pfister, Hanspeter and Wattenberg, Martin},
+  journal={arXiv preprint arXiv:2210.13382},
+  year={2023}
+}
+
+@book{shallice1988neuropsychology,
+  title={From Neuropsychology to Mental Structure},
+  author={Shallice, Tim},
+  year={1988},
+  publisher={Cambridge University Press}
+}
+
+@article{teuber1955physiological,
+  title={Physiological Psychology},
+  author={Teuber, Hans-Lukas},
+  journal={Annual Review of Psychology},
+  volume={6},
+  number={1},
+  pages={267--296},
+  year={1955},
+  publisher={Annual Reviews}
+}
+
+@misc{black2021gpt,
+  title={{GPT-Neo: Large Scale Autoregressive Language Modeling with Mesh-Tensorflow}},
+  author={Sid Black and Leo Gao and Phil Wang and Connor Leahy and Stella Biderman},
+  year={2021},
+  publisher={Zenodo},
+  doi={10.5281/zenodo.5297715},
+}
+
+@inproceedings{abadi2016deep,
+  title={Deep Learning with Differential Privacy},
+  author={Mart{\'\i}n Abadi and Andy Chu and Ian Goodfellow and H. Brendan McMahan and Ilya Mironov and Kunal Talwar and Li Zhang},
+  booktitle={Proceedings of the 2016 ACM SIGSAC Conference on Computer and Communications Security},
+  pages={308--318},
+  year={2016},
+  publisher={ACM},
+}
+
+@article{rajamanoharan2024jumprelu,
+  title={{Jumping Ahead: Improving Reconstruction Fidelity with JumpReLU Sparse Autoencoders}},
+  author={Senthooran Rajamanoharan and Tom Lieberum and Nicolas Sonnerat and Arthur Conmy and Vikrant Varma and J{\'a}nos Kram{\'a}r and Neel Nanda},
+  journal={arXiv preprint arXiv:2407.14435},
+  year={2024},
+}
+
+% Duplicate removed -- see liu-etal-2024-probing-membership above
+
+@article{brown2022does,
+  title={What Does it Mean for a Language Model to Preserve Privacy?},
+  author={Hannah Brown and Katherine Lee and Fatemehsadat Mireshghallah and Reza Shokri and Florian Tram{\`e}r},
+  journal={Proceedings of the 2022 ACM Conference on Fairness, Accountability, and Transparency},
+  pages={2280--2292},
+  year={2022},
+  publisher={ACM},
+}
+
+% Duplicate tang-etal-2025-identifying removed (kept full entry above)
+
+@inproceedings{dwork2006calibrating,
+  title={Calibrating Noise to Sensitivity in Private Data Analysis},
+  author={Cynthia Dwork and Frank McSherry and Kobbi Nissim and Adam Smith},
+  booktitle={Theory of Cryptography Conference},
+  pages={265--284},
+  year={2006},
+  publisher={Springer},
+}
+
+% ---- Machine unlearning ----
+
+@inproceedings{hu2025jogging,
+  title={Unlearning or Obfuscating? {Jogging} the Memory of Unlearned {LLMs} via Benign Relearning},
+  author={Hu, Shengyuan and Fu, Yiwei and Wu, Zhiwei Steven and Smith, Virginia},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2025},
+  note={arXiv preprint arXiv:2406.13356}
+}
+
+% ---- Representation geometry ----
+
+@inproceedings{arditi2024refusal,
+  title={Refusal in Language Models Is Mediated by a Single Direction},
+  author={Arditi, Andy and Obeso, Oscar and Syed, Aaquib and Paleka, Daniel and Panickssery, Nina and Gurnee, Wes and Nanda, Neel},
+  booktitle={Advances in Neural Information Processing Systems},
+  volume={37},
+  year={2024},
+  note={arXiv preprint arXiv:2406.11717}
+}
+
+% ---- V6 canonical missing citations (added 2026-04-21 per V6-F §4) ----
+% shokri2017membership already present at line 46 (SKIPPED).
+% bricken2023monosemanticity already present at line 128 (SKIPPED; V6-F key was bricken2023towards).
+% rajamanoharan2024jumprelu already present at line 504 (SKIPPED; V6-F key was rajamanoharan2024jumping).
+
+@inproceedings{mattern2023membership,
+  author={Mattern, Justus and Mireshghallah, Fatemehsadat and Jin, Zhijing and Sch{\"o}lkopf, Bernhard and Sachan, Mrinmaya and Berg-Kirkpatrick, Taylor},
+  title={Membership Inference Attacks against Language Models via Neighbourhood Comparison},
+  booktitle={Findings of the Association for Computational Linguistics: ACL 2023},
+  pages={11330--11343},
+  year={2023},
+  address={Toronto, Canada},
+  publisher={Association for Computational Linguistics},
+  doi={10.18653/v1/2023.findings-acl.719}
+}
+
+@inproceedings{mireshghallah2022quantifying,
+  author={Mireshghallah, Fatemehsadat and Goyal, Kartik and Uniyal, Archit and Berg-Kirkpatrick, Taylor and Shokri, Reza},
+  title={Quantifying Privacy Risks of Masked Language Models Using Membership Inference Attacks},
+  booktitle={Proceedings of the 2022 Conference on Empirical Methods in Natural Language Processing},
+  year={2022},
+  publisher={Association for Computational Linguistics},
+  url={https://aclanthology.org/2022.emnlp-main.570}
+}
+
+@inproceedings{ye2022enhanced,
+  author={Ye, Jiayuan and Maddi, Aadyaa and Murakonda, Sasi Kumar and Bindschaedler, Vincent and Shokri, Reza},
+  title={Enhanced Membership Inference Attacks against Machine Learning Models},
+  booktitle={Proceedings of the 2022 ACM SIGSAC Conference on Computer and Communications Security (CCS)},
+  year={2022},
+  publisher={ACM},
+  doi={10.1145/3548606.3560675}
+}
+
+@inproceedings{park2024linear,
+  author={Park, Kiho and Choe, Yo Joong and Veitch, Victor},
+  title={The Linear Representation Hypothesis and the Geometry of Large Language Models},
+  booktitle={Proceedings of the 41st International Conference on Machine Learning (ICML)},
+  year={2024},
+  note={arXiv preprint arXiv:2311.03658}
+}
+
+@article{efron1987better,
+  author={Efron, Bradley},
+  title={Better Bootstrap Confidence Intervals},
+  journal={Journal of the American Statistical Association},
+  volume={82},
+  number={397},
+  pages={171--185},
+  year={1987},
+  publisher={Taylor \& Francis},
+  doi={10.1080/01621459.1987.10478410}
+}
+
+@article{holm1979simple,
+  author={Holm, Sture},
+  title={A Simple Sequentially Rejective Multiple Test Procedure},
+  journal={Scandinavian Journal of Statistics},
+  volume={6},
+  number={2},
+  pages={65--70},
+  year={1979},
+  publisher={Wiley}
+}
+
+@inproceedings{braun2024identifying,
+  author={Braun, Dan and Taylor, Jordan and Goldowsky-Dill, Nicholas and Sharkey, Lee},
+  title={Identifying Functionally Important Features with End-to-End Sparse Dictionary Learning},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
+  year={2024},
+  note={arXiv preprint arXiv:2405.12241 (distinct from Makelov/Lange/Nanda arXiv:2405.08366)}
+}
+
+@inproceedings{huang2024demystifying,
+  author={Huang, Jing and Yang, Diyi and Potts, Christopher},
+  title={Demystifying Verbatim Memorization in Large Language Models},
+  booktitle={Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing},
+  pages={10711--10732},
+  year={2024},
+  address={Miami, Florida, USA},
+  publisher={Association for Computational Linguistics},
+  doi={10.18653/v1/2024.emnlp-main.598}
+}
+
+% ---- V6-G new T1 preempts (SAE-based and internal-state MIA) ----
+
+@article{ferrando2026memtrace,
+  title={Neural Breadcrumbs: Membership Inference Attacks on {LLMs} through Hidden State and Attention Pattern Analysis},
+  author={Makhija, Disha and Arivazhagan, Manoj Ghuhan and Kumar, Vinayshekhar Bannihatti and Gangadharaiah, Rashmi},
+  journal={arXiv preprint arXiv:2509.05449},
+  year={2025},
+  note={Preprint. Probes transformer hidden states + attention patterns (not SAE features).}
+}
+
+@article{huang2026gdrift,
+  title={{G-Drift MIA}: Membership Inference via Gradient-Induced Feature Drift in {LLMs}},
+  author={Ranjan, Ravi and Grover, Utkarsh and Lin, Xiaomin and Polyzou, Agoritsa},
+  journal={Proceedings of the International Conference on Pattern Recognition (ICPR)},
+  year={2026},
+  note={arXiv preprint arXiv:2604.00419.}
+}
+
+@inproceedings{minder2025narrow,
+  title={Narrow Finetuning Leaves Clearly Readable Traces in the Activation Differences},
+  author={Minder, Julian and Dumas, Cl{\'e}ment and Slocum, Stewart and Casademunt, Helena and Holmes, Cameron and West, Robert and Nanda, Neel},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2026},
+  note={arXiv preprint arXiv:2510.13900}
+}
+
+@inproceedings{galli2024lumia,
+  title={{LUMIA}: Linear Probing for Unimodal and {MultiModal} Membership Inference Attacks Leveraging Internal {LLM} States},
+  author={Ibanez-Lissen, Luis and Gonzalez-Manzano, Lorena and de Fuentes, Jose Maria and Anciaux, Nicolas and Garcia-Alfaro, Joaquin},
+  booktitle={European Symposium on Research in Computer Security (ESORICS)},
+  year={2025},
+  note={arXiv preprint arXiv:2411.19876}
+}
+
+@article{grande2026privacyscalpelv3,
+  title={{PrivacyScalpel} (v3): Feature-Specific Privacy Intervention with Sparse Autoencoders, Extended Pythia Benchmark},
+  author={Grande, Paolo and Frikha, Ahmed and Ar Razi, Muhammad Reza and Nakka, Krishna Kanth and Mendes, Ricardo and Jiang, Xue and Zhou, Xuebing},
+  journal={arXiv preprint arXiv:2503.11232},
+  year={2026},
+  note={v3 update, February 2026}
+}
+
+@article{zhang2026gss,
+  author={Zhang, Xuanqi and Shang, Haoyang and Li, Xiaoxiao},
+  title={{GSS}: Gated Subspace Steering for Selective Memorization Mitigation in {LLMs}},
+  journal={arXiv preprint arXiv:2602.08901},
+  year={2026}
+}
+
+@inproceedings{lasy2025memcircuits,
+  author={Lasy, Ilya and Knees, Peter and Woltran, Stefan},
+  title={Understanding Verbatim Memorization in {LLMs} Through Circuit Discovery},
+  booktitle={Proceedings of the First Workshop on Large Language Model Memorization (L2M2)},
+  year={2025},
+  address={ACL 2025, Vienna},
+  note={arXiv:2506.21588}
+}
+
+@misc{smith2025deepmind,
+  title={Negative Results for Sparse Autoencoders On Downstream Tasks and Deprioritising {SAE} Research (Mechanistic Interpretability Team Progress Update)},
+  author={Smith, Lewis and Rajamanoharan, Senthooran and Conmy, Arthur and McDougall, Callum and Kram{\'a}r, J{\'a}nos and Lieberum, Tom and Shah, Rohin and Nanda, Neel},
+  howpublished={Google DeepMind Safety Research, Medium},
+  year={2025},
+  month={March}
+}
+
+@inproceedings{karvonen2025saebench,
+  title={{SAEBench}: A Comprehensive Benchmark for Sparse Autoencoders in Language Model Interpretability},
+  author={Karvonen, Adam and Rager, Can and Lin, Johnny and Tigges, Curt and Bloom, Joseph and Chanin, David and Lau, Yeu-Tong and Farrell, Eoin and McDougall, Callum and Ayonrinde, Kola and Till, Demian and Wearden, Matthew and Conmy, Arthur and Marks, Samuel and Nanda, Neel},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2025},
+  note={arXiv preprint arXiv:2503.09532}
+}
+
+@inproceedings{kantamneni2025sparse,
+  title={Are Sparse Autoencoders Useful? A Case Study in Sparse Probing},
+  author={Kantamneni, Subhash and Engels, Joshua and Rajamanoharan, Senthooran and Tegmark, Max and Nanda, Neel},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2025},
+  note={arXiv preprint arXiv:2502.16681}
+}
+
+@article{davis2026probes,
+  title={Exploring the Limits of Probes for Latent Representation Edits in {GPT} Models},
+  author={Davis, Austin L. and Vasquez-Ferrer, Robinson and Sukthankar, Gita},
+  journal={AI ({MDPI})},
+  volume={7},
+  number={3},
+  pages={92},
+  year={2026},
+  doi={10.3390/ai7030092}
+}
+
+@inproceedings{bussmann2025matryoshka,
+  title={Learning Multi-Level Features with Matryoshka Sparse Autoencoders},
+  author={Bussmann, Bart and Nabeshima, Noa and Karvonen, Adam and Nanda, Neel},
+  booktitle={International Conference on Machine Learning (ICML)},
+  year={2025},
+  note={arXiv preprint arXiv:2503.17547}
+}
+
+@article{bussmann2024batchtopk,
+  title={{BatchTopK} Sparse Autoencoders},
+  author={Bussmann, Bart and Leask, Patrick and Nanda, Neel},
+  journal={arXiv preprint arXiv:2412.06410},
+  year={2024}
+}
+
+@article{chen2026wbc,
+  title={Window-based Membership Inference Attacks Against Fine-tuned Large Language Models},
+  author={Chen, Yuetian and Du, Yuntao and Zhang, Kaiyuan and Kundu, Ashish and Fleming, Charles and Ribeiro, Bruno and Li, Ninghui},
+  journal={arXiv preprint arXiv:2601.02751},
+  year={2026},
+  note={Accepted to USENIX Security 2026.}
+}
+
+@article{ilic2026ezmia,
+  title={Powerful Training-Free Membership Inference Against Autoregressive Language Models},
+  author={Ili\'{c}, David and Stanojevi\'{c}, David and Cvejoski, Kostadin},
+  journal={arXiv preprint arXiv:2601.12104},
+  year={2026}
+}
+
+@article{farrell2024applying,
+  title={Applying sparse autoencoders to unlearn knowledge in language models},
+  author={Farrell, Eoin and Lau, Yeu-Tong and Conmy, Arthur},
+  journal={arXiv preprint arXiv:2410.19278},
+  year={2024},
+  note={NeurIPS 2024 SAE+Unlearning Workshop.}
+}
+
+@inproceedings{lu2026icp,
+  title={In-Context Probing for Membership Inference in Fine-Tuned Language Models},
+  author={Lu, Zhexi and Chi, Hongliang and Baracaldo, Nathalie and Kadhe, Swanand Ravindra and Jeon, Yuseok and Yu, Lei},
+  booktitle={Network and Distributed System Security Symposium (NDSS)},
+  year={2026},
+  note={arXiv preprint arXiv:2512.16292}
+}
+
+@inproceedings{mayne2024steering,
+  title={Can Sparse Autoencoders Be Used to Decompose and Interpret Steering Vectors?},
+  author={Mayne, Harry and Yang, Yushi and Mahdi, Adam},
+  booktitle={NeurIPS 2024 Workshop on Interpretable AI},
+  year={2024},
+  note={arXiv preprint arXiv:2411.08790}
+}
+
+@article{rajamanoharan2024jumping,
+  title={Jumping ahead: Improving reconstruction fidelity with {JumpReLU} sparse autoencoders},
+  author={Rajamanoharan, Senthooran and Lieberum, Tom and Sonnerat, Nicolas and Conmy, Arthur and Varma, Vikrant and Kram{\'a}r, J{\'a}nos and Nanda, Neel},
+  journal={arXiv preprint arXiv:2407.14435},
+  year={2024}
+}
+
+% ---- Reserve citations (not currently cited; preserved from prior bib snapshots for future use) ----
+
+@inproceedings{paudel2026sanitization,
+  author={Paudel, Bipin and Mandal, Bishwas and Amariucai, George and Wei, Shuangqing},
+  title={Sanitization or Deception? Rethinking Privacy Protection in Large Language Models},
+  booktitle={Proceedings on Privacy Enhancing Technologies},
+  volume={2026},
+  number={1},
+  pages={154--174},
+  year={2026},
+  doi={10.56553/popets-2026-0009}
+}
+
+@inproceedings{deng2026projection,
+  author={Deng, others},
+  title={Projection Residual Membership Inference for Federated Large Language Models},
+  booktitle={Proceedings of the 47th IEEE Symposium on Security and Privacy (S\&P)},
+  year={2026}
+}
+
+@article{shen2014learning,
+  author={Shen, Bin and Liu, Bao-Di and Wang, Qifan},
+  title={Elastic net regularization paths for all generalized linear models},
+  journal={Multimedia Tools and Applications},
+  year={2014},
+  doi={10.1007/s11042-014-2257-y}
+}
+
+@inproceedings{mahdizadehaghdam2018deep,
+  author={Mahdizadehaghdam, Shahin and Panahi, Ashkan and Krim, Hamid and Dai, Liyi},
+  title={Deep Dictionary Learning: A PARametric NETwork Approach},
+  booktitle={arXiv preprint arXiv:1803.04022},
+  year={2018}
+}
+
+@article{mairal2014sparse,
+  author={Mairal, Julien and Bach, Francis and Ponce, Jean},
+  title={Sparse Modeling for Image and Vision Processing},
+  journal={Foundations and Trends in Computer Graphics and Vision},
+  volume={8},
+  number={2-3},
+  pages={85-283},
+  year={2014}
+}
+
+@article{stoehr2024localizing,
+  author={Stoehr, Niklas and Gordon, Mitchell and Zhang, Chiyuan and Lewis, Owen},
+  title={Localizing Paragraph Memorization in Language Models},
+  journal={arXiv preprint arXiv:2403.19851},
+  year={2024}
+}
+
+@inproceedings{chavhan2024diffusion,
+  author={Chavhan, Ruchika and others},
+  title={Memorization is Localized within a Small Subspace in Diffusion Models},
+  booktitle={ICML 2024 Workshop on Generative AI and Law (GenLaw)},
+  year={2024}
+}
+
+@inproceedings{zhu2026abstopk,
+  title={{AbsTopK}: Rethinking Sparse Autoencoders For Bidirectional Features},
+  author={Zhu, Xudong and Khalili, Mohammad Mahdi and Zhu, Zhihui},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2026},
+  note={arXiv preprint arXiv:2510.00404}
+}
+
+@inproceedings{paulo2026samefeatures,
+  title={Sparse Autoencoders Trained on the Same Data Learn Different Features},
+  author={Paulo, Gon{\c{c}}alo and Belrose, Nora},
+  booktitle={International Conference on Learning Representations (ICLR)},
+  year={2026},
+  note={arXiv preprint arXiv:2501.16615}
+}
+

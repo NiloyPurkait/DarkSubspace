@@ -1,0 +1,34 @@
+{
+  "model": "neo",
+  "layer": 16,
+  "sae_path": "runs/sae/memcirc_gptneo_epoch5_layer16_4x_l1_5e4_member/sae_final.pt",
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "original": {
+    "score_K_auroc": 0.615737,
+    "norm_auroc": 0.505474
+  },
+  "sae_reconstructed": {
+    "score_K_auroc": 0.571573,
+    "norm_auroc": 0.5172889999999999
+  },
+  "residual": {
+    "score_K_auroc": 0.699239,
+    "norm_auroc": 0.5180115
+  },
+  "sae_quality": {
+    "reconstruction_mse": 1726.4892578125,
+    "reconstruction_cosine": 0.9984690546989441,
+    "d_K_coverage_cosine": -0.032361362129449844,
+    "d_K_residual_fraction": 0.9989527463912964,
+    "mean_active_features": 235.681,
+    "total_features": 10240,
+    "sparsity": 0.02301572265625
+  },
+  "dark_subspace_effect": {
+    "auroc_drop_from_recon": 0.04416399999999998,
+    "auroc_preserved_in_residual": 0.699239,
+    "memorization_is_dark": true
+  },
+  "timestamp": "2026-03-26 10:37:49 UTC"
+}

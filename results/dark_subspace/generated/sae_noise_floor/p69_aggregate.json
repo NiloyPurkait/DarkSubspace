@@ -1,0 +1,138 @@
+{
+  "model_tag": "p69",
+  "roster_size": 6,
+  "expected": 6,
+  "source": "reuse of P69 N=6 mixed-SAE seeds (no new GPU job)",
+  "per_seed": [
+    {
+      "seed_dir": "p69_mixed_sae_seed42_postfix",
+      "seed_label": "42_postfix",
+      "model_id": "p69_mixed_seed42_postfix",
+      "sae_path": "runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260416_204852/sae_final.pt",
+      "original_score_K_auroc": 0.803197,
+      "reconstructed_score_K_auroc": 0.590669,
+      "residual_score_K_auroc": 0.7834289999999999,
+      "recon_cos": 0.9767528176307678,
+      "L0": null,
+      "drop_original_minus_reconstructed": 0.21252800000000005
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed43",
+      "seed_label": "43",
+      "model_id": "p69_mixed_seed43",
+      "sae_path": "runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260413_184801/sae_final.pt",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.5900989999999999,
+      "residual_score_K_auroc": 0.7850170000000001,
+      "recon_cos": 0.9790783524513245,
+      "L0": null,
+      "drop_original_minus_reconstructed": 0.2128660000000001
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed44",
+      "seed_label": "44",
+      "model_id": "p69_mixed_seed44",
+      "sae_path": "runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260414_083722/sae_final.pt",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.597069,
+      "residual_score_K_auroc": 0.77948,
+      "recon_cos": 0.9758415818214417,
+      "L0": null,
+      "drop_original_minus_reconstructed": 0.20589600000000008
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed45",
+      "seed_label": "45",
+      "model_id": "p69_mixed_seed45",
+      "sae_path": "runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260415_184845/sae_final.pt",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.598114,
+      "residual_score_K_auroc": 0.772269,
+      "recon_cos": 0.9728530049324036,
+      "L0": null,
+      "drop_original_minus_reconstructed": 0.204851
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed46",
+      "seed_label": "46",
+      "model_id": "p69_mixed_seed46",
+      "sae_path": "runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260416_154920/sae_final.pt",
+      "original_score_K_auroc": 0.803088,
+      "reconstructed_score_K_auroc": 0.5923280000000001,
+      "residual_score_K_auroc": 0.7835460000000001,
+      "recon_cos": 0.976436197757721,
+      "L0": null,
+      "drop_original_minus_reconstructed": 0.21075999999999995
+    },
+    {
+      "seed_dir": "p69_mixed_sae_seed47",
+      "seed_label": "47",
+      "model_id": "p69_mixed_seed47",
+      "sae_path": "runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260416_155229/sae_final.pt",
+      "original_score_K_auroc": 0.803088,
+      "reconstructed_score_K_auroc": 0.5941000000000001,
+      "residual_score_K_auroc": 0.7686320000000001,
+      "recon_cos": 0.9742370843887329,
+      "L0": null,
+      "drop_original_minus_reconstructed": 0.20898799999999995
+    }
+  ],
+  "summary": {
+    "original_score_K_auroc": {
+      "mean": 0.8030446666666666,
+      "std": 9.591802055227542e-05,
+      "min": 0.802965,
+      "max": 0.803197,
+      "n": 6
+    },
+    "reconstructed_score_K_auroc": {
+      "mean": 0.5937298333333333,
+      "std": 0.003317371333852565,
+      "min": 0.5900989999999999,
+      "max": 0.598114,
+      "n": 6
+    },
+    "residual_score_K_auroc": {
+      "mean": 0.7787288333333334,
+      "std": 0.006768713952197014,
+      "min": 0.7686320000000001,
+      "max": 0.7850170000000001,
+      "n": 6
+    },
+    "recon_cos": {
+      "mean": 0.9758665064970652,
+      "std": 0.0021523419486168768,
+      "min": 0.9728530049324036,
+      "max": 0.9790783524513245,
+      "n": 6
+    },
+    "L0": {
+      "mean": null,
+      "std": null,
+      "min": null,
+      "max": null,
+      "n": 0
+    },
+    "drop_original_minus_reconstructed": {
+      "mean": 0.20931483333333334,
+      "std": 0.0033688211835398367,
+      "min": 0.204851,
+      "max": 0.2128660000000001,
+      "n": 6
+    }
+  },
+  "noise_floor": {
+    "drop_mean": 0.20931483333333334,
+    "drop_std_cross_seed": 0.0033688211835398367,
+    "drop_n_sigma": 62.13296044208342,
+    "residual_AUROC_mean": 0.7787288333333334,
+    "residual_AUROC_std_cross_seed": 0.006768713952197014,
+    "description": "Cross-seed std of the drop (original-reconstructed score_K_AUROC) establishes the empirical noise floor. A measured drop of drop_mean at n_sigma cross-seed-std above zero supports the separability claim. The residual_AUROC cross-seed std gives the noise floor on the membership signal that survives into the SAE-residual space \u2014 used in the dark-subspace paper to frame the residual-probe claim."
+  },
+  "notes": [
+    "All 6 P69 SAEs share identical HP (layer=16, d_mult=4, L1=5e-4, 200M tokens, dead-feat resample).",
+    "Different random init per SAE training run (check training timestamps in per-seed sae_path).",
+    "eval seed=42 on all (score computation deterministic given SAE).",
+    "This is a reuse of existing data \u2014 no new SLURM job was dispatched."
+  ]
+}
