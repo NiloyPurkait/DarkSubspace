@@ -27,17 +27,17 @@ Extended components:
     score_norm_zscore actually changes scores.
   - **Multi-scale temporal evidence**: Computes evidence at multiple temporal
     resolutions (token, window, sequence) and fuses them. Captures both
-    local memorization patterns and global distribution shifts.
+    local memorisation patterns and global distribution shifts.
 
 Safety/ethics:
   This repo is intended for *authorized auditing* of open-weight models and
   datasets. Do not use these methods against systems you do not own or do not
   have explicit permission to test.
 
-Key design decisions for reviewer-proofing:
+Key design decisions for robustness:
   - Stability gating is applied BEFORE aggregation and layer selection.
   - Layer selection defaults to tpr@fpr rather than AUROC.
-  - Score normalization is fitted on non-members only.
+  - Score normalisation is fitted on non-members only.
   - Frequency calibration uses separate reference corpus statistics.
 """
 
@@ -200,8 +200,8 @@ class SAENAPDDConfig:
     # --- Multi-Scale Temporal Evidence ---
     # Compute evidence at multiple temporal resolutions and fuse them.
     # Different membership signals manifest at different scales:
-    # - Token-level: individual rare token memorization
-    # - Window-level: phrase/sentence memorization
+    # - Token-level: individual rare token memorisation
+    # - Window-level: phrase/sentence memorisation
     # - Sequence-level: global distributional shift
     # The final score is a weighted combination of all scales.
     multi_scale_windows: Tuple[int, ...] = (1, 8, 32)  # window sizes for multi-scale
@@ -248,7 +248,7 @@ class SAENAPDDConfig:
     # Adapted from ReCaLL (Xie et al., EMNLP 2024): compare SAE-NA-PDD score
     # of text x alone vs. score of x preceded by irrelevant prefix P.
     # Members are "anchored" — their SAE score is robust to prefix perturbation.
-    # Non-members' scores shift more because the model hasn't memorized them.
+    # Non-members' scores shift more because the model hasn't memorised them.
     # score_recall = SAE_score(prefix + x) / SAE_score(x)   (ratio mode)
     # score_recall = SAE_score(prefix + x) - SAE_score(x)   (diff mode)
     # Novel: ReCaLL has only been applied to token log-probs. Applying it to
@@ -381,11 +381,11 @@ def _aggregate_codes(
 
 class SAENAPDD:
     """NA-PDD-style pretraining data detection in SAE feature space.
-    
-    Key design decisions for reviewer-proofing:
+
+    Key design decisions for robustness:
       - Stability gating is applied BEFORE aggregation and layer selection.
       - Layer selection defaults to tpr@fpr rather than AUROC.
-      - Score normalization is fitted on non-members only.
+      - Score normalisation is fitted on non-members only.
     """
 
     def __init__(self, model: CausalLMWrapper, cfg: SAENAPDDConfig, device: Optional[str] = None):
@@ -461,7 +461,7 @@ class SAENAPDD:
             sae: SAE trained on residual-stream activations at this layer.
             return_token_codes: if True, returns [N, T, F]; else returns [N, F].
         """
-        # B3: Explicit random_crop=False for deterministic evaluation
+        # Explicit random_crop=False for deterministic evaluation
         tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
         out_codes: List[torch.Tensor] = []
         out_tok_codes: List[torch.Tensor] = []
@@ -572,7 +572,7 @@ class SAENAPDD:
         def _freq(texts: Sequence[str], label: str) -> Tuple[torch.Tensor, int]:
             counts: Optional[torch.Tensor] = None
             n = 0
-            # B3: Explicit random_crop=False for deterministic evaluation
+            # Explicit random_crop=False for deterministic evaluation
             tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
 
             for i in tqdm(
@@ -609,7 +609,7 @@ class SAENAPDD:
                     # Accumulate magnitude (mean over batch)
                     contrib = z_agg.sum(dim=0)  # [F]
                 else:
-                    # Binary counting (original behavior)
+                    # Binary counting (original behaviour)
                     active = self._active_mask(z_agg, tau=tau).float().sum(dim=0)  # [F]
                     contrib = active
                 
@@ -636,7 +636,7 @@ class SAENAPDD:
     ) -> None:
         """Fit the SAE-NA-PDD scorer using calibration and validation sets.
 
-        When val_examples is provided (RECOMMENDED for reviewer-proof evaluation):
+        When val_examples is provided (RECOMMENDED to avoid leakage):
           - calib_examples is used as the reference set (estimate f_mem/f_non, weights w)
           - val_examples is used for layer selection (no data leakage)
           - cfg.ref_frac is IGNORED
@@ -662,7 +662,7 @@ class SAENAPDD:
 
         # Determine ref/val split strategy
         if val_examples is not None:
-            # External validation set provided (reviewer-proof mode)
+            # External validation set provided (preferred to avoid leakage)
             ref = list(calib_examples)
             val = list(val_examples)
         else:
@@ -735,7 +735,7 @@ class SAENAPDD:
                     # Require minimum total activation mass (scaled by sample count)
                     mask = mask & ((c_mem + c_non) >= float(self.cfg.min_total_count) * 0.1)
                 else:
-                    # Binary mode (original behavior): c_mem/c_non are activation counts
+                    # Binary mode (original behaviour): c_mem/c_non are activation counts
                     # Bayesian smoothing: compute smoothed Bernoulli probabilities
                     a = float(self.cfg.freq_prior)
                     p_mem = (c_mem + a) / (max(1, n_mem) + 2.0 * a)
@@ -1255,7 +1255,7 @@ class SAENAPDD:
         # Whether to compute reconstruction error
         compute_recon = self.cfg.recon_error_weight > 0
 
-        # B3: Explicit random_crop=False for deterministic evaluation
+        # Explicit random_crop=False for deterministic evaluation
         tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
         out_scores: List[torch.Tensor] = []
         out_recon: List[torch.Tensor] = []
@@ -1450,8 +1450,8 @@ class SAENAPDD:
         Computes per-token evidence, then pools at multiple temporal resolutions
         (window sizes), and combines the scores. Different membership signals
         manifest at different scales:
-        - Token-level (window=1): individual rare token memorization
-        - Window-level (window=8,16): phrase/sentence memorization
+        - Token-level (window=1): individual rare token memorisation
+        - Window-level (window=8,16): phrase/sentence memorisation
         - Sequence-level (window=T): global distributional shift
         
         Novel: No prior MIA work combines multi-resolution SAE feature evidence.
@@ -1698,7 +1698,7 @@ class SAENAPDD:
             },
         }
 
-        # B3: Explicit random_crop=False for deterministic evaluation
+        # Explicit random_crop=False for deterministic evaluation
         tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
         batch = tokenize_batch(self.model.tokenizer, [text], tok_cfg)
         input_ids = batch["input_ids"].to(self.model.model.device)

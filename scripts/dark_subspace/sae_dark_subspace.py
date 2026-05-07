@@ -19,7 +19,7 @@ Reproduce:
         --layer 16 --output-dir runs/dark_subspace/sae_dark_subspace/p69_epoch5 \\
         --model-id p69
 
-Tests whether the memorization signal (score_K) lives in the SAE blind spot
+Tests whether the memorisation signal (score_K) lives in the SAE blind spot
 by comparing membership detection AUROC on three streams.
   1. Original activations h, expected high AUROC.
   2. SAE-reconstructed h' = decode(encode(h)), predicted near chance.
@@ -274,10 +274,13 @@ def run_dark_subspace_experiment(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="SAE Dark Subspace: Does SAE reconstruction wash out memorization?"
+        description=(
+            "Compare membership-detection AUROC across original activation, "
+            "SAE reconstruction, and reconstruction residual."
+        )
     )
     parser.add_argument("--model-path", required=True, help="Path to fine-tuned model")
-    parser.add_argument("--bcd-dir", required=True, help="Path to BCD directions directory")
+    parser.add_argument("--bcd-dir", required=True, help="Path to channel-decomposition directions directory")
     parser.add_argument("--sae-path", required=True, help="Path to SAE checkpoint (sae_final.pt)")
     parser.add_argument("--member-texts", required=True)
     parser.add_argument("--nonmember-texts", required=True)
@@ -307,7 +310,7 @@ def main():
     config["script"] = "sae_dark_subspace.py"
     (out_dir / "config.json").write_text(json.dumps(config, indent=2, default=str))
 
-    # Load BCD directions
+    # Load channel-decomposition directions
     bcd_data = np.load(Path(args.bcd_dir) / "directions.npz", allow_pickle=True)
     dk_key = f"d_K_layer{args.layer}"
     if dk_key not in bcd_data:
@@ -390,11 +393,11 @@ def main():
 
     ds = results['dark_subspace_effect']
     if ds['memorization_is_dark']:
-        print("  *** MEMORIZATION IS IN THE DARK SUBSPACE ***")
+        print("  Membership signal preserved in residual; reconstruction below threshold.")
         print(f"  SAE reconstruction dropped score_K by {ds['auroc_drop_from_recon']:.4f}")
         print(f"  Residual preserves AUROC = {ds['auroc_preserved_in_residual']:.4f}")
     else:
-        print(f"  Dark subspace effect unclear (recon AUROC={results['sae_reconstructed']['score_K_auroc']:.4f})")
+        print(f"  Dark-subspace signal not detected (recon AUROC={results['sae_reconstructed']['score_K_auroc']:.4f})")
 
 
 if __name__ == "__main__":

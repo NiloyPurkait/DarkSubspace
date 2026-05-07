@@ -16,6 +16,12 @@ import torch
 
 @dataclass(frozen=True)
 class MinKConfig:
+    """Configuration for the Min-K%/Min-K%++ membership-detection baselines.
+
+    ``k_frac`` is the fraction of lowest-scoring tokens to average; ``ignore_pad``
+    excludes padding positions from the average when an attention mask is given.
+    """
+
     k_frac: float = 0.2  # 20% of tokens (matches Shi et al. 2024 / MIMIR default)
     # Safety: ignore padding tokens in scoring (requires attention_mask)
     ignore_pad: bool = True

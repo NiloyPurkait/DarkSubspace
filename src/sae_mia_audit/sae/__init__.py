@@ -1,3 +1,4 @@
+"""Sparse autoencoder implementation, training, I/O, and intervention helpers."""
 from .sae import SparseAutoencoder, SAEConfig
 from .trainer import SAETrainConfig, SAETrainer, MultiSAETrainer
 from .interventions import (

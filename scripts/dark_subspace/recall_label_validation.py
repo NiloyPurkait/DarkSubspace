@@ -6,8 +6,8 @@ Validates the loss-median recall label against ROUGE-L extraction with
 Spearman rank correlation and partial correlation controlling for loss,
 across eight models.
 
-Used in Methods (recall label validation), Appendix BCD details, and the
-adversarial-robustness recall-label discussion.
+Used in Methods (recall label validation), Appendix `app:bcd_details`,
+and the adversarial-robustness recall-label discussion.
 Reproduce:
     env/bin/python3 scripts/dark_subspace/recall_label_validation.py
 

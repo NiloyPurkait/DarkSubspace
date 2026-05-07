@@ -35,8 +35,8 @@ DS_BASE = ROOT / "runs" / "dark_subspace" / "sae_dark_subspace"
 def canonical_auroc(labels, scores):
     """AUROC with sign correction: max(auroc, 1-auroc).
 
-    BCD scoring direction may vary by model. The canonical convention
-    is to report the sign that gives AUROC >= 0.5.
+    The channel-decomposition scoring direction may vary by model.
+    The canonical convention is to report the sign that gives AUROC >= 0.5.
     """
     raw = float(roc_auc_score(labels, scores))
     return max(raw, 1.0 - raw)

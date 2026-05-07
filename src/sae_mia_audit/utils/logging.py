@@ -1,3 +1,4 @@
+"""Project-wide logging setup using ``rich`` for console output."""
 from __future__ import annotations
 
 import logging

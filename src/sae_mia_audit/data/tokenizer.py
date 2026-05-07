@@ -1,3 +1,9 @@
+"""Batch tokenisation utilities with optional deterministic random cropping.
+
+Wraps a Hugging Face tokenizer to produce fixed-length [B, seq_len] tensors,
+with right-padding and an optional isolated RNG for reproducible cropping
+during evaluation.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -18,7 +24,7 @@ class TokenizeConfig:
     seq_len: int = 256
     add_special_tokens: bool = True
     random_crop: bool = False  # if True, sample a random contiguous token window
-    # B4: Evaluation determinism - use local RNG with explicit seed for random_crop
+    # Evaluation determinism: use a local RNG with explicit seed for random_crop
     crop_seed: Optional[int] = None  # if set, creates isolated RNG for random_crop
 
 
@@ -51,13 +57,13 @@ def tokenize_batch(
         else:
           take prefix window (start=0)
     
-    B4: If cfg.crop_seed is set, random_crop uses an isolated RNG seeded with
-        crop_seed + batch_index for deterministic but varied cropping.
+    If cfg.crop_seed is set, random_crop uses an isolated RNG seeded with
+    crop_seed + batch_index for deterministic but varied cropping.
     """
     seq_len = int(cfg.seq_len)
     pad_id = _resolve_pad_id(tokenizer)
     
-    # B4: Create isolated RNG if crop_seed is specified (eval determinism)
+    # Create isolated RNG if crop_seed is specified (eval determinism)
     local_rng: Optional[random.Random] = None
     if cfg.crop_seed is not None:
         local_rng = random.Random(cfg.crop_seed)
@@ -88,7 +94,7 @@ def tokenize_batch(
             if cfg.random_crop:
                 # randint is inclusive at both ends; start in [0, n-seq_len]
                 max_start = max(0, n - seq_len)
-                # B4: Use local RNG if available (eval determinism)
+                # Use local RNG if available (eval determinism)
                 if local_rng is not None:
                     start = local_rng.randint(0, max_start)
                 else:

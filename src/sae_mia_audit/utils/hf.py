@@ -1,3 +1,4 @@
+"""HuggingFace model/tokenizer loading helpers with retries and dtype/device resolution."""
 from __future__ import annotations
 
 import logging

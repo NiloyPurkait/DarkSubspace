@@ -1,8 +1,8 @@
 """
 Neuron-basis baseline probe + ablation.
 
-Phase 6.1: This baseline answers "could any basis do this?" by fitting a linear
-probe on raw residual stream activations and ablating top neurons.
+This baseline addresses the question "could any basis do this?" by fitting a
+linear probe on raw residual-stream activations and ablating the top neurons.
 
 If SAE features outperform neuron ablation for equal k, it supports the claim
 that SAEs provide more concentrated causal control over membership signals.
@@ -72,7 +72,7 @@ class NeuronProbeBaseline:
         Args:
             n_features: Number of neurons to select (k for top-k selection).
             method: Selection method ("logreg" for logistic regression).
-            C: Inverse regularization strength.
+            C: Inverse regularisation strength.
             penalty: Regularization type ("l1", "l2", or "elasticnet").
             max_iter: Maximum iterations for fitting.
             seed: Random seed.

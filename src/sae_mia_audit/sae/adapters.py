@@ -28,8 +28,13 @@ import torch
 class SAEProtocol(Protocol):
     """Minimal interface expected by PDD methods and interventions."""
 
-    def encode(self, x: torch.Tensor) -> torch.Tensor: ...
-    def decode(self, z: torch.Tensor) -> torch.Tensor: ...
+    def encode(self, x: torch.Tensor) -> torch.Tensor:
+        """Encode hidden states ``x`` into sparse SAE codes ``z``."""
+        ...
+
+    def decode(self, z: torch.Tensor) -> torch.Tensor:
+        """Decode SAE codes ``z`` back into the hidden-state space."""
+        ...
 
     def parameters(self): ...  # Required for device/dtype inference
 
@@ -42,6 +47,8 @@ class SAEProtocol(Protocol):
 
 @dataclass(frozen=True)
 class SAEInfo:
+    """Metadata describing a loaded SAE (backend, dimensions, training layer)."""
+
     backend: str  # e.g. 'internal', 'saif'
     d_model: int
     d_sae: int

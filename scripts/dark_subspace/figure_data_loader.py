@@ -356,11 +356,11 @@ if __name__ == "__main__":
     for k, v in get_dark_subspace_table(labels_full).items():
         print(f"  {k:24s}  orig={v['orig']:.3f} recon={v['recon']:.3f} resid={v['resid']:.3f} cos={v['recon_cos']:.3f}")
     print()
-    print("=== norm vs BCD ===")
+    print("=== norm vs channel-decomposition ===")
     for k, v in get_norm_table([
         "Pythia-1B","GPT-Neo-2.7B","Pythia-6.9B","OPT-6.7B","Pythia-12B",
         "Falcon-7B","Mistral-7B","Llama-3-8B","Qwen2-7B"]).items():
-        print(f"  {k:24s}  norm={v['norm_auroc']:.3f}  BCD={v['bcd_auroc']:.3f}")
+        print(f"  {k:24s}  norm={v['norm_auroc']:.3f}  d_K={v['bcd_auroc']:.3f}")
     print()
     print("=== scaling curve ===")
     sc = get_scaling_curve_data(["Pythia-70M","Pythia-160M","Pythia-410M",

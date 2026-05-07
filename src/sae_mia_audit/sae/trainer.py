@@ -1,3 +1,8 @@
+"""Trainers for sparse autoencoders.
+
+Provides single-SAE and multi-SAE training loops with optional weight tying,
+load-balancing auxiliary loss, and dead-feature resampling.
+"""
 from __future__ import annotations
 
 import json
@@ -105,7 +110,7 @@ class SAETrainConfig:
     write_summary_json: bool = True
     
     # =========================================================================
-    # D3: Dead feature resampling (strongest fix for dictionary collapse)
+    # Dead feature resampling (strongest fix for dictionary collapse)
     # =========================================================================
     # When enabled, periodically reinitializes dead features using the
     # reconstruction residual distribution. This prevents "dead forever" features.
@@ -136,7 +141,7 @@ class SAETrainer:
         self._summary_path = self.out_dir / "train_summary.json"
         self._last_logged_metrics: Optional[dict] = None
         
-        # D3: Dead feature tracking for resampling
+        # Dead feature tracking for resampling
         self._feature_firing_counts: Optional[torch.Tensor] = None  # [d_sae]
         self._feature_tracking_tokens: int = 0
         self._total_resampled: int = 0
@@ -165,7 +170,7 @@ class SAETrainer:
         # Restore step counter
         self.step = state.get("step", 0)
         
-        # D3: Restore resampling stats
+        # Restore resampling stats
         self._total_resampled = state.get("total_resampled", 0)
         
         self._log_info(f"Loaded checkpoint from step {self.step}: {path}")
@@ -212,14 +217,14 @@ class SAETrainer:
             "train_cfg": self.cfg.__dict__,
             "state_dict": self.sae.state_dict(),
             "opt_state": self.opt.state_dict(),
-            "total_resampled": self._total_resampled,  # D3: Track resampling stats
+            "total_resampled": self._total_resampled,  # Track resampling stats
         }
         torch.save(state, tmp)
         tmp.replace(path)
         self._log_info(f"Saved checkpoint: {path}")
     
     # =========================================================================
-    # D3: Dead feature resampling
+    # Dead feature resampling
     # =========================================================================
     @torch.no_grad()
     def _update_feature_firing_stats(self, z: torch.Tensor) -> None:
@@ -242,8 +247,8 @@ class SAETrainer:
     def _maybe_resample_dead_features(self, x: torch.Tensor) -> int:
         """Resample dead features using reconstruction residual.
         
-        D3 Reviewer-proof: This is standard practice for preventing dictionary
-        collapse in overcomplete SAEs. Dead features are reinitialized from the
+        This is standard practice for preventing dictionary collapse in
+        overcomplete SAEs. Dead features are reinitialized from the
         reconstruction residual distribution.
         
         Returns: Number of features resampled.
@@ -337,7 +342,7 @@ class SAETrainer:
         self._feature_tracking_tokens = 0
         self._total_resampled += n_dead
         
-        self._log_info(f"D3 Resampled {n_dead} dead features (total: {self._total_resampled})")
+        self._log_info(f"Resampled {n_dead} dead features (total: {self._total_resampled})")
         
         return n_dead
 
@@ -471,7 +476,7 @@ class SAETrainer:
 
             x = x.to(device=self._device, dtype=self._dtype, non_blocking=True)
             
-            # D3: Track feature firing for dead feature detection
+            # Track feature firing for dead feature detection
             with torch.no_grad():
                 _, z_track, _ = self.sae(x)
                 self._update_feature_firing_stats(z_track)
@@ -488,7 +493,7 @@ class SAETrainer:
                     metrics["loss_minus_recon"] = float(metrics["loss"] - float(metrics["recon_mse"]))
                 except Exception:
                     pass
-            # B3: Use correct L1 term based on l1_form setting
+            # Use correct L1 term based on l1_form setting
             if hasattr(self.sae, "cfg") and hasattr(self.sae.cfg, "l1_coeff"):
                 try:
                     l1_form = getattr(self.sae.cfg, "l1_form", "mean")
@@ -510,7 +515,7 @@ class SAETrainer:
 
             self.step += 1
             
-            # D3: Periodic dead feature resampling
+            # Periodic dead feature resampling
             if (self.cfg.resample_dead_features and 
                 self.step % self.cfg.resample_every == 0 and
                 self.step >= self.cfg.resample_window_steps):
@@ -525,7 +530,7 @@ class SAETrainer:
                 mean_metrics = {k: v / max(1, n_accum) for k, v in metrics_accum.items()}
                 # Compute additional quality metrics on the current batch.
                 quality = self._compute_quality_metrics(x)
-                # D3: Add resampling stats to quality metrics
+                # Add resampling stats to quality metrics
                 if self.cfg.resample_dead_features:
                     quality["total_resampled"] = self._total_resampled
                 self._log_info(json.dumps({"step": self.step, **mean_metrics}))
@@ -578,7 +583,7 @@ class MultiSAETrainer:
         self._summary_path = self.out_dir / "train_summary.json"
         self._last_logged_metrics: Optional[dict] = None
         
-        # D3: Dead feature tracking per SAE
+        # Dead feature tracking per SAE
         self._feature_firing_counts: Dict[str, torch.Tensor] = {}
         self._feature_tracking_tokens: int = 0
         self._total_resampled: Dict[str, int] = {k: 0 for k in saes.keys()}
@@ -608,7 +613,7 @@ class MultiSAETrainer:
                 "train_cfg": self.cfg.__dict__,
                 "state_dict": sae.state_dict(),
                 "opt_state": self.opts[key].state_dict(),
-                "total_resampled": self._total_resampled.get(key, 0),  # D3
+                "total_resampled": self._total_resampled.get(key, 0),
             }
             torch.save(state, tmp)
             tmp.replace(path)
@@ -616,7 +621,7 @@ class MultiSAETrainer:
         self._log_info(f"Saved multi-SAE checkpoint(s): {name}")
     
     # =========================================================================
-    # D3: Dead feature resampling for MultiSAETrainer
+    # Dead feature resampling for MultiSAETrainer
     # =========================================================================
     @torch.no_grad()
     def _update_feature_firing_stats(self, x: torch.Tensor) -> None:
@@ -725,7 +730,7 @@ class MultiSAETrainer:
         
         total = sum(results.values())
         if total > 0:
-            self._log_info(f"D3 Resampled {results} dead features")
+            self._log_info(f"Resampled {results} dead features")
         
         return results
 
@@ -905,7 +910,7 @@ class MultiSAETrainer:
 
             x = x.to(device=self._device, dtype=self._dtype, non_blocking=True)
 
-            # D3: Update feature firing stats before loss computation
+            # Update feature firing stats before loss computation
             self._update_feature_firing_stats(x)
 
             # Zero grads
@@ -927,7 +932,7 @@ class MultiSAETrainer:
                         md["loss_minus_recon"] = float(md["loss"] - float(md["recon_mse"]))
                     except Exception:
                         pass
-                # B3: Use correct L1 term based on l1_form setting
+                # Use correct L1 term based on l1_form setting
                 if hasattr(sae, "cfg") and hasattr(sae.cfg, "l1_coeff"):
                     try:
                         l1_form = getattr(sae.cfg, "l1_form", "mean")
@@ -951,7 +956,7 @@ class MultiSAETrainer:
                 self.opts[key].step()
                 sae.maybe_renorm_decoder()
 
-            # D3: Periodically resample dead features
+            # Periodically resample dead features
             if (
                 self.cfg.resample_dead_features
                 and self.step > 0

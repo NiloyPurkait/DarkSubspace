@@ -1,8 +1,9 @@
 """
 Baseline methods for comparison with SAE-based interventions.
 
-Phase 6: These baselines answer the reviewer question "why SAEs specifically?"
-by comparing SAE-based feature selection to simpler alternatives.
+These baselines isolate the contribution of the SAE basis by comparing
+SAE feature selection against simpler alternatives (raw neurons, PCA,
+random rotations of the residual stream).
 """
 
 from .neuron_probe import (

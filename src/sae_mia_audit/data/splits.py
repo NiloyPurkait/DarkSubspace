@@ -1,3 +1,8 @@
+"""Calibration / test splits and FPR-feasibility reporting for PDD examples.
+
+Provides ``SplitConfig`` and helpers that produce stratified or group-aware
+splits suitable for membership-detection evaluation.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -10,6 +15,12 @@ from .pdd import PDDExample
 
 @dataclass(frozen=True)
 class SplitConfig:
+    """Configuration for calibration / test splits over PDD examples.
+
+    Supports stratified random splitting, group-aware splitting (e.g., for
+    MIMIR pair indices), and exact per-class counts.
+    """
+
     seed: int = 0
     calib_frac: float = 0.2
     stratify: bool = True
@@ -195,6 +206,13 @@ def _grouped_split_indices(
 
 
 def train_calib_test_split(examples: List[PDDExample], cfg: SplitConfig) -> Tuple[List[PDDExample], List[PDDExample]]:
+    """Split a list of PDD examples into calibration and test partitions.
+
+    Uses count-based splitting if ``cfg.n_calib_per_class`` is set, otherwise
+    a group-aware split (when ``cfg.group_key`` is provided) or a stratified
+    fractional split. Returns ``(calib, test)`` as parallel lists of
+    ``PDDExample``.
+    """
     rng = np.random.default_rng(cfg.seed)
     labels = np.array([ex.label for ex in examples], dtype=int)
 

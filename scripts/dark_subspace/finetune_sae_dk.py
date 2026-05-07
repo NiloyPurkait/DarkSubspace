@@ -5,8 +5,8 @@ Fine-tunes a pre-trained mixed-data SAE with the additional lambda_d_K
 projection penalty term (Equation 1) so the reconstruction explicitly
 captures d_K on a held-out audit partition.
 
-Used in Section "Methods" (M:114-127, `sec:methods:sae_recon`) and Section
-"Results" (R:122-127), with reviewer concern C12 of the paper.
+Used in Section "Methods" (M:114-127, ``sec:methods:sae_recon``) and Section
+"Results" (R:122-127) of the paper.
 Reproduce: env/bin/python3 scripts/dark_subspace/finetune_sae_dk.py --sae-path <sae> --model-path <ft_model> --bcd-dir <bcd_dir> --layer <L> --dk-coeff 0.01 --steps 5000 --corpus <mixed.jsonl> --output-dir <out>
 
 Loads a pre-trained SAE and continues training with an additional loss

@@ -1,3 +1,8 @@
+"""Minimal sparse autoencoder module used throughout sae_mia_audit.
+
+Provides :class:`SparseAutoencoder` and :class:`SAEConfig` along with the
+forward, encode, decode, and loss computations used by the trainer.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -26,7 +31,7 @@ class SAEConfig:
     # Most SAE papers use "sum" form; "mean" can lead to many small activations.
     l1_form: L1Form = "sum"
 
-    # S6.13 (2026-04-21): optional L2 penalty on sparse codes (elastic-net form).
+    # Optional L2 penalty on sparse codes (elastic-net form).
     # Loss += l2_coeff * (z ** 2).sum(dim=-1).mean()
     # Default 0.0 = backward compatible (pure L1). Matches Mahdizadehaghdam 2018 eq (2)
     # and Shen-Liu-Wang 2014 elastic-net sparse-coding formulation. Intended use:
@@ -52,7 +57,7 @@ class SAEConfig:
     center_input: bool = True
     
     # =========================================================================
-    # D5: Load balancing regularization (optional, for high-overcompleteness)
+    # Load balancing regularisation (optional, for high-overcompleteness)
     # =========================================================================
     # Penalizes deviation from uniform feature usage to prevent collapse.
     # Computed as: aux_coeff * (firing_rate - target_rate)^2.mean()
@@ -206,7 +211,7 @@ class SparseAutoencoder(nn.Module):
         recon = F.mse_loss(x_hat, x)
         loss = recon + (float(self.cfg.l1_coeff) * l1)
 
-        # S6.13 (2026-04-21): optional L2 penalty on sparse codes for elastic-net.
+        # Optional L2 penalty on sparse codes for elastic-net.
         # Computed as sum over features per token, then mean over batch
         # (matches "sum" form of L1 for dimensional consistency).
         l2_term = torch.tensor(0.0, device=x.device, dtype=x.dtype)
@@ -214,7 +219,7 @@ class SparseAutoencoder(nn.Module):
             l2_term = (z ** 2).sum(dim=-1).mean()
             loss = loss + (float(self.cfg.l2_coeff) * l2_term)
 
-        # D5: Load balancing auxiliary loss (if enabled)
+        # Load balancing auxiliary loss (if enabled)
         aux_loss = torch.tensor(0.0, device=x.device, dtype=x.dtype)
         if self.cfg.aux_coeff > 0:
             # Compute per-feature firing rate on this batch
@@ -247,8 +252,8 @@ class SparseAutoencoder(nn.Module):
             "l1_sum": l1_sum.detach(),  # Standard metric (sum form)
             "l0_mean": l0.detach(),
             "active_frac": active_frac.detach(),
-            "aux_loss": aux_loss.detach(),  # D5: Load balancing loss
-            "l2_term": l2_term.detach(),  # S6.13: elastic-net L2 on codes (sum form)
-            "l2_coeff": float(self.cfg.l2_coeff),  # S6.13: echo for logs
+            "aux_loss": aux_loss.detach(),  # Load balancing loss
+            "l2_term": l2_term.detach(),  # elastic-net L2 on codes (sum form)
+            "l2_coeff": float(self.cfg.l2_coeff),  # echo for logs
         }
         return loss, metrics

@@ -21,13 +21,21 @@ from sae_mia_audit.models.wrapper import CausalLMWrapper
 
 @dataclass(frozen=True)
 class ProbeConfig:
+    """Configuration for the linear-probe membership-detection baseline.
+
+    Specifies which residual-stream layer to extract activations from, the
+    prompt template, tokenisation parameters, and logistic-regression
+    hyper-parameters (including an optional ``c_grid`` for sensitivity
+    analysis).
+    """
+
     layer_idx: int = 8  # 0-indexed transformer layer
     prompt_template: str = "Here is a statement: {sample}\nIs the above statement correct? Answer:"
     seq_len: int = 256
     batch_size: int = 8
     max_train: Optional[int] = None  # optional cap
-    C: float = 1.0  # inverse regularization for logistic regression
-    # C grid for regularization sensitivity analysis
+    C: float = 1.0  # inverse regularisation for logistic regression
+    # C grid for regularisation sensitivity analysis
     # When provided, fit_with_c_grid() will try all values and report metrics
     c_grid: Tuple[float, ...] = (0.001, 0.01, 0.1, 1.0, 10.0, 100.0)
     # Centering/scaling: match official implementation (zhliu0106/probing-lm-data)
@@ -53,7 +61,7 @@ class ProbePDD:
 
     @torch.no_grad()
     def _extract_features(self, texts: Sequence[str]) -> np.ndarray:
-        # B3: Explicit random_crop=False for deterministic evaluation
+        # Explicit random_crop=False for deterministic evaluation
         tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
         feats = []
         for i in tqdm(range(0, len(texts), self.cfg.batch_size), desc="probe_feats", dynamic_ncols=True):
@@ -81,6 +89,11 @@ class ProbePDD:
         return np.concatenate(feats, axis=0)
 
     def fit(self, examples: Sequence[PDDExample]) -> None:
+        """Train the probe on labelled PDD examples.
+
+        Extracts last-token hidden states at ``cfg.layer_idx``, optionally
+        centres/scales features, and fits a logistic-regression classifier.
+        """
         ex = list(examples)
         if self.cfg.max_train is not None:
             ex = ex[: self.cfg.max_train]
@@ -109,6 +122,11 @@ class ProbePDD:
         self.clf = clf
 
     def score(self, examples: Sequence[PDDExample]) -> np.ndarray:
+        """Return the predicted probability of class 1 (member) per example.
+
+        Applies the same centring/scaling that was fitted on training data.
+        Must be called after :meth:`fit` (or :meth:`fit_with_c_grid`).
+        """
         if self.clf is None:
             raise RuntimeError("Call fit() before score().")
         X = self._extract_features([e.text for e in examples])
@@ -126,10 +144,10 @@ class ProbePDD:
         train_examples: Sequence[PDDExample],
         val_examples: Sequence[PDDExample],
     ) -> Dict[str, any]:
-        """Fit the probe with regularization sensitivity analysis (C grid).
+        """Fit the probe with regularisation sensitivity analysis (C grid).
         
         This method trains multiple probes with different C values and reports
-        metrics for each, enabling analysis of regularization sensitivity.
+        metrics for each, enabling analysis of regularisation sensitivity.
         
         Args:
             train_examples: Training examples (for fitting the probe).

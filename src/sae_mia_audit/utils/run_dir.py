@@ -1,3 +1,9 @@
+"""Run directory and reproducibility-snapshot helpers.
+
+Provides timestamped output directories that are safe under ``accelerate``
+and ``torchrun``, and writes config, git-commit, environment, and ``pip
+freeze`` snapshots alongside each run.
+"""
 from __future__ import annotations
 
 import json

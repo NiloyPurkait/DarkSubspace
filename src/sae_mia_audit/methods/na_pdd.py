@@ -1,8 +1,10 @@
-# ---------------------------------------------------------------------------
-# Source: Tang, Zhu & Yang, "Identifying Pre-training Data in LLMs:
-#         A Neuron Activation-Based Detection Framework" (EMNLP 2025).
-# Original repo: https://github.com/tanghongyi0406/CCNewsPDD
-# ---------------------------------------------------------------------------
+"""NA-PDD: neuron-activation-based pretraining-data detection.
+
+Implementation of the method introduced in Tang, Zhu, & Yang (EMNLP 2025),
+"Identifying Pre-training Data in LLMs: A Neuron Activation-Based Detection
+Framework". Original repository:
+https://github.com/tanghongyi0406/CCNewsPDD .
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -19,6 +21,13 @@ from sae_mia_audit.models.wrapper import CausalLMWrapper
 
 @dataclass(frozen=True)
 class NAPDDConfig:
+    """Configuration for the NA-PDD neuron-activation membership-detection method.
+
+    ``tau`` is the activation threshold; ``alpha`` weights member-vs-nonmember
+    log-odds; ``top_k_layers`` selects how many layers to aggregate; ``agg``
+    is the cross-token reduction (``"max"`` or ``"mean"``).
+    """
+
     tau: float = 0.0
     alpha: float = 2.0
     top_k_layers: int = 5
@@ -62,7 +71,7 @@ class _ActivationRecorder:
     Stores: layer_idx -> active_bool [B, F] on the same device as model activations.
     Handles modules that output either [B,T,F], [B*T,F], or [B,F] by reshaping when possible.
     
-    B: Aggregation now respects attention_mask to avoid padding bias (reviewer-proof).
+    Aggregation respects attention_mask to avoid padding bias.
     """
 
     def __init__(self, act_fn: Callable[[torch.Tensor], torch.Tensor], tau: float, agg: str):
@@ -70,7 +79,7 @@ class _ActivationRecorder:
         self.tau = float(tau)
         self.agg = agg
         self.active_by_layer: Dict[int, torch.Tensor] = {}  # layer -> [B, F] bool
-        # B: Store attention mask for masked aggregation (prevents padding bias)
+        # Store attention mask for masked aggregation (prevents padding bias)
         self._current_attn_mask: Optional[torch.Tensor] = None  # [B, T] bool
 
     def set_attention_mask(self, attn_mask: Optional[torch.Tensor]):
@@ -196,7 +205,7 @@ class NAPDD:
     @torch.no_grad()
     def _collect_freqs(self, texts: Sequence[str]) -> Tuple[List[torch.Tensor], int]:
         """Return per-layer activation counts (float32 on GPU) and number of examples."""
-        # B3: Explicit random_crop=False for deterministic evaluation
+        # Explicit random_crop=False for deterministic evaluation
         tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
         counts: List[torch.Tensor] = []
         counts_init = False
@@ -268,7 +277,7 @@ class NAPDD:
         if self._denom_mem is None or self._denom_non is None:
             raise RuntimeError("Internal error: denominators not initialized. Call fit() again.")
 
-        # B3: Explicit random_crop=False for deterministic evaluation
+        # Explicit random_crop=False for deterministic evaluation
         tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
         scores: List[float] = []
 

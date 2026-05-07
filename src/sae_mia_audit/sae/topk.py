@@ -1,5 +1,8 @@
-##PACHED
+"""Top-k activation tracking for SAE feature interpretation.
 
+Bounded-memory utilities that retain only the highest-activating contexts
+per feature, used to surface example tokens for qualitative inspection.
+"""
 from __future__ import annotations
 
 import heapq

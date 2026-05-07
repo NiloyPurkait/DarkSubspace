@@ -1,3 +1,9 @@
+"""Cross-SAE feature consistency utilities.
+
+Provides Hungarian-style cosine matching between feature dictionaries from
+independently trained SAEs, used to assess which directions are stable
+across runs.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

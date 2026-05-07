@@ -30,11 +30,11 @@ Baselines.
                     bidirectional orientation.
 
 Method scores.
-    6. residual_d_K  projection of (h minus SAE.reconstruct(h)) onto the BCD
-                     d_K direction. Same residual_score_K_auroc as the dark
-                     subspace and orthogonal-complement pipeline, persisted
-                     per text so TPR@1%FPR and paired bootstrap CIs are
-                     available.
+    6. residual_d_K  projection of (h minus SAE.reconstruct(h)) onto the
+                     channel-decomposition leading knowledge direction d_K.
+                     Same residual_score_K_auroc as the dark-subspace and
+                     orthogonal-complement pipeline, persisted per text so
+                     TPR@1%FPR and paired bootstrap CIs are available.
     7. original_d_K  projection of h onto d_K (baseline reference).
 
 All attacks are scored on AUROC, TPR@1%FPR, and TPR@5%FPR. Paired bootstrap
@@ -44,7 +44,7 @@ method and paired (residual minus baseline).
 Note on controlled-FT ceiling.
 On Pythia-6.9B, Pythia-12B, and Qwen2-7B at epoch 5 of controlled FT, the
 loss signal saturates at AUROC=1.0 because the fine-tune has effectively
-memorized the 1000 member texts. On GPT-Neo-2.7B the loss signal sits near
+memorised the 1000 member texts. On GPT-Neo-2.7B the loss signal sits near
 0.50 because Neo's fine-tune barely moved. The paper Methods and Limitations
 sections discuss this caveat.
 
@@ -302,10 +302,10 @@ def run_model(
     sae_module = sae[0] if isinstance(sae, tuple) else sae
     sae_module.eval().to(device)
 
-    log.info(f"[{model_tag}] loading BCD directions {bcd_dir}")
+    log.info(f"[{model_tag}] loading channel-decomposition directions {bcd_dir}")
     bcd_npz = np.load(Path(bcd_dir) / "directions.npz")
     # directions.npz stores per-layer keys (d_K_layer{L}); fall back to flat "d_K"
-    # for legacy BCD archives that only encode a single layer.
+    # for legacy archives that only encode a single layer.
     d_K_key = f"d_K_layer{layer}"
     if d_K_key in bcd_npz.files:
         d_K = bcd_npz[d_K_key]

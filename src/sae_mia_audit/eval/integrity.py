@@ -1,4 +1,4 @@
-"""Split integrity and confound audit utilities (reviewer-proof).
+"""Split integrity and confound audit utilities.
 
 This module provides:
 1. Split disjointness checks (no data leakage)
@@ -6,7 +6,8 @@ This module provides:
 3. Length confound diagnostics
 4. Determinism verification
 
-These are critical for addressing reviewer attacks on experimental validity.
+These checks guard against common confounds that would otherwise
+undermine the validity of membership-detection experiments.
 """
 from __future__ import annotations
 
@@ -24,7 +25,7 @@ from sae_mia_audit.data.pdd import PDDExample
 
 @dataclass
 class IntegrityReport:
-    """Comprehensive integrity report for reviewer-proofing."""
+    """Comprehensive integrity report covering split, duplicate, and confound diagnostics."""
     
     # Split disjointness (MIMIR pair_idx, etc.)
     group_leakage_found: bool = False

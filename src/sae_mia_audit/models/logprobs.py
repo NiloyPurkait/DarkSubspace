@@ -1,3 +1,8 @@
+"""Token-level log-probability utilities for causal language models.
+
+Provides ``LogProbOutputs`` and helpers for computing next-token log p,
+its mean, and its standard deviation given pre-computed logits and labels.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

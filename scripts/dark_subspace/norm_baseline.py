@@ -237,7 +237,7 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         description=(
             "Compute AUROC(||h_l||, membership_label) per layer. "
-            "Confound check: is BCD just capturing activation norm differences?"
+            "Confound check: is the channel-decomposition signal just capturing activation-norm differences?"
         )
     )
     p.add_argument("--model-path", required=True, help="Path to FT model checkpoint")

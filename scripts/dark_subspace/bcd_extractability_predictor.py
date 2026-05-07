@@ -4,20 +4,20 @@
 Computes the recall-extractability predictor (loss-vs-ROUGE-L) per model
 and writes `runs/dark_subspace/bcd_extractability/<model>_epoch5/extractability_predictor.json`.
 
-Used in Appendix `app:bcd_details` (A:49-53), with reviewer concern C3 of the paper.
+Used in Appendix ``app:bcd_details`` (A:49-53) of the paper.
 Reproduce: env/bin/python3 scripts/dark_subspace/bcd_extractability_predictor.py --model-path <ft_model> --bcd-dir <bcd_dir> --member-texts <member.jsonl> --layer <L> --output-dir <out>
 
 For each member text this script computes:
   - Per-text loss (cross-entropy under the fine-tuned model)
   - Per-text ROUGE-L (greedy generation from a prefix)
-  - BCD projection scores. score_K, score_R, score_SK, score_SR
+  - Channel-decomposition projection scores: score_K, score_R, score_SK, score_SR
 
 Then measures:
   - Spearman correlations of each score vs ROUGE-L
   - Partial Spearman correlation of score_SR vs ROUGE-L controlling for loss
 
-This answers whether the BCD "recall subspace" captures extractability
-information beyond what per-text loss already provides.
+This tests whether the recall subspace S_R captures extractability information
+beyond what per-text loss already provides.
 """
 
 import _bootstrap  # noqa: F401
@@ -133,7 +133,7 @@ def collect_activations(
 
 
 # ---------------------------------------------------------------------------
-# BCD projection scores
+# Channel-decomposition projection scores
 # ---------------------------------------------------------------------------
 
 def compute_bcd_scores(
@@ -144,7 +144,7 @@ def compute_bcd_scores(
     S_R_basis: Optional[np.ndarray],
     global_mean: np.ndarray,
 ) -> Dict[str, np.ndarray]:
-    """Compute BCD-based projection scores from activations and directions.
+    """Compute channel-decomposition projection scores from activations and directions.
 
     Args:
         activations: (n_texts, d_model) mean-pooled hidden states.
@@ -244,9 +244,9 @@ def _sanitize_for_json(obj):
 def main():
     parser = argparse.ArgumentParser(
         description=(
-            "BCD Extractability Predictor: test whether BCD projection "
-            "magnitudes predict per-document extractability (ROUGE-L) "
-            "better than loss alone."
+            "Channel-decomposition extractability predictor: test whether "
+            "projection magnitudes onto S_K and S_R predict per-document "
+            "extractability (ROUGE-L) better than loss alone."
         )
     )
     parser.add_argument(
@@ -255,7 +255,7 @@ def main():
     )
     parser.add_argument(
         "--bcd-dir", required=True,
-        help="Path to BCD output directory (contains directions.npz)",
+        help="Path to channel-decomposition output directory (contains directions.npz)",
     )
     parser.add_argument(
         "--member-texts", required=True,
@@ -313,16 +313,16 @@ def main():
     (out_dir / "config.json").write_text(json.dumps(config, indent=2, default=str))
     log.info(f"Config saved to {out_dir / 'config.json'}")
 
-    # ── Load BCD directions ─────────────────────────────────────────────
+    # ── Load channel-decomposition directions ───────────────────────────
     bcd_dir = Path(args.bcd_dir)
     directions_path = bcd_dir / "directions.npz"
     if not directions_path.exists():
         raise FileNotFoundError(
-            f"BCD directions file not found: {directions_path}\n"
+            f"Channel-decomposition directions file not found: {directions_path}\n"
             f"Expected in --bcd-dir={bcd_dir}"
         )
 
-    log.info(f"Loading BCD directions from {directions_path}")
+    log.info(f"Loading channel-decomposition directions from {directions_path}")
     bcd_data = np.load(directions_path, allow_pickle=True)
 
     # Keys are layer-indexed: d_K_layer{L}, d_R_layer{L}, etc.
@@ -444,7 +444,7 @@ def main():
     torch.cuda.empty_cache()
     log.info("Model freed from GPU memory")
 
-    # ── Step 4: Compute BCD scores ──────────────────────────────────────
+    # ── Step 4: Compute channel-decomposition projection scores ─────────
     if global_mean is None:
         global_mean = activations.mean(axis=0)
         log.info(
@@ -456,10 +456,10 @@ def main():
     if d_K.shape[0] != activations.shape[1]:
         raise ValueError(
             f"Dimension mismatch: d_K has dim={d_K.shape[0]} but activations "
-            f"have dim={activations.shape[1]}. Check --layer matches BCD layer."
+            f"have dim={activations.shape[1]}. Check --layer matches the channel-decomposition layer."
         )
 
-    log.info("Computing BCD projection scores...")
+    log.info("Computing channel-decomposition projection scores...")
     bcd_scores = compute_bcd_scores(
         activations, d_K, d_R, S_K_basis, S_R_basis, global_mean
     )
@@ -570,10 +570,10 @@ def main():
     # ── Print summary ───────────────────────────────────────────────────
     print()
     print("=" * 72)
-    print("BCD EXTRACTABILITY PREDICTOR SUMMARY")
+    print("CHANNEL-DECOMPOSITION EXTRACTABILITY PREDICTOR SUMMARY")
     print("=" * 72)
-    print(f"Model:      {args.model_path}")
-    print(f"BCD dir:    {args.bcd_dir}")
+    print(f"Model:           {args.model_path}")
+    print(f"Directions dir:  {args.bcd_dir}")
     print(f"Layer:      {layer}   d_model: {activations.shape[1]}")
     print(f"Texts:      {n_valid} valid / {n_texts} total")
     print(f"Prefix len: {args.prefix_len} tokens")

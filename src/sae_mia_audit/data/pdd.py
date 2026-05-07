@@ -1,10 +1,19 @@
+"""Pretraining-data-detection (PDD) benchmark loaders.
+
+Provides ``PDDExample`` and ``PDDDatasetSpec`` along with loaders for the
+standard membership-detection benchmarks (WikiMIA, WikiMIA paraphrased,
+MIMIR, ArxivMIA, BookMIA, and CCNewsPDD).
+"""
 from __future__ import annotations
 
 import hashlib
+import logging
 from dataclasses import dataclass
 from typing import Iterable, Iterator, List, Literal, Optional, Tuple
 
 from datasets import Dataset, DatasetDict, load_dataset
+
+logger = logging.getLogger(__name__)
 
 
 def _safe_meta_value(v, max_list_elems: int = 32):
@@ -31,19 +40,34 @@ def _safe_meta_value(v, max_list_elems: int = 32):
 
 @dataclass(frozen=True)
 class PDDExample:
+    """A single PDD evaluation example.
+
+    Attributes:
+        text: Raw text of the example.
+        label: 1 if the example is a member of the model's training set, 0 otherwise.
+        meta: Optional metadata (source, length bucket, paraphrase variant, etc.).
+    """
+
     text: str
     label: int  # 1=member, 0=non-member
     meta: dict
 
 
 # NOTE: "ccnews" is renamed to "ccnews_raw" to clarify it's NOT the full CCNewsPDD
-# with transformations. Use "ccnews_pdd" for the reviewer-proof version with year
-# filtering and text transformations.
+# with transformations. Use "ccnews_pdd" for the variant with text transformations
+# applied to non-members (back-translation or MLM substitution).
 PDDName = Literal["wikia", "wikia_para", "mimir", "arxivmia", "bookmia", "ccnews_raw", "ccnews_pdd"]
 
 
 @dataclass(frozen=True)
 class PDDDatasetSpec:
+    """Specification for loading a PDD benchmark.
+
+    The ``name`` field selects the benchmark family; remaining fields configure
+    benchmark-specific options (WikiMIA length, MIMIR source/split, CCNewsPDD
+    transformation variant and length balancing, etc.).
+    """
+
     name: PDDName
     # WikiMIA
     wikia_length: int = 128  # 32/64/128/256
@@ -51,7 +75,8 @@ class PDDDatasetSpec:
     wikia_para_type: str = "paraphrase"  # "paraphrase" or "perturbed"
     # MIMIR
     mimir_source: str = "pile_cc"
-    mimir_split: str = "ngram_13_0.8"  # B8: SoK-recommended (Meeus et al. SaTML 2025)
+    # SoK-recommended MIMIR split (Meeus et al. SaTML 2025).
+    mimir_split: str = "ngram_13_0.8"
     # ArxivMIA (HF config name, NOT split - each config only has 'train' split)
     # Valid configs: 'arxiv_mia' (full), 'arxiv_mia_dev', 'arxiv_mia_test'
     arxiv_config: str = "arxiv_mia_test"  # HF config name for test set evaluation
@@ -64,15 +89,15 @@ class PDDDatasetSpec:
     # Test: 800 total (400 member from Pile-CC + 400 nonmember from CC News)
     ccnews_split: Literal["train", "dev", "test"] = "test"  # Which split to load
     ccnews_seed: int = 42  # Random seed for reproducibility
-    # CCNewsPDD transformation variant (for reviewer-proof non-member generation)
-    # "raw" = no transformation (vulnerable to distribution shift critique)
-    # "trans" = back-translation (EN→FR→EN via MarianMT) - paper default
+    # CCNewsPDD transformation variant (controls non-member generation).
+    # "raw" = no transformation (susceptible to distribution-shift confounds)
+    # "trans" = back-translation (EN -> FR -> EN via MarianMT) — paper default
     # "mask" = MLM masking + substitution (BERT-style)
     ccnews_variant: Literal["raw", "trans", "mask"] = "trans"
-    # B5: Length balancing to prevent length confounds
+    # Length balancing to prevent length confounds.
     # When True, sample member/nonmember pairs with matched length distributions
-    # This prevents the "length baseline AUROC >> 0.5" reviewer attack
-    ccnews_length_balanced: bool = True  # Default=True for reviewer-proofing
+    # so that a length-only baseline cannot exceed chance.
+    ccnews_length_balanced: bool = True
     ccnews_length_bins: int = 10  # Number of length bins for matching
     # general
     limit: Optional[int] = None  # cap examples for quick tests
@@ -321,7 +346,7 @@ def _iter_mimir(source: str, split: str, limit: Optional[int]) -> Iterator[PDDEx
 
 
 # ---------------------------------------------------------------------------
-# Text transformation utilities for CCNewsPDD (reviewer-proof non-member generation)
+# Text transformation utilities for CCNewsPDD non-member generation
 # ---------------------------------------------------------------------------
 
 def _backtranslate_en_fr_en(text: str, _cache: dict = {}) -> str:
@@ -435,16 +460,16 @@ def _length_balanced_sample(
     rng: "random.Random",
 ) -> Tuple[List[str], List[str]]:
     """Sample n_per_class texts from each pool with matched length distributions.
-    
-    B5: This is critical for preventing length confounds in CCNews benchmark.
-    The algorithm:
+
+    Length balancing is critical for preventing length confounds in the
+    CCNews benchmark. The algorithm:
     1. Bin texts_a by length quantiles to create n_bins buckets
     2. For each bucket, sample min(n_per_bucket, available) from both pools
     3. If one pool has insufficient samples in a bucket, skip that bucket
     4. Continue until we have n_per_class from each
-    
+
     This ensures member/nonmember length distributions are nearly identical,
-    preventing the "length baseline AUROC >> 0.5" reviewer attack.
+    so a length-only baseline cannot exceed chance.
     """
     import numpy as np
     
@@ -529,31 +554,33 @@ def _iter_ccnews_paper_exact(
     length_balanced: bool = True,
     length_bins: int = 10,
 ) -> Iterator[PDDExample]:
-    """Load CCNewsPDD benchmark with reviewer-proof length balancing.
-    
-    This function replicates the paper's data loading methodology with
-    CRITICAL ADDITION: Length balancing to prevent confounds.
-    
+    """Load CCNewsPDD benchmark with optional length balancing.
+
+    This function replicates the paper's data loading methodology and adds
+    optional length balancing to prevent length confounds.
+
     PAPER DATA STRUCTURE:
-    - Train: 200 samples (100 member + 100 nonmember) - BOTH from CC News!
-      → All samples are back-translated (both member and nonmember)
-    - Dev: 400 samples (200 member from Pile-CC + 200 nonmember from CC News)
-      → Only nonmembers are back-translated, members stay original
-    - Test: 800 samples (400 member from Pile-CC + 400 nonmember from CC News)
-      → Only nonmembers are back-translated, members stay original
-    
-    B5: LENGTH BALANCING (reviewer-proofing):
+    - Train: 200 samples (100 member + 100 nonmember) - BOTH from CC News.
+      All samples are back-translated (both member and nonmember).
+    - Dev: 400 samples (200 member from Pile-CC + 200 nonmember from CC News).
+      Only nonmembers are back-translated; members stay original.
+    - Test: 800 samples (400 member from Pile-CC + 400 nonmember from CC News).
+      Only nonmembers are back-translated; members stay original.
+
+    Length balancing:
     When length_balanced=True (default), we sample member/nonmember texts with
-    matched length distributions to prevent the "length AUROC >> 0.5" attack.
-    
-    LENGTH FILTER: Paper uses ONLY `len(text) < 512`, NO minimum length!
-    
-    YEAR FILTER: Paper does NOT filter by year (no temporal restriction)
-    
-    ⚠️ OPT MEMBERSHIP CAVEAT (B5):
-    OPT's training data includes CCNewsV2, so CC News nonmembers may not be true
-    nonmembers for OPT. This benchmark should be framed as "source-based audit"
-    or restricted to Pythia models for valid membership claims.
+    matched length distributions so that a length-only baseline cannot exceed
+    chance.
+
+    LENGTH FILTER: Paper uses ONLY ``len(text) < 512``, NO minimum length.
+
+    YEAR FILTER: Paper does NOT filter by year (no temporal restriction).
+
+    OPT membership caveat:
+    OPT's training data includes CCNewsV2, so CC News nonmembers may not be
+    true nonmembers for OPT. This benchmark should therefore be framed as a
+    "source-based audit" or restricted to Pythia models for valid membership
+    claims.
     
     References:
         - NA-PDD paper: https://arxiv.org/abs/2310.16789
@@ -586,7 +613,7 @@ def _iter_ccnews_paper_exact(
     # For train split, we need enough CC News samples for BOTH member and nonmember
     # For dev/test splits, nonmembers come from CC News, members from Pile-CC
     
-    # B5: For length balancing, we need extra samples to do stratified sampling
+    # For length balancing, we need extra samples to do stratified sampling
     # Test split needs 400 samples — use larger buffer to survive bin attrition
     if length_balanced:
         buffer_mult = 10 if split == "test" else 6
@@ -596,7 +623,7 @@ def _iter_ccnews_paper_exact(
     # --------------------------------------------------------------------------
     # Step 1: Load CC News data (used differently depending on split)
     # --------------------------------------------------------------------------
-    print(f"Loading CC News data for split={split} (length_balanced={length_balanced})...")
+    logger.info("Loading CC News data for split=%s (length_balanced=%s)...", split, length_balanced)
     cc_news = load_dataset("vblagoje/cc_news", split="train", streaming=True)
     
     # Paper filter: len(text) < 512 only, NO minimum length!
@@ -617,7 +644,7 @@ def _iter_ccnews_paper_exact(
     
     rng.shuffle(cc_news_texts)
     
-    # B7: Deduplicate CC News texts (source dataset contains exact duplicates
+    # Deduplicate CC News texts (source dataset contains exact duplicates
     # from multi-outlet syndication). Without this, ~12 duplicates leak across
     # ref/val/test splits, causing 100% integrity-check failure on CCNews.
     _seen = set()
@@ -629,7 +656,7 @@ def _iter_ccnews_paper_exact(
             _deduped.append(_t)
     n_cc_dupes = len(cc_news_texts) - len(_deduped)
     if n_cc_dupes:
-        print(f"  Removed {n_cc_dupes} intra-source duplicates from CC News pool")
+        logger.info("Removed %d intra-source duplicates from CC News pool", n_cc_dupes)
     cc_news_texts = _deduped
     
     # --------------------------------------------------------------------------
@@ -637,7 +664,7 @@ def _iter_ccnews_paper_exact(
     # --------------------------------------------------------------------------
     pile_cc_texts = []
     if split in ("dev", "test"):
-        print(f"Loading Pile-CC data for split={split}...")
+        logger.info("Loading Pile-CC data for split=%s...", split)
         pile_stream = load_dataset("monology/pile-uncopyrighted", split="train", streaming=True)
         
         for item in tqdm(pile_stream, desc="Filtering Pile-CC (len < 512)", dynamic_ncols=True):
@@ -653,7 +680,7 @@ def _iter_ccnews_paper_exact(
         
         rng.shuffle(pile_cc_texts)
         
-        # B7: Deduplicate Pile-CC texts
+        # Deduplicate Pile-CC texts
         _seen_pile = set()
         _deduped_pile = []
         for _t in pile_cc_texts:
@@ -663,10 +690,10 @@ def _iter_ccnews_paper_exact(
                 _deduped_pile.append(_t)
         n_pile_dupes = len(pile_cc_texts) - len(_deduped_pile)
         if n_pile_dupes:
-            print(f"  Removed {n_pile_dupes} intra-source duplicates from Pile-CC pool")
+            logger.info("Removed %d intra-source duplicates from Pile-CC pool", n_pile_dupes)
         pile_cc_texts = _deduped_pile
         
-        # B7: Cross-source deduplication — remove any text appearing in both pools
+        # Cross-source deduplication: remove any text appearing in both pools
         _cc_hashes = {hashlib.sha256(t.strip().lower().encode()).hexdigest()[:16]
                       for t in cc_news_texts}
         _pile_before = len(pile_cc_texts)
@@ -675,11 +702,11 @@ def _iter_ccnews_paper_exact(
                          not in _cc_hashes]
         n_cross_dupes = _pile_before - len(pile_cc_texts)
         if n_cross_dupes:
-            print(f"  Removed {n_cross_dupes} cross-source duplicates (Pile-CC ∩ CC News)")
+            logger.info("Removed %d cross-source duplicates (Pile-CC intersect CC News)", n_cross_dupes)
     
     # --------------------------------------------------------------------------
     # Step 3: Assign texts to member/nonmember based on split
-    # B5: With length balancing to prevent confounds
+    # With optional length balancing to prevent length confounds
     # --------------------------------------------------------------------------
     if split == "train":
         # PAPER TRAIN: BOTH member and nonmember come from CC News!
@@ -695,20 +722,20 @@ def _iter_ccnews_paper_exact(
         
         # PAPER: Back-translate ALL training samples (both member and nonmember)
         if variant == "trans":
-            print(f"Back-translating ALL {len(member_texts) + len(nonmember_texts)} training samples...")
+            logger.info("Back-translating ALL %d training samples...", len(member_texts) + len(nonmember_texts))
             member_texts = [_backtranslate_en_fr_en(t) for t in tqdm(member_texts, desc="Back-translating members")]
             nonmember_texts = [_backtranslate_en_fr_en(t) for t in tqdm(nonmember_texts, desc="Back-translating nonmembers")]
         elif variant == "mask":
-            print(f"MLM masking ALL {len(member_texts) + len(nonmember_texts)} training samples...")
+            logger.info("MLM masking ALL %d training samples...", len(member_texts) + len(nonmember_texts))
             member_texts = [_mlm_mask_substitute(t) for t in tqdm(member_texts, desc="MLM masking members")]
             nonmember_texts = [_mlm_mask_substitute(t) for t in tqdm(nonmember_texts, desc="MLM masking nonmembers")]
         # variant == "raw" → no transformation
         
     else:
         # PAPER DEV/TEST: members from Pile-CC, nonmembers from CC News
-        # B5: Apply length balancing to prevent confounds
+        # Apply length balancing to prevent confounds
         if length_balanced:
-            print(f"Applying length balancing with {length_bins} bins...")
+            logger.info("Applying length balancing with %d bins...", length_bins)
             member_texts, nonmember_texts = _length_balanced_sample(
                 texts_a=pile_cc_texts,
                 texts_b=cc_news_texts,
@@ -719,7 +746,7 @@ def _iter_ccnews_paper_exact(
             # Ensure we have exactly the right counts
             member_texts = member_texts[:n_member]
             nonmember_texts = nonmember_texts[:n_nonmember]
-            print(f"Length-balanced: {len(member_texts)} members, {len(nonmember_texts)} nonmembers")
+            logger.info("Length-balanced: %d members, %d nonmembers", len(member_texts), len(nonmember_texts))
         else:
             member_texts = pile_cc_texts[:n_member]
             nonmember_texts = cc_news_texts[:n_nonmember]
@@ -728,10 +755,10 @@ def _iter_ccnews_paper_exact(
         
         # PAPER: Back-translate ONLY nonmembers in dev/test (members stay original)
         if variant == "trans":
-            print(f"Back-translating {len(nonmember_texts)} nonmember samples only...")
+            logger.info("Back-translating %d nonmember samples only...", len(nonmember_texts))
             nonmember_texts = [_backtranslate_en_fr_en(t) for t in tqdm(nonmember_texts, desc="Back-translating nonmembers")]
         elif variant == "mask":
-            print(f"MLM masking {len(nonmember_texts)} nonmember samples only...")
+            logger.info("MLM masking %d nonmember samples only...", len(nonmember_texts))
             nonmember_texts = [_mlm_mask_substitute(t) for t in tqdm(nonmember_texts, desc="MLM masking nonmembers")]
         # variant == "raw" → no transformation
     
@@ -753,7 +780,7 @@ def _iter_ccnews_paper_exact(
             )
         import warnings
         warnings.warn(msg)
-        print(f"WARNING: {msg}")
+        logger.warning("%s", msg)
         n_member = len(member_texts)
     if len(nonmember_texts) < n_nonmember:
         shortfall_pct = (1 - len(nonmember_texts) / n_nonmember) * 100
@@ -769,7 +796,7 @@ def _iter_ccnews_paper_exact(
             )
         import warnings
         warnings.warn(msg)
-        print(f"WARNING: {msg}")
+        logger.warning("%s", msg)
         n_nonmember = len(nonmember_texts)
     
     # --------------------------------------------------------------------------
@@ -784,7 +811,7 @@ def _iter_ccnews_paper_exact(
             "split": split,
             "benchmark": "ccnews_pdd",
             "variant": variant,
-            "length_balanced": length_balanced,  # B5: Track for reproducibility
+            "length_balanced": length_balanced,  # Track for reproducibility
             "char_len": len(text),
         }
         yield PDDExample(text=text, label=1, meta=meta)
@@ -798,7 +825,7 @@ def _iter_ccnews_paper_exact(
             "split": split,
             "benchmark": "ccnews_pdd",
             "variant": variant,
-            "length_balanced": length_balanced,  # B5: Track for reproducibility
+            "length_balanced": length_balanced,  # Track for reproducibility
             "char_len": len(text),
         }
         yield PDDExample(text=text, label=0, meta=meta)
@@ -883,8 +910,8 @@ def load_pdd_dataset(spec: PDDDatasetSpec) -> list[PDDExample]:
     elif spec.name == "wikia_para":
         examples = list(_iter_wikia_paraphrased(spec.wikia_length, spec.wikia_para_type, spec.limit))
     elif spec.name in ("ccnews", "ccnews_pdd", "ccnews_raw"):
-        # CCNewsPDD - PAPER EXACT implementation with B5 length balancing
-        # Note: "ccnews_raw" now uses variant="raw" but same structure
+        # CCNewsPDD: paper-exact implementation with optional length balancing.
+        # Note: "ccnews_raw" now uses variant="raw" but same structure.
         variant = "raw" if spec.name == "ccnews_raw" else spec.ccnews_variant
         examples = list(_iter_ccnews_paper_exact(
             split=spec.ccnews_split,

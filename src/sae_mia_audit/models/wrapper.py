@@ -1,3 +1,9 @@
+"""Causal language model wrapper and activation-site descriptors.
+
+Provides ``CausalLMWrapper``, ``ModelInfo``, and ``ActivationSite``, plus the
+``load_model_and_tokenizer`` entry point used by training and evaluation
+scripts.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -58,6 +64,13 @@ class ActivationSite:
 
 @dataclass(frozen=True)
 class ModelInfo:
+    """Lightweight description of a loaded causal language model.
+
+    Captures the HF identifier (``name_or_path``), inferred layer count and
+    hidden size, and the model architecture family (e.g., ``gpt_neox``,
+    ``opt``).
+    """
+
     name_or_path: str
     n_layers: int
     d_model: int
@@ -100,6 +113,11 @@ class CausalLMWrapper:
         attention_mask: Optional[torch.Tensor] = None,
         output_hidden_states: bool = False,
     ):
+        """Run a no-grad forward pass with KV cache disabled.
+
+        Returns the raw HF model output. Pass ``output_hidden_states=True``
+        to get all layer activations.
+        """
         return self.model(
             input_ids=input_ids,
             attention_mask=attention_mask,
@@ -378,6 +396,12 @@ class CausalLMWrapper:
 
 
 def load_model_and_tokenizer(spec: HFModelSpec) -> CausalLMWrapper:
+    """Load a HuggingFace causal LM and tokenizer and return them wrapped.
+
+    Returns a :class:`CausalLMWrapper` bundling the loaded model, tokenizer,
+    and a :class:`ModelInfo` summary. Raises :class:`ImportError` if the
+    optional ``transformers`` dependency is unavailable.
+    """
     # Fail with an informative message if transformers is absent.
     if PreTrainedTokenizerBase is Any:  # pragma: no cover
         raise ImportError("transformers is required to load models/tokenizers. Install with: pip install transformers")

@@ -1,3 +1,8 @@
+"""Heuristic feature interpretation from top-activating contexts.
+
+Generates short n-gram labels for SAE features based on the tokens that
+most strongly activate them.
+"""
 from __future__ import annotations
 
 from collections import Counter

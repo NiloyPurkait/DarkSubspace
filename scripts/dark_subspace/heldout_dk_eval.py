@@ -11,7 +11,7 @@ Reproduce:
         --output results/dark_subspace/paper_claims/heldout_dk_2026-05-02.json \\
         --train-frac 0.7 --n-bootstrap 10000 --n-splits 10 --device cpu
 
-Goal. Falsification probe on the BCD direction d_K.
+Goal. Falsification probe on the channel-decomposition direction d_K.
   - Re-fit d_K on a 70 percent partition of the canonical N=2000 cache (1400 examples).
   - Evaluate residual, SAE-reconstructed, and original score_K AUROC plus drop on
     the disjoint 30 percent held-out partition (600 examples).

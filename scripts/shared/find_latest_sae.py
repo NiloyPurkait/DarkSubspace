@@ -92,7 +92,7 @@ def main():
         print(str(ckpt))
         return 0
 
-    # Legacy behavior: pick the first found sweep checkpoint
+    # Legacy behaviour: pick the first found sweep checkpoint
     if args.sweep_select == "first":
         candidates2 = sorted(glob.glob(str(latest_p / "*" / "sae_final.pt")))
         if not candidates2:

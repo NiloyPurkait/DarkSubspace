@@ -22,7 +22,7 @@ Reproduce:
 Tests whether the residual-direction membership signal is preserved under
 paraphrase of member texts. If the signal is truly geometric (lives in an
 abstract content-feature subspace), it should survive paraphrase. If it is
-surface memorization (verbatim token identity), it should collapse toward
+surface memorisation (verbatim token identity), it should collapse toward
 chance under paraphrase.
 
 Paraphrase modes.
@@ -37,9 +37,8 @@ Paraphrase modes.
       tokens within a rolling window of size 3, keeping every 4th token as
       an anchor. This is NOT a true paraphrase, it is a minimum-viable
       stress test that preserves the word-identity multiset while
-      scrambling local order. Reviewer-facing framing is "conservative
-      syntactic perturbation, a stronger test would use a model-based
-      paraphrase".
+      scrambling local order. We frame this as a "conservative syntactic
+      perturbation"; a stronger test would use a model-based paraphrase.
 
   --mode backtranslation_cached
       Only works if data/memcirc_ctrl_ft/member_paraphrased.jsonl already
@@ -294,7 +293,7 @@ def main():
     sae_module = sae[0] if isinstance(sae, tuple) else sae
     sae_module.eval().to(args.device)
     bcd = np.load(Path(args.bcd_dir) / "directions.npz")
-    # Per-layer BCD archives use d_K_layer{L}; flat "d_K" kept as legacy fallback.
+    # Per-layer channel-decomposition archives use d_K_layer{L}; flat "d_K" kept as legacy fallback.
     d_K_key = f"d_K_layer{args.layer}"
     if d_K_key in bcd.files:
         d_K = bcd[d_K_key]

@@ -17,7 +17,7 @@
 #       https://github.com/iamgroot42/mimir
 # ---------------------------------------------------------------------------
 """
-Baseline MIA methods for reviewer-proof benchmarking.
+Baseline membership-detection methods used for benchmarking.
 
 These implementations follow:
 - LOSS: https://ieeexplore.ieee.org/abstract/document/8429311
@@ -280,8 +280,8 @@ def score_length(
     """Length-based score baseline (character count).
     
     If length correlates with membership, your dataset has confounds.
-    This is a critical artifact check per reviewer guidelines.
-    
+    This is a standard artifact check for membership-detection benchmarks.
+
     Higher score => longer text. If AUC >> 0.5, length is a confound.
     """
     return np.array([len(t) for t in texts], dtype=np.float32)
@@ -326,7 +326,7 @@ def score_token_count(
 # These classifiers detect *distribution shift* between members and
 # non-members using only raw text, no model access.  If their AUROC is
 # high, the benchmark's membership signal may come from temporal/topical
-# artefacts rather than genuine memorization.
+# artefacts rather than genuine memorisation.
 #
 # Two variants following the literature:
 #   1. BoW + Random Forest  (Meeus et al. Table II)

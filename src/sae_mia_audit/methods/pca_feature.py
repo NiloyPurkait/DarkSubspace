@@ -1,8 +1,8 @@
 """PCA-Feature-PDD: Supervised MIA using logistic regression over PCA-projected activations.
 
-This is the PCA baseline counterpart to SAEFeaturePDD.  It answers the
-reviewer question: *"Does the learned SAE dictionary provide detection
-power beyond what principal-component projection offers?"*
+This is the PCA baseline counterpart to SAEFeaturePDD. It addresses the
+question: *"Does the learned SAE dictionary provide detection power
+beyond what principal-component projection offers?"*
 
 Architecture (mirroring SAEFeaturePDD):
     1. Extract hidden states from specified transformer layers.

@@ -5,8 +5,8 @@ Trains fresh L2-regularised logistic regression probes on full activation
 vectors (original, reconstruction, residual) under the privacy-aware SAE
 conditions and emits the shuffle permutation null calibration.
 
-Used in Section "Results" (R:124-127) and Appendix `app:fresh_probe_v2`
-(A:807-825), with reviewer concern C12 of the paper.
+Used in Section "Results" (R:124-127) and Appendix ``app:fresh_probe_v2``
+(A:807-825) of the paper.
 Reproduce: env/bin/python3 scripts/dark_subspace/fresh_probe_test.py --model-path <ft_model> --sae-path <sae> --bcd-dir <bcd_dir> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id>
 
 Breaks the circularity where d_K is used for both SAE optimisation
@@ -522,7 +522,7 @@ def main():
     parser.add_argument(
         "--bcd-dir",
         required=True,
-        help="Path to BCD directions directory (for score_K comparison)",
+        help="Path to channel-decomposition directions directory (for score_K comparison)",
     )
     parser.add_argument("--member-texts", required=True)
     parser.add_argument("--nonmember-texts", required=True)
@@ -571,7 +571,7 @@ def main():
     config["script"] = "fresh_probe_test.py"
     (out_dir / "config.json").write_text(json.dumps(config, indent=2, default=str))
 
-    # Load BCD directions (for score_K comparison only)
+    # Load channel-decomposition directions (for score_K comparison only)
     bcd_data = np.load(Path(args.bcd_dir) / "directions.npz", allow_pickle=True)
     dk_key = f"d_K_layer{args.layer}"
     if dk_key not in bcd_data:

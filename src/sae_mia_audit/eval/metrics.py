@@ -1,3 +1,8 @@
+"""Evaluation metrics for membership-detection experiments.
+
+Provides AUROC and TPR-at-fixed-FPR computations with configurable FPR
+targets, plus convenience aliases used by the standard MIA literature.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -7,7 +12,7 @@ import numpy as np
 from sklearn.metrics import roc_auc_score, roc_curve
 
 
-# Standard FPR targets for MIA evaluation (reviewer-aligned)
+# Standard FPR targets for membership-detection evaluation
 # 5%: Moderate regime (meaningful for small datasets)
 # 1%: Low-FPR regime (standard in MIA literature)
 # 0.1%: Very low-FPR regime (security-critical, requires large datasets)

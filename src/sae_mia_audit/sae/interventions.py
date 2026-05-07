@@ -1,3 +1,9 @@
+"""Causal interventions on SAE features and neurons.
+
+Provides feature-selection routines (top-k, mutual-information, correlation,
+non-circular variants), ablation modes ("subtract"/"replace"), and validity
+diagnostics used to ensure interventions actually act on the intended subspace.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -21,7 +27,13 @@ FeatureSelectMode = Literal["topk", "random", "bottomk", "positive", "negative",
 
 @dataclass
 class FeatureSelectionDiagnostics:
-    """Diagnostics for feature selection (addresses reviewer blind spot #6)."""
+    """Diagnostics for SAE feature selection.
+
+    Captures how many features were selected, how active they actually were,
+    and (for top-k) the balance of positive vs. negative contributions, so
+    that downstream consumers can detect cancellation and selection-quality
+    issues.
+    """
     mode: str
     k: int
     n_selected: int
@@ -34,7 +46,7 @@ class FeatureSelectionDiagnostics:
     net_contrib: float = 0.0
     # For non-circular modes
     selection_method: str = ""  # e.g., "w_based", "correlation", "mutual_info"
-    # Phase 1.1: Active-only selection stats
+    # Active-only selection stats
     n_active: int = 0  # Number of truly active features (z > eps)
     n_masked: int = 0  # Number of features passing the mask
     active_eps: float = 0.0  # Epsilon used for active determination
@@ -118,10 +130,10 @@ class InterventionResult:
 
 
 # ---------------------------------------------------------------------
-# Feature selection (reviewer-critical)
+# Feature selection
 # ---------------------------------------------------------------------
 
-# Default minimum activation threshold for "active" features (Phase 1.1)
+# Default minimum activation threshold for "active" features.
 DEFAULT_ACTIVE_EPS = 1e-6
 
 
@@ -140,9 +152,9 @@ def select_sae_features(
     """
     Select SAE feature indices for controlled causal ablations.
 
-    Phase 1.1 fix: By default, selects from the *truly active* feature set
-    (mask & z > eps) to avoid selecting features with near-zero activations.
-    This ensures random/bottomk baselines are meaningful controls.
+    By default, selects from the *truly active* feature set (mask & z > eps)
+    to avoid selecting features with near-zero activations. This ensures
+    random/bottomk baselines are meaningful controls.
 
     Args:
       z_agg: aggregated SAE activations [F] (nonnegative).
@@ -174,7 +186,7 @@ def select_sae_features(
     mask_np = mask.detach().cpu().numpy()
     n_masked = int(mask_np.sum())
     
-    # Phase 1.1 fix: active = mask AND z_agg > eps (when active_only=True)
+    # active = mask AND z_agg > eps (when active_only=True)
     if active_only:
         active_mask = mask_np & (z_np > active_eps)
     else:
@@ -291,14 +303,15 @@ def select_sae_features_noncircular(
     active_eps: float = DEFAULT_ACTIVE_EPS,
 ) -> Tuple[List[int], FeatureSelectionDiagnostics] | Tuple[Tuple[List[int], List[int]], FeatureSelectionDiagnostics]:
     """
-    Select SAE features using NON-CIRCULAR methods (addresses reviewer blind spot #1).
-    
-    These methods select features based on their relationship with membership labels,
-    NOT based on the SAE-NA-PDD weights w. This provides an independent validation
-    that the selected features are membership-predictive.
-    
-    Phase 2.2: Can now return both member-leaning (positive) and nonmember-leaning
-    (negative) feature sets for bidirectional ablation experiments.
+    Select SAE features using non-circular methods.
+
+    These methods select features based on their relationship with membership
+    labels rather than on the SAE-NA-PDD weights w, providing an independent
+    check that the selected features are membership-predictive (and not merely
+    re-deriving the weights they will then be evaluated against).
+
+    Can return both member-leaning (positive) and nonmember-leaning (negative)
+    feature sets for bidirectional ablation experiments.
     
     Args:
         z_matrix: SAE activations [N, F] for N examples.
@@ -308,7 +321,7 @@ def select_sae_features_noncircular(
         mode:
             - "correlation": Pearson correlation with membership label
             - "mi": Mutual information with membership label (unsigned)
-            - "logreg": L1-regularized logistic regression coefficients
+            - "logreg": L1-regularised logistic regression coefficients
         seed: RNG seed.
         return_both_directions: If True, return (selected_pos, selected_neg) tuple.
         active_eps: Minimum activation threshold for considering a feature active.
@@ -327,7 +340,7 @@ def select_sae_features_noncircular(
     if len(mask) != F:
         raise ValueError(f"Shape mismatch: z_matrix has {F} features, mask has {len(mask)}")
     
-    # Phase 1.1 fix: Filter to truly active features (have z > eps on at least some examples)
+    # Filter to truly active features (have z > eps on at least some examples)
     z_max = z_matrix.max(axis=0)
     active_mask = mask & (z_max > active_eps)
     
@@ -371,7 +384,7 @@ def select_sae_features_noncircular(
         scores = mi_scores * direction  # Signed MI scores
         
     elif mode == "logreg":
-        # L1-regularized logistic regression
+        # L1-regularised logistic regression
         clf = LogisticRegression(
             penalty='l1', solver='liblinear', C=1.0, random_state=seed, max_iter=1000
         )
@@ -409,7 +422,7 @@ def select_sae_features_noncircular(
         )
         return (selected_pos, selected_neg), diag
     else:
-        # Original behavior: select member-leaning features only
+        # Original behaviour: select member-leaning features only
         pos_scores = scores.copy()
         pos_scores[scores <= 0] = -np.inf
         top_idx = np.argsort(-pos_scores)[:k]
@@ -951,7 +964,7 @@ def compute_kl_divergence(
 
 
 # ---------------------------------------------------------------------
-# Intervention Validity Metrics (addresses reviewer blind spot #5)
+# Intervention validity metrics
 # ---------------------------------------------------------------------
 
 @dataclass
@@ -1002,9 +1015,10 @@ def compute_intervention_validity(
 ) -> InterventionValidityMetrics:
     """
     Compute validity metrics for an ablation intervention.
-    
-    This addresses reviewer blind spot #5: ensuring the score change is not
-    just a side effect of representation damage.
+
+    Implements the validity gate that ensures any score change reflects an
+    intervention on the targeted feature subspace rather than a side effect
+    of generic representation damage.
     
     Args:
         h_base: Original hidden states [B, T, D]

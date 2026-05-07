@@ -7,7 +7,8 @@ residual stream activations via covariance-difference contrastive PCA, and
 emits per-layer cosine, principal angles, and cross-validated probe AUROC for
 membership and recall to ``runs/dark_subspace/behavioral_channels/<condition>/orthogonality.json``.
 
-Used in Methods §3.2 (BCD), Results §4.1 (geometry), and Appendix BCD details.
+Used in Methods §3.2 (channel decomposition), Results §4.1 (geometry), and
+Appendix `app:bcd_details`.
 Reproduce:
     env/bin/python3 scripts/dark_subspace/behavioral_channels.py \\
         --model-path runs/controlled_ft/run_20260306_055225/ft_epoch5/model \\
@@ -195,11 +196,11 @@ def contrastive_pca_paired(
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """LEGACY paired-difference cPCA (kept for backward compatibility).
 
-    BUG: This computes PCA on D = H_pos[:n] - H_neg[:n] where the pairing
-    is arbitrary (the data are not truly paired). The resulting PCA captures
-    pooled within-class variance noise, not discriminative directions.
-
-    Use contrastive_pca() (covariance-difference method) instead.
+    Note: this legacy implementation computes PCA on
+    ``D = H_pos[:n] - H_neg[:n]`` where the pairing is arbitrary (the data
+    are not truly paired). The resulting PCA captures pooled within-class
+    variance noise rather than discriminative directions, so prefer
+    :func:`contrastive_pca` (covariance-difference method) for new work.
 
     Args:
         H_pos: (n_pos, d) activations for positive class
@@ -322,7 +323,7 @@ def main():
     parser.add_argument("--sae-layer", type=int, default=None,
                         help="Layer where SAE was trained (for SAE alignment analysis)")
     parser.add_argument("--layers", type=int, nargs="+", default=None,
-                        help="Layers to analyze. If not set, auto-selects evenly spaced layers.")
+                        help="Layers to analyse. If not set, auto-selects evenly spaced layers.")
     parser.add_argument("--n-components", type=int, default=10,
                         help="Number of PCA components for subspace estimation")
     parser.add_argument("--cpca-method", choices=["covariance", "paired"], default="covariance",
@@ -361,7 +362,7 @@ def main():
     d_model = wrapper.model.config.hidden_size
     log.info(f"Model loaded: {n_layers} layers, d_model={d_model}")
 
-    # Determine layers to analyze
+    # Determine layers to analyse
     if args.layers is not None:
         layers = sorted(args.layers)
     else:
@@ -382,7 +383,7 @@ def main():
     # ── Determine extractability labels for recall subspace ─────────
     # We need to split members into "high-recall" and "low-recall" groups.
     # Option A: Use per-text extractability from a prior control experiment.
-    # Option B: Use loss-based proxy (lower loss = more memorized → likely more extractable).
+    # Option B: Use loss-based proxy (lower loss = more memorised → likely more extractable).
     extract_labels = None
     if args.extractability_json is not None:
         log.info(f"Loading extractability data from {args.extractability_json}")
@@ -398,7 +399,7 @@ def main():
             log.info(f"Using per-text extractability scores (median={median:.4f})")
 
     if extract_labels is None:
-        # Loss-based proxy: compute per-text loss to identify memorized vs non-memorized members
+        # Loss-based proxy: compute per-text loss to identify memorised vs non-memorised members
         log.info("Computing loss-based proxy for extractability...")
         tok_cfg = TokenizeConfig(seq_len=args.seq_len, random_crop=False)
         losses = []
@@ -424,7 +425,7 @@ def main():
                     losses.append(mean_loss.item())
 
         losses = np.array(losses)
-        # Lower loss = more memorized = likely higher recall
+        # Lower loss = more memorised = likely higher recall
         median_loss = np.median(losses)
         extract_labels = np.array([1 if l < median_loss else 0 for l in losses])
         log.info(f"Loss-based proxy: median_loss={median_loss:.4f}, "
@@ -670,7 +671,7 @@ def main():
     print("BEHAVIORAL CHANNEL DECOMPOSITION SUMMARY")
     print("=" * 70)
     print(f"Model: {args.model_path}")
-    print(f"Layers analyzed: {layers}")
+    print(f"Layers analysed: {layers}")
     print(f"Data: {len(member_texts)} member, {len(nonmember_texts)} nonmember texts")
     print()
 

@@ -1,7 +1,7 @@
 """
 Random rotation baseline for comparison with SAE-based interventions.
 
-Phase 6.2: This stronger baseline tests whether SAE's learned basis is actually
+This stronger baseline tests whether the SAE's learned basis is actually
 important, or if any orthonormal basis would work equally well.
 
 If SAE significantly outperforms random rotation, it supports the claim that

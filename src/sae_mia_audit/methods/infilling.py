@@ -17,6 +17,12 @@ import torch.nn.functional as F
 
 @dataclass(frozen=True)
 class InfillingConfig:
+    """Configuration for the Infilling Score membership-detection method.
+
+    ``m`` is the future-token window size used to compute the infilling
+    statistic; ``batch_size`` controls inference batching.
+    """
+
     m: int = 10  # future window
     batch_size: int = 16
 
@@ -44,6 +50,8 @@ def _logp_mu_sigma_for_targets(logits: torch.Tensor, targets: torch.Tensor):
 
 
 class InfillingScorer:
+    """Compute the Infilling Score (Raoof et al., ICLR 2025) for membership detection."""
+
     def __init__(self, model, cfg: InfillingConfig, device: str):
         self.model = model
         self.cfg = cfg
@@ -75,7 +83,7 @@ class InfillingScorer:
 
         # Respect attention mask (exclude padding from positions we modify/score)
         T_eff = self._effective_length(attention_mask, T)
-        # Match legacy behavior for unpadded sequences: score i in [1, T-2].
+        # Match legacy behaviour for unpadded sequences: score i in [1, T-2].
         # With padding, use i in [1, T_eff-2] so we never touch/score padding.
         last_scored_i = min(T - 2, T_eff - 2)
         if last_scored_i < 1:

@@ -1,3 +1,9 @@
+"""Paired, stratified bootstrap utilities for delta confidence intervals.
+
+Provides resampling-based CIs for AUROC, TPR-at-FPR, and group-difference
+statistics, used to compare ablated vs. baseline scores while preserving
+class balance under the null.
+"""
 from __future__ import annotations
 
 from typing import Callable, Dict, List, Tuple, Optional
@@ -9,7 +15,7 @@ from .metrics import compute_metrics, MetricsResult
 
 
 # =============================================================================
-# Phase 1.2: Paired Stratified Bootstrap for Delta CIs
+# Paired Stratified Bootstrap for Delta CIs
 # =============================================================================
 
 def _auroc_safe(y: np.ndarray, s: np.ndarray) -> float:
@@ -46,11 +52,11 @@ def paired_stratified_bootstrap_delta_ci(
 ) -> Tuple[float, Tuple[float, float]]:
     """
     Compute paired, stratified bootstrap CI for delta = metric(edited) - metric(base).
-    
-    Phase 1.2 implementation:
+
+    Implementation notes:
     - **Paired**: Resample indices once; apply to BOTH base and edited arrays
     - **Stratified**: Resample members and nonmembers separately, then concatenate
-    - Returns CI for **delta** (edited − base), not absolute values
+    - Returns CI for **delta** (edited - base), not absolute values
     
     Args:
         labels: Binary labels [N] (1=member, 0=nonmember).
@@ -113,8 +119,9 @@ def bootstrap_ci_of_group_diff(
 ) -> Tuple[float, Tuple[float, float]]:
     """
     Compute bootstrap CI for (mean_members - mean_nonmembers).
-    
-    Phase 1.2: Used to test if intervention affects members vs nonmembers differently.
+
+    Used to test whether an intervention affects members and nonmembers
+    differently.
     
     Args:
         values: Per-example values (e.g., delta scores) [N].
@@ -160,9 +167,9 @@ def compute_full_attack_metrics_with_bootstrap(
 ) -> Dict:
     """
     Compute full attack metrics on entire test set with paired stratified bootstrap CIs.
-    
-    Phase 1.2 centralized function that replaces scattered bootstrap logic.
-    
+
+    Centralized function that replaces scattered bootstrap logic.
+
     Returns:
         Dict with baseline, after_ablation, and delta metrics, each with CIs.
     """

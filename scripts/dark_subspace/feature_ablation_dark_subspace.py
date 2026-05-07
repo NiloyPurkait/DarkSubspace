@@ -4,7 +4,8 @@
 Top-k SAE classifier feature ablation in the encoded code, decoded back to
 activations, measuring membership AUROC and verbatim extraction at each k.
 
-Used in Section "Results" (R:84-87) and Appendix C11 of the paper.
+Used in Section "Results" (R:84-87) and the feature-ablation control
+appendix of the paper.
 Reproduce: env/bin/python3 scripts/dark_subspace/feature_ablation_dark_subspace.py --model-path <ft_model> --bcd-dir <bcd_dir> --sae-path <sae> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id>
 
 Protocol
@@ -376,7 +377,7 @@ def main():
         "membership-correlated SAE features eliminate score_K?"
     )
     parser.add_argument("--model-path", required=True, help="Path to fine-tuned model")
-    parser.add_argument("--bcd-dir", required=True, help="Path to BCD directions directory")
+    parser.add_argument("--bcd-dir", required=True, help="Path to channel-decomposition directions directory")
     parser.add_argument("--sae-path", required=True, help="Path to SAE checkpoint (sae_final.pt)")
     parser.add_argument("--member-texts", required=True)
     parser.add_argument("--nonmember-texts", required=True)
@@ -411,7 +412,7 @@ def main():
     config["script"] = "feature_ablation_dark_subspace.py"
     (out_dir / "config.json").write_text(json.dumps(config, indent=2, default=str))
 
-    # --- Load BCD directions ---
+    # --- Load channel-decomposition directions ---
     bcd_data = np.load(Path(args.bcd_dir) / "directions.npz", allow_pickle=True)
     dk_key = f"d_K_layer{args.layer}"
     if dk_key not in bcd_data:
@@ -522,7 +523,7 @@ def main():
           f"(drop={drop_all:+.4f})")
     if abl_all["score_K_ablated_recon"] > 0.60:
         print("    --> Even with ALL correlated features removed, score_K persists!")
-        print("    --> SAE features fundamentally cannot capture the memorization signal.")
+        print("    --> SAE features fundamentally cannot capture the memorisation signal.")
     print()
 
 

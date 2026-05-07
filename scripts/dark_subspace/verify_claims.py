@@ -88,9 +88,9 @@ def show_layer(label, layers, layer_key):
 
 
 # -----------------------------------------------------------------------------
-# 7. Behavioral channels (BCD) main table source
+# 7. Channel decomposition: main table source
 # -----------------------------------------------------------------------------
-banner("7. Behavioral channels (BCD) per-model AUROC + cosine (Table 1)")
+banner("7. Channel decomposition per-model AUROC + cosine (Table 1)")
 
 bcd_models_main = [
     ("Pythia-1B", "p1b_epoch5", 8),
@@ -318,15 +318,15 @@ for seed, expected_drop in p12b_seeds:
 banner("Norm baseline + best layer per model (Table 3 source)")
 
 print("Paper Table 3 says:")
-print("  Pythia-6.9B    norm 0.542  BCD 0.803 +26pp")
-print("  OPT-6.7B       norm 0.534  BCD 0.774 +24pp")
-print("  Falcon-7B      norm 0.557  BCD 0.690 +13pp")
-print("  Pythia-1B      norm 0.548  BCD 0.660 +11pp")
-print("  Pythia-12B     norm 0.599  BCD 0.707 +11pp")
-print("  GPT-Neo-2.7B   norm 0.514  BCD 0.616 +10pp")
-print("  Qwen2-7B       norm 0.542  BCD 0.638 +10pp")
-print("  Mistral-7B     norm 0.877  BCD 0.927 +5pp")
-print("  Llama-3-8B     norm 0.843  BCD 0.903 +6pp")
+print("  Pythia-6.9B    norm 0.542  d_K 0.803 +26pp")
+print("  OPT-6.7B       norm 0.534  d_K 0.774 +24pp")
+print("  Falcon-7B      norm 0.557  d_K 0.690 +13pp")
+print("  Pythia-1B      norm 0.548  d_K 0.660 +11pp")
+print("  Pythia-12B     norm 0.599  d_K 0.707 +11pp")
+print("  GPT-Neo-2.7B   norm 0.514  d_K 0.616 +10pp")
+print("  Qwen2-7B       norm 0.542  d_K 0.638 +10pp")
+print("  Mistral-7B     norm 0.877  d_K 0.927 +5pp")
+print("  Llama-3-8B     norm 0.843  d_K 0.903 +6pp")
 print()
 
 import os
@@ -464,7 +464,7 @@ else:
 # Additional asserted checks against shipped JSONs (Tables 1, 3, K-PC,
 # cohort bootstrap, held-out dK, BoW ceiling, Pythia-12B L18).
 # -----------------------------------------------------------------------------
-banner("BCD per-model channel decomposition (Table 1) [asserted]")
+banner("Per-model channel decomposition (Table 1) [asserted]")
 
 # Paper Table 1 (tab:bcd_main) reports cos(d_K, d_R), Mem AUROC, Rec AUROC
 # at the SAE layer per model. Pythia-12B row uses layer 24 (channel-geometry
@@ -485,24 +485,24 @@ for label, dirname, layer, exp_cos, exp_mem, exp_rec in bcd_table1:
     p = generated("behavioral_channels", dirname, "orthogonality.json")
     d = load(p)
     if d is None:
-        _check(f"BCD {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, None)
-        _check(f"BCD {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, None)
-        _check(f"BCD {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, None)
+        _check(f"channel-decomp {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, None)
+        _check(f"channel-decomp {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, None)
+        _check(f"channel-decomp {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, None)
         continue
     layers = d.get("per_layer", {})
     ld = layers.get(str(layer)) or layers.get(layer)
     if not isinstance(ld, dict):
-        _check(f"BCD {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, None)
-        _check(f"BCD {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, None)
-        _check(f"BCD {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, None)
+        _check(f"channel-decomp {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, None)
+        _check(f"channel-decomp {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, None)
+        _check(f"channel-decomp {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, None)
         continue
     cos = ld.get("cosine_d_K_d_R")
     mem = get(ld, "membership_probe", "auroc_mean")
     rec = get(ld, "recall_probe", "auroc_mean")
     # Cosines are reported to 3 decimals, allow 1e-3 tol.
-    _check(f"BCD {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, cos, tol=1e-3)
-    _check(f"BCD {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, mem, tol=1e-3)
-    _check(f"BCD {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, rec, tol=1e-3)
+    _check(f"channel-decomp {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, cos, tol=1e-3)
+    _check(f"channel-decomp {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, mem, tol=1e-3)
+    _check(f"channel-decomp {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, rec, tol=1e-3)
 
 
 banner("Norm-baseline best-layer AUROCs (Table 3) [asserted]")

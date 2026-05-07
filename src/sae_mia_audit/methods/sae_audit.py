@@ -41,6 +41,13 @@ FeatureSelectMetric = Literal["tpr@fpr", "tail_sep", "auc"]
 
 @dataclass(frozen=True)
 class SAEFeatureConfig:
+    """Configuration for the SAE-feature-based membership-detection method.
+
+    Bundles SAE checkpoints and their target layers, token-level aggregation
+    options, feature-selection criteria (default: TPR-at-low-FPR), and score
+    normalisation settings fit on non-members only.
+    """
+
     sae_paths: List[str]
     layer_indices: List[int]
     agg: AggMode = "mean"
@@ -125,7 +132,7 @@ class SAEFeaturePDD:
         self.saes: List[SAEProtocol] = [load_sae(p, device=self.device) for p in cfg.sae_paths]
         self.layers = list(map(int, cfg.layer_indices))
 
-        # Reviewer-safety: concatenating SAE bases for the same layer is almost
+        # Sanity check: concatenating SAE bases for the same layer is almost
         # never meaningful. We allow it (for backward compatibility) but warn
         # loudly so experiments don't silently produce uninterpretable features.
         if len(set(self.layers)) != len(self.layers):
@@ -145,7 +152,7 @@ class SAEFeaturePDD:
         Uses fast masked torch operations (not slow Python loops).
         Respects attention_mask to exclude padding tokens from aggregation.
         """
-        # B3: Explicit random_crop=False for deterministic evaluation
+        # Explicit random_crop=False for deterministic evaluation
         tok_cfg = TokenizeConfig(seq_len=self.cfg.seq_len, random_crop=False)
         feats = []
 

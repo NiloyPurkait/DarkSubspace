@@ -22,7 +22,7 @@ The marker is drawn with an open face in that case.
 Figures.
   1. Dark Subspace Hero. Grouped bar chart (orig, recon, residual) per model.
   2. Scaling Curve. Best-layer membership AUROC vs model size (log scale).
-  3. Norm-Direction Decomposition. Norm vs BCD AUROC per model.
+  3. Norm-Direction Decomposition. Norm vs channel-decomposition AUROC per model.
 """
 
 import os
@@ -209,7 +209,7 @@ def fig_scaling_curve():
     ax.set_xticklabels(labels)
     ax.xaxis.set_minor_locator(mticker.NullLocator())
     ax.set_xlabel("Model Size (parameters)")
-    ax.set_ylabel("BCD Membership AUROC")
+    ax.set_ylabel("Channel-decomposition Membership AUROC")
     ax.set_ylim(0.45, 0.95)
     ax.set_xlim(sizes[0] * 0.6, sizes[-1] * 1.5)
 
@@ -263,8 +263,8 @@ def fig_norm_direction():
         color = C_BLUE if i < n_gpt else C_ORANGE
         ax.bar(x[i] + w / 2, bcds[i], w, color=color, edgecolor="none",
                zorder=3,
-               label=("BCD score$_K$ (GPT)" if i == 0
-                      else ("BCD score$_K$ (LLaMA)" if i == n_gpt else "")))
+               label=("Channel-decomp score$_K$ (GPT)" if i == 0
+                      else ("Channel-decomp score$_K$ (LLaMA)" if i == n_gpt else "")))
 
     ax.axhline(0.50, ls="--", lw=0.8, color=C_GRAY, zorder=1)
 

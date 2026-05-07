@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Validate the recall proxy used in BCD (behavioral_channels.py).
+"""Validate the recall proxy used in the channel decomposition (behavioral_channels.py).
 
-The BCD recall proxy labels member texts as "high recall" if their
-per-text loss is in the bottom 50% (lower loss = more memorized).
+The recall proxy labels member texts as "high recall" if their per-text
+loss is in the bottom 50% (lower loss = more memorised).
 This script validates that proxy by computing the Spearman rank
 correlation between:
   - Per-text member loss (from the fine-tuned model)
@@ -237,7 +237,7 @@ def main():
     log.info(f"Pearson r(loss, ROUGE-L) = {pearson_r:.4f}, p = {pearson_p:.2e}")
 
     # -- Classification agreement -------------------------------------------
-    # BCD uses median split on loss: below median = high recall (label 1)
+    # The channel decomposition uses median split on loss: below median = high recall (label 1)
     median_loss = np.median(losses_valid)
     loss_proxy_label = (losses_valid < median_loss).astype(int)
 

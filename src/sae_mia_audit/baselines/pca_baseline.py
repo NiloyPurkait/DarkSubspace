@@ -1,8 +1,8 @@
 """
 PCA baseline for comparison with SAE-based interventions.
 
-This baseline answers the reviewer question: "Do SAE features outperform
-PCA directions (the top principal components of hidden-state variance)?"
+This baseline addresses the question "Do SAE features outperform PCA
+directions (the top principal components of hidden-state variance)?"
 
 If SAE features significantly outperform PCA, it supports the claim that
 *sparsity* and *dictionary learning* capture membership-relevant structure

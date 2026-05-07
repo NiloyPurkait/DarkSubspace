@@ -1,3 +1,4 @@
+"""Global seeding helpers for reproducibility across Python, NumPy, and torch."""
 from __future__ import annotations
 
 import os

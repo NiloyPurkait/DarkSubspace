@@ -1,3 +1,8 @@
+"""Metrics for sparse autoencoder training and evaluation.
+
+Reports reconstruction MSE, fraction of variance unexplained, L0/L1
+sparsity statistics, and active-feature counts.
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

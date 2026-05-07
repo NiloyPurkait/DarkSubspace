@@ -8,14 +8,15 @@ the FSC random-null table.
 Used in Section "Results" (R:77-88) and Appendix `app:fsc` (A:489-525) of the paper.
 Reproduce: env/bin/python3 scripts/dark_subspace/fsc_random_null.py [--n-random 1000] [--json]
 
-For each model with BCD results, samples N random subsets of size |CF|
+For each model with channel-decomposition results, samples N random subsets of size |CF|
 from the full SAE dictionary, computes FSC for each, and reports:
   - mean, std, 95th/99th percentile of random FSC distribution
   - observed FSC and its percentile rank
   - FSC for random subsets of size 50 and 100
 
-This addresses the reviewer concern that low FSC (around 8 to 16 percent)
-is trivially expected when selecting few features from a 16K+ dictionary.
+This control distinguishes a genuine FSC signal from the trivial baseline
+in which low FSC (around 8 to 16 percent) would be expected merely from
+selecting few features out of a 16K+ dictionary.
 """
 
 import _bootstrap  # noqa: F401

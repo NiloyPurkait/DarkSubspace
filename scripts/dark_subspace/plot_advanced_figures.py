@@ -22,7 +22,7 @@ Figures.
   2. SAE Quality vs AUROC Drop. Scatter showing the AUROC gap is decoupled
      from reconstruction quality.
   3. Scaling Curve with Bootstrap CIs. Membership signal across model size.
-  4. Architecture Scatter with Family Ellipses. Norm vs BCD by family.
+  4. Architecture Scatter with Family Ellipses. Norm vs channel-decomposition by family.
   5. Layer Trajectory Heatmap. Membership AUROC across models x layers
      (loaded from disk).
 """
@@ -330,7 +330,7 @@ def fig3_scaling_curve():
     ax.set_xlim(5e7, 2e10)
     ax.set_ylim(0.45, 0.95)
     ax.set_xlabel("Model parameters")
-    ax.set_ylabel("BCD membership AUROC")
+    ax.set_ylabel("Channel-decomposition membership AUROC")
 
     fig.tight_layout()
     save(fig, "scaling_curve_v2")
@@ -360,7 +360,7 @@ def fig4_architecture_scatter():
 
     # Diagonal reference
     ax.plot([0.45, 1.0], [0.45, 1.0], "--", color=GREY, linewidth=0.8,
-            alpha=0.5, zorder=1, label="Norm = BCD")
+            alpha=0.5, zorder=1, label="Norm = channel decomposition")
 
     for name, (x, y) in gpt_models.items():
         ax.scatter(x, y, c=GPT_COLOR, marker="o", s=55, zorder=5,
@@ -429,7 +429,7 @@ def fig4_architecture_scatter():
     ax.set_xlim(0.46, 0.95)
     ax.set_ylim(0.55, 0.98)
     ax.set_xlabel("Activation norm AUROC")
-    ax.set_ylabel("BCD score$_K$ AUROC")
+    ax.set_ylabel("Channel-decomp score$_K$ AUROC")
 
     handles = [
         plt.Line2D([0], [0], marker="o", color="w", markerfacecolor=GPT_COLOR,

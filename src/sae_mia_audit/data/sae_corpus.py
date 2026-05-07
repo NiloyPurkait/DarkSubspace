@@ -1,3 +1,8 @@
+"""SAE training corpus iterators with shuffle, dedup, and mixture support.
+
+Provides ``SAECorpusSource`` and ``SAECorpusSpec`` plus streaming text
+iterators over Hugging Face datasets and local JSON/JSONL files.
+"""
 from __future__ import annotations
 
 from collections import deque
@@ -38,7 +43,7 @@ class SAECorpusSpec:
     Backward-compatible fields (single-source):
       - name/subset/split/text_field
 
-    Reviewer-proof additions:
+    Hygiene options for credible SAE training corpora:
       - streaming shuffle (buffered)
       - rolling-window dedup (bounded memory)
       - optional multi-source mixture (sources=...)
@@ -137,7 +142,7 @@ def _load_one_dataset(name: str, subset: Optional[str], split: str, streaming: b
 def load_sae_corpus(spec: SAECorpusSpec) -> Iterator[str]:
     """Yield text documents for SAE activation sampling.
 
-    Best-practice behavior (if enabled in spec):
+    Best-practice behaviour (if enabled in spec):
       - streaming shuffle (buffered) to reduce ordering effects
       - rolling-window dedup (best-effort) to reduce repeated docs
       - optional mixture of multiple sources

@@ -130,7 +130,7 @@ def _parse_activation_dtype(dtype: str, model_param_dtype: torch.dtype) -> torch
 
 
 def _assert_single_process() -> None:
-    # Reviewer-proof: SAE training here is intentionally single-process.
+    # SAE training here is intentionally single-process for reproducibility.
     world_size = int(os.environ.get("WORLD_SIZE", "1"))
     if world_size != 1:
         raise SystemExit(
@@ -299,19 +299,19 @@ def iter_activation_batches(
     activation_sampling: str = "repeat",
     token_filter: str = "all",
     activation_dtype: torch.dtype = torch.float32,
-    pad_stats_callback: Optional[callable] = None,  # C2: Callback to report pad stats
+    pad_stats_callback: Optional[callable] = None,  # Callback to report pad stats
 ) -> Iterator[torch.Tensor]:
     """Yield [tokens_per_step, d_model] activation batches for SAE training.
 
     Backward compatibility:
-      - activation_capture defaults to "hidden_states" (old behavior).
-      - activation_sampling defaults to "repeat" (old behavior when batch_tokens < tokens_per_step).
+      - activation_capture defaults to "hidden_states" (old behaviour).
+      - activation_sampling defaults to "repeat" (old behaviour when batch_tokens < tokens_per_step).
 
     Recommended for paper runs:
       --activation-capture hook --activation-sampling accumulate --token-filter nonpad
       --corpus-shuffle-buffer 10000 --corpus-dedup
       
-    C2 Reviewer-proof:
+    Padding hygiene:
       - Tracks and reports padding token statistics via pad_stats_callback
     """
     # CPU generator keeps determinism stable across devices.
@@ -321,7 +321,7 @@ def iter_activation_batches(
     # matching prior SAE training practice
     tok_cfg = TokenizeConfig(seq_len=seq_len, random_crop=True)
     
-    # C2: Padding statistics tracking
+    # Padding statistics tracking
     total_tokens_seen = 0
     total_pad_tokens = 0
 
@@ -355,7 +355,7 @@ def iter_activation_batches(
         B, T, D = h.shape
         x_all = h.reshape(B * T, D)
         
-        # C2: Track padding statistics
+        # Track padding statistics
         batch_total_tokens = B * T
         total_tokens_seen += batch_total_tokens
 
@@ -391,7 +391,7 @@ def iter_activation_batches(
             processed += int(tokens_per_step)
             buffer = []
             if processed >= int(train_tokens):
-                # C2: Report final padding statistics
+                # Report final padding statistics
                 if pad_stats_callback is not None and total_tokens_seen > 0:
                     pad_stats_callback({
                         "total_tokens_seen": total_tokens_seen,
@@ -419,7 +419,7 @@ def iter_activation_batches(
             yield xb
             processed += int(tokens_per_step)
             if processed >= int(train_tokens):
-                # C2: Report final padding statistics
+                # Report final padding statistics
                 if pad_stats_callback is not None and total_tokens_seen > 0:
                     pad_stats_callback({
                         "total_tokens_seen": total_tokens_seen,
@@ -431,7 +431,7 @@ def iter_activation_batches(
 
         buffer = []
     
-    # C2: Report padding statistics at generator exhaustion
+    # Report padding statistics at generator exhaustion
     if pad_stats_callback is not None and total_tokens_seen > 0:
         pad_stats_callback({
             "total_tokens_seen": total_tokens_seen,
@@ -442,7 +442,7 @@ def iter_activation_batches(
 
 
 # ---------------------------------------------------------------------
-# C4: Final evaluation pass (eval_summary.json)
+# Final evaluation pass (eval_summary.json)
 # ---------------------------------------------------------------------
 
 @torch.no_grad()
@@ -459,8 +459,9 @@ def compute_final_eval_summary(
 ) -> Dict[str, Any]:
     """Compute final evaluation metrics on a fresh batch of activations.
     
-    C4 Reviewer-proof: This ensures "final" metrics are truly final, not just
-    the last logged batch during training.
+    This ensures "final" metrics are truly final (computed over a fresh,
+    held-out activation slice) rather than just the last logged batch
+    during training.
     """
     from sae_mia_audit.data.sae_corpus import SAECorpusSpec, load_sae_corpus
     
@@ -481,7 +482,7 @@ def compute_final_eval_summary(
         drop_empty=True,
     )
     texts = iter(load_sae_corpus(corpus_spec))
-    # B4: Use crop_seed for deterministic eval cropping
+    # Use crop_seed for deterministic eval cropping
     tok_cfg = TokenizeConfig(seq_len=seq_len, random_crop=True, crop_seed=99999)
     
     # Accumulators
@@ -585,7 +586,7 @@ def compute_final_eval_summary(
 def eval_ppl(model, eval_texts: List[str], seq_len: int, batch_size: int) -> float:
     """Token-weighted perplexity on eval_texts, ignoring padding tokens."""
     model.model.eval()
-    # B4: Use crop_seed for deterministic eval cropping
+    # Use crop_seed for deterministic eval cropping
     tok_cfg = TokenizeConfig(seq_len=seq_len, random_crop=True, crop_seed=42)
 
 
@@ -674,7 +675,7 @@ def main() -> int:
         ),
     )
     
-    # B1: L1 form (reviewer-proof sparsity objective)
+    # L1 form (standard sparsity objective)
     ap.add_argument(
         "--l1-form",
         type=str,
@@ -683,14 +684,14 @@ def main() -> int:
         help="L1 sparsity penalty form. 'sum' = z.abs().sum(dim=-1).mean() (standard); 'mean' = z.abs().mean() (legacy).",
     )
     
-    # B2: Tied weights option
+    # Tied weights option
     ap.add_argument(
         "--tied-weights",
         action="store_true",
         help="Use tied weights (decoder = encoder.T). Standard in some SAE papers.",
     )
     
-    # D3: Dead feature resampling
+    # Dead feature resampling
     ap.add_argument(
         "--resample-dead-features",
         action="store_true",
@@ -709,7 +710,7 @@ def main() -> int:
         help="Features with firing rate below this are considered dead.",
     )
     
-    # D5: Load balancing auxiliary loss
+    # Load balancing auxiliary loss
     ap.add_argument(
         "--aux-coeff",
         type=float,
@@ -743,21 +744,21 @@ def main() -> int:
         type=str,
         choices=["hidden_states", "hook"],
         default="hidden_states",
-        help="How to capture layer activations. 'hidden_states' matches old behavior; 'hook' is faster.",
+        help="How to capture layer activations. 'hidden_states' matches old behaviour; 'hook' is faster.",
     )
     ap.add_argument(
         "--activation-sampling",
         type=str,
         choices=["repeat", "accumulate"],
         default="repeat",
-        help="How to satisfy tokens_per_step when batch_tokens < tokens_per_step. 'repeat' matches old behavior.",
+        help="How to satisfy tokens_per_step when batch_tokens < tokens_per_step. 'repeat' matches old behaviour.",
     )
     ap.add_argument(
         "--token-filter",
         type=str,
         choices=["all", "nonpad"],
         default="all",
-        help="Whether to include padded tokens in SAE training activations. 'all' matches old behavior.",
+        help="Whether to include padded tokens in SAE training activations. 'all' matches old behaviour.",
     )
     ap.add_argument(
         "--activation-dtype",
@@ -779,7 +780,7 @@ def main() -> int:
                     help="Drop empty docs before tokenization (recommended).",
                 )
 
-    # Reviewer-proof corpus hygiene (defaults remain legacy unless --mode paper)
+    # Corpus hygiene flags (defaults remain legacy unless --mode paper)
     ap.add_argument("--corpus-min-chars", type=int, default=1)
     ap.add_argument("--corpus-shuffle-buffer", type=int, default=0, help="Streaming shuffle buffer size (0 disables).")
     ap.add_argument("--corpus-dedup", action="store_true", help="Drop duplicate documents using a bounded hash set.")
@@ -794,11 +795,11 @@ def main() -> int:
     ap.add_argument("--interpret-topk", type=int, default=8)
     ap.add_argument("--interpret-examples", type=int, default=256)
     
-    # C4: Final evaluation pass
+    # Final evaluation pass
     ap.add_argument("--final-eval", action="store_true", 
                    help="Run final evaluation pass on heldout data (writes eval_summary.json)")
     ap.add_argument("--final-eval-tokens", type=int, default=50_000,
-                   help="Tokens for final evaluation (C4 reviewer-proof)")
+                   help="Tokens for the held-out final evaluation pass")
 
     ap.add_argument("--runs-dir", type=str, default="runs/sae")
     
@@ -813,7 +814,7 @@ def main() -> int:
 
     args = ap.parse_args()
 
-    # Mode presets (gated; do not silently change legacy behavior).
+    # Mode presets (gated; do not silently change legacy behaviour).
     if args.mode == "paper":
         args.activation_sampling = "accumulate"
         args.activation_capture = "hook"
@@ -827,7 +828,7 @@ def main() -> int:
             args.corpus_min_chars = 50
         if not args.corpus_drop_empty:
             args.corpus_drop_empty = True
-        # C4: Enable final evaluation for paper mode
+        # Enable final evaluation for paper mode
         if not args.final_eval:
             args.final_eval = True
     elif args.mode == "quick":
@@ -857,7 +858,7 @@ def main() -> int:
         model.model.to(resolved_device)
     _assert_single_device_model(model, device_map=device_map)
 
-    # Ensure deterministic forward behavior (no dropout).
+    # Ensure deterministic forward behaviour (no dropout).
     try:
         model.model.eval()
     except Exception:
@@ -963,11 +964,11 @@ def main() -> int:
                 d_model=d_model,
                 d_sae=d_sae,
                 l1_coeff=float(l1),
-                l1_form=args.l1_form,  # B1: Standard "sum" vs legacy "mean"
+                l1_form=args.l1_form,  # Standard "sum" vs legacy "mean"
                 l2_coeff=float(args.l2_coeff),  # elastic-net L2 on codes
-                tied_weights=args.tied_weights,  # B2: Tied weights ablation
-                aux_coeff=float(args.aux_coeff),  # D5: Load balancing
-                aux_target_firing_rate=float(args.aux_target_firing_rate),  # D5
+                tied_weights=args.tied_weights,  # Tied weights ablation
+                aux_coeff=float(args.aux_coeff),  # Load balancing
+                aux_target_firing_rate=float(args.aux_target_firing_rate),
                 use_bias=True,
                 normalize_decoder=True,
             )
@@ -986,7 +987,7 @@ def main() -> int:
             device=resolved_device,
             log_every=50,
             save_every=1000,
-            # D3: Dead feature resampling
+            # Dead feature resampling
             resample_dead_features=bool(args.resample_dead_features),
             resample_every=int(args.resample_every),
             resample_dead_threshold=float(args.resample_dead_threshold),
@@ -1052,7 +1053,7 @@ def main() -> int:
         # `load_sae_corpus(...)` already performs a buffered shuffle.
         #texts = _iter_shuffle_buffer(texts, buffer_size=int(args.corpus_shuffle_buffer), seed=int(args.seed))
         
-        # C2: Pad statistics tracking
+        # Pad statistics tracking
         pad_stats_holder: Dict[str, Any] = {}
         def pad_stats_callback(stats: dict) -> None:
             pad_stats_holder.update(stats)
@@ -1071,7 +1072,7 @@ def main() -> int:
             activation_sampling=str(args.activation_sampling),
             token_filter=str(args.token_filter),
             activation_dtype=act_dtype,
-            pad_stats_callback=pad_stats_callback,  # C2
+            pad_stats_callback=pad_stats_callback,
         )
 
         log.info(
@@ -1084,13 +1085,13 @@ def main() -> int:
                     "d_sae": d_sae,
                     "n_saes": len(saes),
                     "l1_coeffs": [float(x) for x in l1_list],
-                    "l1_form": args.l1_form,  # B1: Document L1 form
-                    "tied_weights": args.tied_weights,  # B2: Document weight tying
-                    "aux_coeff": args.aux_coeff,  # D5: Load balancing
-                    "aux_target_firing_rate": args.aux_target_firing_rate,  # D5
-                    "resample_dead_features": args.resample_dead_features,  # D3
-                    "resample_every": args.resample_every,  # D3
-                    "resample_dead_threshold": args.resample_dead_threshold,  # D3
+                    "l1_form": args.l1_form,  # Document L1 form
+                    "tied_weights": args.tied_weights,  # Document weight tying
+                    "aux_coeff": args.aux_coeff,  # Load balancing
+                    "aux_target_firing_rate": args.aux_target_firing_rate,
+                    "resample_dead_features": args.resample_dead_features,
+                    "resample_every": args.resample_every,
+                    "resample_dead_threshold": args.resample_dead_threshold,
                     "train_cfg": train_cfg.__dict__,
                     "activation_capture": args.activation_capture,
                     "activation_sampling": args.activation_sampling,
@@ -1120,7 +1121,7 @@ def main() -> int:
 
         trainer.train(activations, skip_steps=resume_step)
         
-        # C2: Log and save padding statistics
+        # Log and save padding statistics
         if pad_stats_holder:
             log.info(
                 json.dumps(
@@ -1241,9 +1242,9 @@ def main() -> int:
                 labels[str(fid)] = {"label": lab.label, "top_ngrams": lab.top_ngrams}
             (run_dir / "feature_labels.json").write_text(json.dumps(labels, indent=2), encoding="utf-8")
         
-        # C4: Final evaluation pass on heldout data
+        # Final evaluation pass on heldout data
         if args.final_eval:
-            log.info("Running final evaluation pass (C4: eval_summary.json)...")
+            log.info("Running final evaluation pass (writes eval_summary.json)...")
             eval_summary: Dict[str, Any] = {
                 "event": "eval_summary",
                 "eval_tokens": int(args.final_eval_tokens),

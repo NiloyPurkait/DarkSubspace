@@ -1,3 +1,4 @@
+"""Model wrappers and per-token logprob helpers."""
 from .wrapper import (
     ActivationSite,
     CausalLMWrapper,

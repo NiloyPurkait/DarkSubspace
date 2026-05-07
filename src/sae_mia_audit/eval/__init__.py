@@ -1,3 +1,4 @@
+"""Evaluation metrics, bootstrap confidence intervals, and groupwise breakdowns."""
 from .metrics import compute_metrics, MetricsResult
 from .bootstrap import bootstrap_ci
 from .groupwise import compute_groupwise_metrics, GroupwiseResult
