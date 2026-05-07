@@ -3,7 +3,7 @@
 
 Canonical sparse autoencoder trainer. Supports mixed-data, member-only, and
 disjoint-corpus training regimes for the dark-subspace experiments. Invoked by
-all SLURM wrappers under ``scripts/memcirc/shell/`` and produces the
+all SLURM wrappers under ``scripts/dark_subspace/shell/`` and produces the
 ``sae_final.pt`` checkpoints consumed by ``sae_dark_subspace.py``.
 
 Used in Section 2.2 (SAE training protocol) of the paper.

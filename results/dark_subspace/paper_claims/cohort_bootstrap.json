@@ -182,5 +182,5 @@
   },
   "elapsed_sec": 277.33424282073975,
   "timestamp_utc": "2026-05-02 09:31:10 UTC",
-  "script": "scripts/memcirc/per_row_bootstrap_kocl2.py"
+  "script": "scripts/dark_subspace/per_row_bootstrap_kocl2.py"
 }

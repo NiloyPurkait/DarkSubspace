@@ -5,7 +5,7 @@ Small bootstrap helper that adds the repository ``src/`` directory to
 without an editable install.
 
 Used as a sys.path shim for every paper script (imported via
-``scripts/memcirc/_bootstrap.py``).
+``scripts/dark_subspace/_bootstrap.py``).
 
 Why this exists
 ---------------

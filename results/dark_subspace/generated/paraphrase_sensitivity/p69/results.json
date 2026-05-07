@@ -44,7 +44,7 @@
     {
       "n_boot": 10000,
       "seed": 12345,
-      "rerun_script": "scripts/memcirc/rerun_bootstrap_cis.py",
+      "rerun_script": "scripts/dark_subspace/rerun_bootstrap_cis.py",
       "rerun_target": "paraphrase",
       "rerun_timestamp": "2026-05-02 10:12:22 UTC"
     }

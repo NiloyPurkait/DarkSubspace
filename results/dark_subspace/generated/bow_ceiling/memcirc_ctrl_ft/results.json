@@ -77,7 +77,7 @@
     {
       "n_boot": 10000,
       "seed": 12345,
-      "rerun_script": "scripts/memcirc/rerun_bootstrap_cis.py",
+      "rerun_script": "scripts/dark_subspace/rerun_bootstrap_cis.py",
       "rerun_target": "bow",
       "rerun_timestamp": "2026-05-02 10:27:52 UTC",
       "note": "bootstrap rerun used seed=12345; OOF score generation seed=42 (unchanged)"

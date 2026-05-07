@@ -466,5 +466,5 @@
   "blockers_skipped": [],
   "elapsed_sec": 188.68205738067627,
   "timestamp_utc": "2026-05-02 09:58:10 UTC",
-  "script": "scripts/memcirc/heldout_dk_eval.py"
+  "script": "scripts/dark_subspace/heldout_dk_eval.py"
 }
