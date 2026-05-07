@@ -1,12 +1,12 @@
 # `sae_mia_audit`
 
-Reusable Python package used by the Dark Subspace artifact scripts.
+Reusable Python package used by the Dark Subspace artefact scripts.
 
-Reviewer entry points live in the repository root README and in `scripts/dark_subspace/`. This package contains shared implementation pieces used by the experiment scripts:
+Starting points live in the repository root `README.md` and in `scripts/dark_subspace/`. This package contains shared implementation components used by the experiment scripts:
 
 | Subpackage | Purpose |
 | --- | --- |
-| `data/` | Dataset loading, splits, tokenization, and SAE training corpora. |
+| `data/` | Dataset loading, splits, tokenisation, and SAE training corpora. |
 | `models/` | Hugging Face causal-LM wrappers and activation capture. |
 | `sae/` | Sparse autoencoder modules, checkpoint I/O, interventions, and metrics. |
 | `methods/` | MIA baselines, probes, PDD variants, and SAE-based scoring methods. |
