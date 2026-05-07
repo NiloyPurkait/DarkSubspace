@@ -112,8 +112,9 @@ ${PY} scripts/dark_subspace/subspace_ablation_eval.py \
 # Note. The err_ratio gate is a script-level sanity check defined in
 # subspace_ablation_eval.py with range (0.01, 0.30). The seed-47 SAE
 # measures (||e||/||h||).mean = 0.3078, marginally above 0.30. The gate
-# is NOT in PREREGISTRATION.md (which only specifies the recon-cosine and
-# L0 sparsity gates), so bypassing it does not violate the pre-registration.
+# is not part of the pre-registration text, which only specifies the
+# recon-cosine and L0 sparsity gates, so bypassing it does not violate that
+# protocol.
 # The bypass flag propagates err_ratio_gate_bypassed=True through every
 # cell's validity block as an honest-disclosure audit trail.
 

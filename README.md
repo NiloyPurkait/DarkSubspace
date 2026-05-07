@@ -54,23 +54,23 @@ The verifier does not load models, require GPUs, submit SLURM jobs, access the n
 
 ## Claim-Source Map
 
-The table below gives the reviewer-facing source for each numbered claim group. `results/dark_subspace/generated/` mirrors the relevant JSON leaves from the original run tree, so review does not require the full ignored `runs/` directory.
+The table below connects each reviewer-facing paper passage to the script and shipped JSON source that reproduce the corresponding result. `results/dark_subspace/generated/` mirrors the relevant JSON leaves from the original run tree, so review does not require the full ignored `runs/` directory.
 
-| Claim | Paper claim group | Source script | Shipped JSON source |
+| Paper passage | What to verify | Source script | Shipped JSON source |
 | --- | --- | --- | --- |
-| C1-C6 | BCD geometry, recall direction separation, multi-seed BCD stability | `scripts/dark_subspace/behavioral_channels.py`, `scripts/dark_subspace/sae_noise_floor_aggregate.py` | `results/dark_subspace/generated/behavioral_channels/*/orthogonality.json`, `results/dark_subspace/generated/sae_noise_floor/p69_aggregate.json` |
-| C7 | Pythia-6.9B N=5 mixed-SAE drop | `scripts/dark_subspace/p69_n5_harmonize.py` | `results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json` |
-| C8 | Pythia-12B mixed-SAE three-init replication | `scripts/dark_subspace/shell/sbatch_p12b_multiseed_array.sh` | `results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed{47,48,49}/results.json` |
-| C9 | Per-row residual-versus-original cohort bootstrap | `scripts/dark_subspace/per_row_bootstrap_kocl2.py` | `results/dark_subspace/paper_claims/cohort_bootstrap.json` |
-| C10-C11 | Feature sufficiency and feature-ablation controls | `scripts/dark_subspace/fsc_random_null.py`, `scripts/dark_subspace/feature_ablation_dark_subspace.py` | `results/dark_subspace/generated/sae_dark_subspace/p69_feature_ablation/results.json` |
-| C12 | Privacy-aware SAE comparison | `scripts/dark_subspace/finetune_sae_dk.py`, `scripts/dark_subspace/fresh_probe_test.py` | `results/dark_subspace/generated/sae_dark_subspace/p69_ft_dk{0.1,1.0}/results.json` |
-| C13-C14 | K-PC causal ablation at K=10 and K=5 | `scripts/dark_subspace/subspace_ablation_eval.py` | `results/dark_subspace/generated/causal_ablation/p12b_errPC_K10/results.json`, `results/dark_subspace/generated/causal_ablation_K5/p12b_errPC_K5/results.json` |
-| C15 | Norm-direction baseline | `scripts/dark_subspace/norm_baseline.py` | `results/dark_subspace/generated/norm_baseline/*/results.json` |
-| C16 | Bag-of-words ceiling | `scripts/dark_subspace/bow_ceiling.py` | `results/dark_subspace/generated/bow_ceiling/memcirc_ctrl_ft/results.json` |
-| C17 | Pre-FT baseline and FT layer sweep | `scripts/dark_subspace/behavioral_channels.py` | `results/dark_subspace/generated/behavioral_channels/{p69_BASE_pre_ft,p69_epoch5_layer_sweep}/orthogonality.json` |
-| C18 | Word-order paraphrase orientation flip | `scripts/dark_subspace/paraphrase_sensitivity.py` | `results/dark_subspace/generated/paraphrase_sensitivity/{p69,qwen2,p12b}/results.json` |
-| C19 | Standard published MIA probes | `scripts/dark_subspace/standard_mia_probe_decomposition.py` | `results/dark_subspace/generated/standard_mia_probes/p69_dark_subspace_replication/results.json` |
-| C20 | Bootstrap-count disclosure | `scripts/dark_subspace/subspace_ablation_eval.py`, `scripts/dark_subspace/per_row_bootstrap_kocl2.py` | Script arguments and shipped bootstrap JSON metadata |
+| Methods: "Separating membership knowledge from recall behavior"; Results: "Membership and recall directions are weakly aligned"; Appendix Table `tab:bcd_main` | BCD geometry, recall direction separation, multi-seed BCD stability | `scripts/dark_subspace/behavioral_channels.py`, `scripts/dark_subspace/sae_noise_floor_aggregate.py` | `results/dark_subspace/generated/behavioral_channels/*/orthogonality.json`, `results/dark_subspace/generated/sae_noise_floor/p69_aggregate.json` |
+| Results: "SAE reconstruction fails to preserve membership signal recoverable from the residual"; Table `tab:dark_subspace` | Pythia-6.9B N=5 mixed-SAE drop | `scripts/dark_subspace/p69_n5_harmonize.py` | `results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json` |
+| Appendix: "Pythia-12B Replication Detail"; Table `tab:dark_subspace` | Pythia-12B mixed-SAE three-init replication | `scripts/dark_subspace/shell/sbatch_p12b_multiseed_array.sh` | `results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed{47,48,49}/results.json` |
+| Appendix: "Per-Row Bootstrap on the K-OC-2 Cohort" | Per-row residual-versus-original cohort bootstrap | `scripts/dark_subspace/per_row_bootstrap_kocl2.py` | `results/dark_subspace/paper_claims/cohort_bootstrap.json` |
+| Results: "Decoder span, sparse codes, residual norm, and top features do not explain the residual signal"; Appendix: "Feature Sufficiency Criterion Values" | Feature sufficiency and feature-ablation controls | `scripts/dark_subspace/fsc_random_null.py`, `scripts/dark_subspace/feature_ablation_dark_subspace.py` | `results/dark_subspace/generated/sae_dark_subspace/p69_feature_ablation/results.json` |
+| Results: "Feature edits do not close the residual membership gap"; Figure `fig:privacy_aware`; Appendix Table `tab:fresh_probe_v2` | Privacy-aware SAE comparison | `scripts/dark_subspace/finetune_sae_dk.py`, `scripts/dark_subspace/fresh_probe_test.py` | `results/dark_subspace/generated/sae_dark_subspace/p69_ft_dk{0.1,1.0}/results.json` |
+| Methods: "Interventions separate extraction from detection"; Results: "Geometry and concentration of the residual signal"; Appendix Table `tab:kpc_kten_cells` | K-PC causal ablation at K=10 and K=5 | `scripts/dark_subspace/subspace_ablation_eval.py` | `results/dark_subspace/generated/causal_ablation/p12b_errPC_K10/results.json`, `results/dark_subspace/generated/causal_ablation_K5/p12b_errPC_K5/results.json` |
+| Results: "Geometry and concentration of the residual signal"; Appendix Table `tab:norm_direction` | Norm-direction baseline | `scripts/dark_subspace/norm_baseline.py` | `results/dark_subspace/generated/norm_baseline/*/results.json` |
+| Results: "Robustness to confound and operating point controls"; Appendix: "Bag-of-Words Vocabulary Baseline" | Bag-of-words ceiling | `scripts/dark_subspace/bow_ceiling.py` | `results/dark_subspace/generated/bow_ceiling/memcirc_ctrl_ft/results.json` |
+| Results: "Membership and recall directions are weakly aligned"; Appendix: "Per-Layer Decomposition Tables" | Pre-FT baseline and FT layer sweep | `scripts/dark_subspace/behavioral_channels.py` | `results/dark_subspace/generated/behavioral_channels/{p69_BASE_pre_ft,p69_epoch5_layer_sweep}/orthogonality.json` |
+| Results: "Robustness to confound and operating point controls"; Appendix: "TPR at Low FPR and Paraphrase Diagnostic" | Word-order paraphrase orientation flip | `scripts/dark_subspace/paraphrase_sensitivity.py` | `results/dark_subspace/generated/paraphrase_sensitivity/{p69,qwen2,p12b}/results.json` |
+| Results: "Robustness to confound and operating point controls"; Appendix: "Standard Probe Replication and Output-Layer Scope" | Standard published MIA probes | `scripts/dark_subspace/standard_mia_probe_decomposition.py` | `results/dark_subspace/generated/standard_mia_probes/p69_dark_subspace_replication/results.json` |
+| Methods: "Validity gate for quantitative claims"; Appendix bootstrap/control tables | Bootstrap-count disclosure | `scripts/dark_subspace/subspace_ablation_eval.py`, `scripts/dark_subspace/per_row_bootstrap_kocl2.py` | Script arguments and shipped bootstrap JSON metadata |
 
 ## Full Reproduction
 
