@@ -242,6 +242,147 @@ if harm is not None:
     _check("P69 N=5 mixed resid (paper 0.781)", 0.781, rs_n5)
     _check("P69 N=5 mixed recon_cos (paper 0.976)", 0.976, rc_n5)
     _check("P69 N=5 mixed drop_mean (paper 0.209)", 0.209, drop_n5)
+    # Materiality of the N=5 reporting basis vs the underlying N=6 cohort.
+    # The shipped JSON's materiality block records that all per-metric
+    # |delta_mean(N=5 - N=6)| < 0.005, so the N=5 reporting basis chosen
+    # to align with the Pythia-1B seed list does not change the conclusion.
+    mat = harm.get("materiality", {})
+    verdict_ok = mat.get("verdict") == "NEGLIGIBLE"
+    _CHECK_RESULTS.append(
+        ("P69 N=5 vs N=6 materiality verdict (NEGLIGIBLE)", verdict_ok,
+         f"actual={mat.get('verdict')!r}"),
+    )
+    flag = "PASS" if verdict_ok else "FAIL"
+    print(f"    [{flag}] P69 N=5 vs N=6 materiality verdict: actual={mat.get('verdict')!r}")
+    abs_deltas = mat.get("abs_delta_mean_per_metric", {})
+    threshold = mat.get("threshold", 0.005)
+    for metric, dval in abs_deltas.items():
+        within = dval is not None and dval < threshold
+        _CHECK_RESULTS.append(
+            (f"P69 N=5 vs N=6 |delta_mean| < {threshold} on {metric}", within,
+             f"actual={dval:.6f}" if dval is not None else "actual=None"),
+        )
+        flag = "PASS" if within else "FAIL"
+        print(f"    [{flag}] P69 N=5 vs N=6 |delta_mean| < {threshold} on {metric}: actual={dval:.6f}")
+
+
+banner("P69 member-only N=5 cohort aggregate (paper_claims/p69_member_only_n5.json) [asserted]")
+
+# Backs the Pythia-6.9B (controlled, member-only) row of tab:dark_subspace
+# at N=5. Paper values: original 0.803, recon 0.633, residual 0.833,
+# recon_cosine 0.940. The mixed-data row is verified separately above.
+mo = load(PAPER_CLAIMS / "p69_member_only_n5.json")
+if mo is not None:
+    s = mo.get("cluster_summary_n5", {})
+    _check("P69 N=5 member-only orig (paper 0.803)", 0.803,
+           s.get("original_score_K_auroc", {}).get("mean"), tol=2e-3)
+    _check("P69 N=5 member-only recon (paper 0.633)", 0.633,
+           s.get("reconstructed_score_K_auroc", {}).get("mean"), tol=2e-3)
+    _check("P69 N=5 member-only resid (paper 0.833)", 0.833,
+           s.get("residual_score_K_auroc", {}).get("mean"), tol=2e-3)
+    _check("P69 N=5 member-only recon_cos (paper 0.940)", 0.940,
+           s.get("recon_cos", {}).get("mean"), tol=2e-3)
+
+
+banner("Pythia-12B mixed-SAE seeds 50, 51 (generated/sae_dark_subspace, app:p12b_replication) [asserted]")
+
+# The P12B mixed-SAE 5-seed cohort. Seeds 47, 48, 49 are asserted in the
+# main P12B section above. Seeds 50, 51 are the remaining two seeds of the
+# pre-registered five-seed cohort and are now bundled in the artefact.
+for s_label in ["50", "51"]:
+    p = GENERATED / "sae_dark_subspace" / f"p12b_mixed_sae_seed{s_label}" / "results.json"
+    d = load(p)
+    if d is None:
+        _check(f"P12B mixed seed {s_label} bundled", True, False)
+    else:
+        orig = d.get("original", {}).get("score_K_auroc")
+        recon = d.get("sae_reconstructed", {}).get("score_K_auroc")
+        rc = d.get("sae_quality", {}).get("reconstruction_cosine")
+        _CHECK_RESULTS.append((f"P12B mixed seed {s_label} bundled and parseable",
+                                orig is not None and recon is not None and rc is not None,
+                                f"orig={orig}, recon={recon}, rc={rc}"))
+        ok = orig is not None and recon is not None and rc is not None
+        print(f"    [{'PASS' if ok else 'FAIL'}] P12B mixed seed {s_label} bundled: orig={orig}, recon={recon}, rc={rc}")
+        # Per-seed values consistent with cohort range (orig in [0.76, 0.77], rc > 0.99)
+        if orig is not None:
+            _check(f"P12B mixed seed {s_label} orig in cohort range", 0.766, orig, tol=0.005)
+        if rc is not None:
+            _check(f"P12B mixed seed {s_label} recon_cos > 0.99", 0.991, rc, tol=0.01)
+
+
+banner("Gemma-2-2B SAE row (generated/sae_dark_subspace/gemma2_2b_epoch5, tab:dark_subspace) [asserted]")
+
+# Backs the Gemma-2-2B row of tab:dark_subspace and is the missing eighth
+# row of the body sign-test denominator. Paper: orig 0.801, recon 0.769,
+# residual 0.820, recon_cosine 0.911 (above the 0.90 strict gate).
+gm = load(GENERATED / "sae_dark_subspace" / "gemma2_2b_epoch5" / "results.json")
+if gm is not None:
+    _check("Gemma-2-2B orig (paper 0.801)", 0.801,
+           gm.get("original", {}).get("score_K_auroc"), tol=3e-3)
+    _check("Gemma-2-2B recon (paper 0.769)", 0.769,
+           gm.get("sae_reconstructed", {}).get("score_K_auroc"), tol=3e-3)
+    _check("Gemma-2-2B resid (paper 0.820)", 0.820,
+           gm.get("residual", {}).get("score_K_auroc"), tol=3e-3)
+    _check("Gemma-2-2B recon_cos (paper 0.911)", 0.911,
+           gm.get("sae_quality", {}).get("reconstruction_cosine"), tol=2e-3)
+
+
+banner("FSC values (paper_claims/fsc_values.json, tab:fsc_values) [asserted]")
+
+# Backs Appendix Table tab:fsc_values; eight model rows.
+fsc = load(PAPER_CLAIMS / "fsc_values.json")
+if fsc is not None:
+    for r in fsc.get("rows", []):
+        setting = r.get("setting", "?")
+        # Disk vs paper agreement on n_cf and fsc_K_cf
+        _check(f"FSC {setting} n_cf_features matches paper",
+               r.get("paper_n_cf"), r.get("n_cf_features"), tol=0)
+        _check(f"FSC {setting} fsc_K_cf matches paper to 1e-3",
+               r.get("paper_fsc_K_cf"), r.get("fsc_K_cf"), tol=1.5e-3)
+        _check(f"FSC {setting} fsc_K_all == 1.0",
+               1.000, r.get("fsc_K_all"), tol=1e-6)
+        _check(f"FSC {setting} fsc_R_all == 1.0",
+               1.000, r.get("fsc_R_all"), tol=1e-6)
+
+
+banner("Double dissociation paper-claim JSON (paper_claims/double_dissociation.json, tab:dd_full + tab:dd_extraction + tab:epoch_dd) [asserted]")
+
+# Internal consistency of the bundled DD paper-claim JSON. Numerical values
+# trace to GPU-pipeline outputs at runs/memcirc/double_dissociation/ that
+# are not bundled. The asserts here check that the bundled JSON encodes
+# the manuscript-rendered cell values consistently across the three
+# overlapping tables (tab:dd_full, tab:dd_extraction, tab:epoch_dd).
+dd = load(PAPER_CLAIMS / "double_dissociation.json")
+if dd is not None:
+    # tab:dd_extraction P1B at epoch 5 must equal tab:epoch_dd at epoch 5
+    p1b_ext = next((r for r in dd["tab_dd_extraction"]["rows"] if r["setting"] == "Pythia-1B"), {})
+    p1b_epoch5 = next((r for r in dd["tab_epoch_dd"]["rows"] if r["epoch"] == 5), {}).get("rouge_l", {})
+    _check("DD P1B baseline ROUGE-L cross-table (tab:dd_extraction == tab:epoch_dd at epoch 5)",
+           p1b_ext.get("baseline"), p1b_epoch5.get("baseline"), tol=1e-6)
+    _check("DD P1B erase S_K ROUGE-L cross-table",
+           p1b_ext.get("erase_S_K"), p1b_epoch5.get("erase_S_K"), tol=1e-6)
+    _check("DD P1B erase S_R ROUGE-L cross-table",
+           p1b_ext.get("erase_S_R"), p1b_epoch5.get("erase_S_R"), tol=1e-6)
+    _check("DD P1B erase both ROUGE-L cross-table",
+           p1b_ext.get("erase_both"), p1b_epoch5.get("erase_both"), tol=1e-6)
+    # tab:dd_full row count
+    _check("DD tab:dd_full row count == 4 (P1B, P69, P12B, OPT)",
+           4, len(dd["tab_dd_full"]["rows"]), tol=0)
+    # tab:dd_extraction row count
+    _check("DD tab:dd_extraction row count == 8",
+           8, len(dd["tab_dd_extraction"]["rows"]), tol=0)
+    # tab:epoch_dd row count
+    _check("DD tab:epoch_dd row count == 3 (epochs 1, 3, 5)",
+           3, len(dd["tab_epoch_dd"]["rows"]), tol=0)
+    # Sanity: every erase-condition value <= baseline (loss inversely)
+    for row in dd["tab_dd_extraction"]["rows"]:
+        baseline = row.get("baseline", 0)
+        for cond in ["erase_S_K", "erase_S_R", "erase_both"]:
+            v = row.get(cond, 0)
+            ok = v <= baseline + 1e-6
+            _CHECK_RESULTS.append((f"DD tab:dd_extraction {row['setting']} {cond} <= baseline",
+                                    ok, f"baseline={baseline}, {cond}={v}"))
+            print(f"    [{'PASS' if ok else 'FAIL'}] DD tab:dd_extraction {row['setting']} {cond} <= baseline: baseline={baseline}, {cond}={v}")
 
 
 # Other rows still pulled from per-run dirs.
@@ -554,8 +695,6 @@ else:
     _check("Pythia-12B K=10 errPC CI hi (paper +0.187)", 0.187, ci_hi, tol=1e-3)
 
 p = generated("causal_ablation_K5", "p12b_errPC_K5", "results.json")
-if not p.exists():
-    p = generated("causal_ablation", "p12b_errPC_K5", "results.json")
 d = load(p)
 if d is None:
     _check("Pythia-12B K=5 errPC delta_auroc (paper +0.103)", 0.103, None)

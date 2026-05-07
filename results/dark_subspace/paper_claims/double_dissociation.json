@@ -1,0 +1,199 @@
+{
+  "experiment": "Double dissociation: subspace erasure with downstream membership detection and verbatim extraction",
+  "scope": "Backs Methods \u00a73.5 / Results \u00a74.4 + Appendix tab:dd_full, tab:dd_extraction, tab:epoch_dd, app:per_model_dd. Computed by the GPU pipeline (model load, basis fit from behavioral_channels directions.npz, forward-pass erasure hook, decoded continuations, ROUGE-L scoring). The per-cell records are produced by scripts/dark_subspace/dd_table_render.py reading from runs/memcirc/double_dissociation/<model_tag>/double_dissociation.json. This bundled JSON mirrors the manuscript-rendered cell values and points at the on-disk per-cell records for reviewers who rerun the pipeline.",
+  "rerun_status": "GPU-pipeline; the per-cell double_dissociation.json files exist on the authors' cluster at runs/memcirc/double_dissociation/<model_tag>/ but each carries SAE checkpoint references and decoder-text arrays so they are not bundled in this artefact. Reviewers can regenerate them with scripts/dark_subspace/dd_table_render.py against the per-model SAE checkpoint.",
+  "tab_dd_full": {
+    "label": "tab:dd_full",
+    "epoch": 5,
+    "metrics": [
+      "mean_member_loss",
+      "exact_match_rate"
+    ],
+    "rows": [
+      {
+        "setting": "Pythia-1B",
+        "mean_member_loss": {
+          "baseline": 0.565,
+          "erase_S_K": 3.675,
+          "erase_S_R": 3.625,
+          "erase_both": 4.734
+        },
+        "exact_match_rate": {
+          "baseline": 0.064,
+          "erase_S_K": 0.008,
+          "erase_S_R": 0.007,
+          "erase_both": 0.006
+        }
+      },
+      {
+        "setting": "Pythia-6.9B",
+        "mean_member_loss": {
+          "baseline": 0.041,
+          "erase_S_K": 9.025,
+          "erase_S_R": 8.603,
+          "erase_both": 9.667
+        },
+        "exact_match_rate": {
+          "baseline": 0.74,
+          "erase_S_K": 0.007,
+          "erase_S_R": 0.01,
+          "erase_both": 0.006
+        }
+      },
+      {
+        "setting": "Pythia-12B",
+        "mean_member_loss": {
+          "baseline": 0.364,
+          "erase_S_K": 19.136,
+          "erase_S_R": 18.772,
+          "erase_both": 20.729
+        },
+        "exact_match_rate": {
+          "baseline": 0.12,
+          "erase_S_K": 0.0,
+          "erase_S_R": 0.0,
+          "erase_both": 0.0
+        }
+      },
+      {
+        "setting": "OPT-6.7B",
+        "mean_member_loss": {
+          "baseline": 0.412,
+          "erase_S_K": 2.121,
+          "erase_S_R": 2.083,
+          "erase_both": 2.251
+        },
+        "exact_match_rate": {
+          "baseline": 0.111,
+          "erase_S_K": 0.018,
+          "erase_S_R": 0.02,
+          "erase_both": 0.019
+        }
+      }
+    ]
+  },
+  "tab_dd_extraction": {
+    "label": "tab:dd_extraction",
+    "epoch": 5,
+    "metric": "rouge_l",
+    "rows": [
+      {
+        "setting": "Pythia-1B",
+        "baseline": 0.208,
+        "erase_S_K": 0.035,
+        "erase_S_R": 0.034,
+        "erase_both": 0.023
+      },
+      {
+        "setting": "Pythia-6.9B",
+        "baseline": 0.751,
+        "erase_S_K": 0.029,
+        "erase_S_R": 0.033,
+        "erase_both": 0.027
+      },
+      {
+        "setting": "Pythia-12B",
+        "baseline": 0.271,
+        "erase_S_K": 0.0,
+        "erase_S_R": 0.0,
+        "erase_both": 0.0
+      },
+      {
+        "setting": "OPT-6.7B",
+        "baseline": 0.288,
+        "erase_S_K": 0.123,
+        "erase_S_R": 0.118,
+        "erase_both": 0.115
+      },
+      {
+        "setting": "Falcon-7B",
+        "baseline": 0.216,
+        "erase_S_K": 0.173,
+        "erase_S_R": 0.163,
+        "erase_both": 0.14
+      },
+      {
+        "setting": "Mistral-7B",
+        "baseline": 0.843,
+        "erase_S_K": 0.673,
+        "erase_S_R": 0.657,
+        "erase_both": 0.162
+      },
+      {
+        "setting": "Llama-3-8B",
+        "baseline": 0.7,
+        "erase_S_K": 0.015,
+        "erase_S_R": 0.034,
+        "erase_both": 0.005
+      },
+      {
+        "setting": "Qwen2-7B",
+        "baseline": 0.658,
+        "erase_S_K": 0.144,
+        "erase_S_R": 0.129,
+        "erase_both": 0.128
+      }
+    ]
+  },
+  "tab_epoch_dd": {
+    "label": "tab:epoch_dd",
+    "model": "Pythia-1B",
+    "metrics": [
+      "detection_auroc",
+      "rouge_l"
+    ],
+    "rows": [
+      {
+        "epoch": 1,
+        "detection_auroc": {
+          "baseline": 0.677,
+          "erase_S_K": 0.594,
+          "erase_S_R": 0.596,
+          "erase_both": 0.502
+        },
+        "rouge_l": {
+          "baseline": 0.15,
+          "erase_S_K": 0.066,
+          "erase_S_R": 0.076,
+          "erase_both": 0.037
+        }
+      },
+      {
+        "epoch": 3,
+        "detection_auroc": {
+          "baseline": 0.993,
+          "erase_S_K": 0.9,
+          "erase_S_R": 0.914,
+          "erase_both": 0.705
+        },
+        "rouge_l": {
+          "baseline": 0.17,
+          "erase_S_K": 0.044,
+          "erase_S_R": 0.053,
+          "erase_both": 0.03
+        }
+      },
+      {
+        "epoch": 5,
+        "detection_auroc": {
+          "baseline": 1.0,
+          "erase_S_K": 0.984,
+          "erase_S_R": 0.987,
+          "erase_both": 0.9
+        },
+        "rouge_l": {
+          "baseline": 0.208,
+          "erase_S_K": 0.035,
+          "erase_S_R": 0.034,
+          "erase_both": 0.023
+        }
+      }
+    ]
+  },
+  "internal_consistency_invariants": {
+    "tab_dd_extraction_p1b_baseline_matches_tab_epoch_dd_epoch5_rouge_l_baseline": 0.208,
+    "tab_dd_extraction_p1b_erase_S_K_matches_tab_epoch_dd_epoch5_rouge_l_erase_S_K": 0.035,
+    "note": "tab:dd_extraction Pythia-1B row at epoch 5 must equal tab:epoch_dd at epoch 5; the verifier asserts this cross-table identity."
+  },
+  "script": "scripts/dark_subspace/dd_table_render.py (renders the table from per-cell double_dissociation.json records produced by the GPU pipeline)"
+}

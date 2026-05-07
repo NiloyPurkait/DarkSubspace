@@ -38,7 +38,7 @@ Method scores.
     7. original_d_K  projection of h onto d_K (baseline reference).
 
 All attacks are scored on AUROC, TPR@1%FPR, and TPR@5%FPR. Paired bootstrap
-95 percent CIs (n_boot=1000, resample 2000 test items) are emitted per
+95 percent CIs (n_boot=10000, resample 2000 test items) are emitted per
 method and paired (residual minus baseline).
 
 Note on controlled-FT ceiling.
@@ -380,17 +380,17 @@ def run_model(
         auroc_mean, auroc_lo, auroc_hi = bootstrap_ci(
             labels, m["orientation_sign"] * s,
             lambda y, x: float(roc_auc_score(y, x)),
-            n_boot=1000, seed=seed,
+            n_boot=10000, seed=seed,
         )
         tpr1_mean, tpr1_lo, tpr1_hi = bootstrap_ci(
             labels, m["orientation_sign"] * s,
             lambda y, x: tpr_at_fpr(y, x, 0.01),
-            n_boot=1000, seed=seed,
+            n_boot=10000, seed=seed,
         )
         tpr5_mean, tpr5_lo, tpr5_hi = bootstrap_ci(
             labels, m["orientation_sign"] * s,
             lambda y, x: tpr_at_fpr(y, x, 0.05),
-            n_boot=1000, seed=seed,
+            n_boot=10000, seed=seed,
         )
         metrics[name] = {
             **m,
@@ -407,13 +407,13 @@ def run_model(
         d_mean, d_lo, d_hi = paired_bootstrap_ci(
             labels, ref_s, cmp_s,
             lambda y, x: tpr_at_fpr(y, x, 0.01),
-            n_boot=1000, seed=seed,
+            n_boot=10000, seed=seed,
         )
         paired[f"tpr1_residual_minus_{name}"] = {"mean": d_mean, "ci95_lo": d_lo, "ci95_hi": d_hi}
         d_mean, d_lo, d_hi = paired_bootstrap_ci(
             labels, ref_s, cmp_s,
             lambda y, x: float(roc_auc_score(y, x)),
-            n_boot=1000, seed=seed,
+            n_boot=10000, seed=seed,
         )
         paired[f"auroc_residual_minus_{name}"] = {"mean": d_mean, "ci95_lo": d_lo, "ci95_hi": d_hi}
 

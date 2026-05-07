@@ -1,6 +1,5 @@
 {
   "experiment": "Held-out d_K direction estimation",
-  "dispatch_brief": null,
   "split_design": {
     "train_frac": 0.7,
     "n_splits": 10,

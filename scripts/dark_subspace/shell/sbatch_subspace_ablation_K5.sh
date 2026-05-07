@@ -41,7 +41,6 @@ env/bin/python3 scripts/dark_subspace/subspace_ablation_eval.py \
   --bootstrap-n 10000 \
   --bootstrap-seed 12345 \
   --continue-on-fail \
-  --bypass-err-ratio-gate \
   --device cuda \
   --seed 42
 

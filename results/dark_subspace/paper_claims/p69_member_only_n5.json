@@ -1,0 +1,107 @@
+{
+  "experiment": "Pythia-6.9B member-only N=5 SAE cohort aggregate (mult=4, L1=5e-4, layer 16). Backs the Pythia-6.9B (controlled, member-only) row of tab:dark_subspace.",
+  "note": "Trained on the member subset only (no mixed corpus); see methods.tex for the protocol distinction between member-only and mixed-data SAE training. The mixed-data row is in p69_n5_harmonized_2026-05-06.json.",
+  "seeds_kept": [
+    "42",
+    "43",
+    "44",
+    "45",
+    "46"
+  ],
+  "cluster_summary_n5": {
+    "original_score_K_auroc": {
+      "mean": 0.8029896000000001,
+      "std": 5.5007272246487775e-05,
+      "min": 0.802965,
+      "max": 0.803088,
+      "n": 5,
+      "values": [
+        0.803088,
+        0.802965,
+        0.802965,
+        0.802965,
+        0.802965
+      ]
+    },
+    "reconstructed_score_K_auroc": {
+      "mean": 0.6327437,
+      "std": 0.014418868539174606,
+      "min": 0.607669,
+      "max": 0.6447609999999999,
+      "n": 5,
+      "values": [
+        0.637042,
+        0.6362224999999999,
+        0.607669,
+        0.638024,
+        0.6447609999999999
+      ]
+    },
+    "residual_score_K_auroc": {
+      "mean": 0.8326505,
+      "std": 0.006325638821494582,
+      "min": 0.8226530000000001,
+      "max": 0.83939,
+      "n": 5,
+      "values": [
+        0.8364419999999999,
+        0.8326720000000001,
+        0.8226530000000001,
+        0.83939,
+        0.8320954999999999
+      ]
+    },
+    "recon_cos": {
+      "mean": 0.9404034614562988,
+      "std": 0.0038357247766518396,
+      "min": 0.933779776096344,
+      "max": 0.9437629580497742,
+      "n": 5,
+      "values": [
+        0.9413756728172302,
+        0.933779776096344,
+        0.9417943358421326,
+        0.9413045644760132,
+        0.9437629580497742
+      ]
+    }
+  },
+  "rows_kept": [
+    {
+      "seed_label": "42",
+      "original_score_K_auroc": 0.803088,
+      "reconstructed_score_K_auroc": 0.637042,
+      "residual_score_K_auroc": 0.8364419999999999,
+      "recon_cos": 0.9413756728172302
+    },
+    {
+      "seed_label": "43",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.6362224999999999,
+      "residual_score_K_auroc": 0.8326720000000001,
+      "recon_cos": 0.933779776096344
+    },
+    {
+      "seed_label": "44",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.607669,
+      "residual_score_K_auroc": 0.8226530000000001,
+      "recon_cos": 0.9417943358421326
+    },
+    {
+      "seed_label": "45",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.638024,
+      "residual_score_K_auroc": 0.83939,
+      "recon_cos": 0.9413045644760132
+    },
+    {
+      "seed_label": "46",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.6447609999999999,
+      "residual_score_K_auroc": 0.8320954999999999,
+      "recon_cos": 0.9437629580497742
+    }
+  ],
+  "script": "scripts/shared/aggregate_member_only_cohort.py (run-time aggregator, not bundled; the per-seed runs/memcirc/sae_dark_subspace/p69_member_only_sae_seed{42..46}/results.json are the source of truth and regenerate from scripts/shared/train_sae_saif.py + scripts/dark_subspace/sae_dark_subspace.py)"
+}

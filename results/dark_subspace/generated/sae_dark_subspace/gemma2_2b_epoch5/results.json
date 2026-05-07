@@ -1,0 +1,34 @@
+{
+  "model": "gemma2_2b_mixed",
+  "layer": 16,
+  "sae_path": "(SAE checkpoint not bundled; regenerates from scripts/shared/train_sae_saif.py)",
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "original": {
+    "score_K_auroc": 0.801293,
+    "norm_auroc": 0.6069
+  },
+  "sae_reconstructed": {
+    "score_K_auroc": 0.7693539999999999,
+    "norm_auroc": 0.589131
+  },
+  "residual": {
+    "score_K_auroc": 0.82039,
+    "norm_auroc": 0.6120635000000001
+  },
+  "sae_quality": {
+    "reconstruction_mse": 2454.39208984375,
+    "reconstruction_cosine": 0.9109283685684204,
+    "d_K_coverage_cosine": -0.21518319845199585,
+    "d_K_residual_fraction": 0.9536961913108826,
+    "mean_active_features": 1408.6025,
+    "total_features": 9216,
+    "sparsity": 0.15284315321180555
+  },
+  "dark_subspace_effect": {
+    "auroc_drop_from_recon": 0.03193900000000016,
+    "auroc_preserved_in_residual": 0.82039,
+    "memorization_is_dark": false
+  },
+  "note": "Gemma-2-2B mixed-data SAE reconstruction/residual decomposition. Backs the Gemma-2-2B row of tab:dark_subspace and the body sign-test denominator. Recon cosine 0.911 sits above the strict 0.90 validity gate."
+}

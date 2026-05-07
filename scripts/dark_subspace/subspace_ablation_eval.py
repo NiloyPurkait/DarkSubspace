@@ -16,11 +16,28 @@ fails any gate). Two opt-in CLI flags loosen this for diagnostic use:
 logged warning. Any cell evaluated under the bypass carries
 ``err_ratio_gate_bypassed=True`` in its validity block, and the
 Holm-correction summary at the end of this script restricts to cells
-with ``gate_pass=True``. The shipped paper-claim JSONs in
-``results/dark_subspace/generated/causal_ablation/`` and
-``results/dark_subspace/generated/causal_ablation_K5/`` were produced
-without these bypass flags; they are present in the script for
-reviewer diagnostic reproducibility, not for the headline numbers.
+with ``gate_pass=True``.
+
+Provenance of shipped paper-claim JSONs:
+``results/dark_subspace/generated/causal_ablation/p12b_errPC_K10/results.json``
+was produced without bypass flags. ``causal_ablation_K5/p12b_errPC_K5/results.json``
+was produced with ``--bypass-err-ratio-gate`` set defensively in the
+shell wrapper, but the ``err_ratio_mean`` evaluated to 0.192, well inside
+the strict pass range [0.01, 0.30], so the shipped K=5 cell would have
+passed the strict gate identically without the bypass. The
+``err_ratio_gate_bypassed=True`` flag in that JSON's validity block
+is therefore a record of what the run script did, not of any rule
+relaxation. The current shell wrapper ``shell/sbatch_subspace_ablation_K5.sh``
+no longer passes the bypass flag, so any rerun produces an identical
+JSON with ``err_ratio_gate_bypassed=False``.
+
+Validity-gate threshold tier:
+``MIN_RECON_COS = 0.85`` corresponds to the permissive tier of the
+validity-gate hierarchy documented in ``manuscript/methods.tex`` (strict
+$\geq 0.90$, permissive $\geq 0.85$, below-permissive diagnostic only).
+The K-PC cells reported in ``tab:kpc_kten_cells`` are computed on
+Pythia-12B at recon_cos $\geq 0.99$, i.e. above the strict gate, so the
+choice of tier in this script does not affect the headline result.
 
 Reproduce:
     env/bin/python3 scripts/dark_subspace/subspace_ablation_eval.py \\

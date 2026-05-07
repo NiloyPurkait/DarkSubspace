@@ -351,12 +351,12 @@ def main():
     d_auroc, d_lo, d_hi = paired_bootstrap(
         y_orig, scores_orig, scores_para,
         lambda y, x: float(roc_auc_score(y, x)),
-        n_boot=1000, seed=args.seed,
+        n_boot=10000, seed=args.seed,
     )
     d_tpr1, d_tpr1_lo, d_tpr1_hi = paired_bootstrap(
         y_orig, sign_o * scores_orig, sign_o * scores_para,
         lambda y, x: tpr_at_fpr(y, x, 0.01),
-        n_boot=1000, seed=args.seed,
+        n_boot=10000, seed=args.seed,
     )
 
     result = {

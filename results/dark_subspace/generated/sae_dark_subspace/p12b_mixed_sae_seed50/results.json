@@ -1,0 +1,33 @@
+{
+  "model": "p12b_mixed_seed50",
+  "layer": 18,
+  "sae_path": "(SAE checkpoint not bundled; regenerates from sbatch_p12b_multiseed_array.sh seed 50)",
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "original": {
+    "score_K_auroc": 0.764461,
+    "norm_auroc": 0.5538639999999999
+  },
+  "sae_reconstructed": {
+    "score_K_auroc": 0.63338,
+    "norm_auroc": 0.5223
+  },
+  "residual": {
+    "score_K_auroc": 0.717449,
+    "norm_auroc": 0.5355285
+  },
+  "sae_quality": {
+    "reconstruction_mse": 12429.8994140625,
+    "reconstruction_cosine": 0.9917277693748474,
+    "d_K_coverage_cosine": 0.21330231428146362,
+    "d_K_residual_fraction": 0.9545021057128906,
+    "mean_active_features": 12.353,
+    "total_features": 20480,
+    "sparsity": 0.000603173828125
+  },
+  "dark_subspace_effect": {
+    "auroc_drop_from_recon": 0.1310809999999999,
+    "auroc_preserved_in_residual": 0.717449,
+    "memorization_is_dark": false
+  }
+}

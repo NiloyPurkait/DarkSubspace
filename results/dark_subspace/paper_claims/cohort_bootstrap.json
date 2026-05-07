@@ -1,6 +1,5 @@
 {
   "experiment": "Cohort per-row paired bootstrap CIs and sign test",
-  "dispatch_brief": null,
   "n_boot": 10000,
   "bootstrap_seed": 0,
   "cohort_rows": [
