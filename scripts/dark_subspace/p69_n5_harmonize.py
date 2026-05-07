@@ -267,10 +267,9 @@ def main() -> None:
         "harmonisation_pattern": "A",
         "harmonisation_pattern_description": (
             "Pattern A: drop seed 47, keep [42_postfix, 43, 44, 45, 46]. "
-            "Aligns the P69 mixed cohort to the same five seed labels as the "
-            "Pythia-1B multi-seed cohort . The seed_label "
-            "'42_postfix' is the post-fix re-train of the original "
-            "seed 42 ; it is canonically labelled '42' in the cohort."
+            "Aligns the Pythia-6.9B mixed cohort to the same five seed "
+            "labels as the Pythia-1B multi-seed cohort. The seed_label "
+            "'42_postfix' is canonically labelled '42' in the cohort."
         ),
         "seeds_kept": P69_SEED_LABELS_KEEP,
         "seeds_dropped": P69_SEED_LABELS_DROP,
