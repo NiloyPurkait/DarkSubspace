@@ -59,6 +59,9 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 | `l2_normalized_auroc.py` | L2-normalised residual membership AUROC (`tab:l2_normalized`). |
 | `paraphrase_sensitivity.py` | Word-order paraphrase orientation diagnostic (`app:tpr_paraphrase`). |
 | `tpr_at_low_fpr.py` | TPR at 0.1% FPR for the residual $\dK$ channel (`tab:tpr_at_0p1pct_fpr`). |
+| `length_baseline.py` | Length-feature membership classifier on the controlled split (`app:length_baseline`). |
+| `nonlinear_probe.py` | MLP-vs-linear probe comparison at the analysis layer (`tab:nonlinear`). |
+| `label_shuffled_null.py` | Permutation null on $\cos(d_K, d_R)$ under shuffled labels (`app:label_shuffled_null`). |
 | `feature_ablation_dark_subspace.py` | Top-$k$ classifier-feature ablation. |
 | `feature_ablation_random_k.py` | Random-feature ablation control matched to the classifier-feature subset. |
 | `random_direction_baseline.py` | 100 random unit-direction membership AUROC per model. |
@@ -69,6 +72,7 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 | `fresh_probe_test.py` | Fresh-probe permutation null for `tab:fresh_probe_v2`. |
 | `fsc_random_null.py` | Random-subset null for the feature sufficiency criterion (`tab:fsc_values`). |
 | `baseline_attacks_suite.py` | Standard pre-training-MIA attack suite for output-level scope checks. |
+| `dd_table_render.py` | Renders the double-dissociation tables (`tab:dd_full`, `tab:dd_extraction`, `tab:epoch_dd`) from cached per-cell records. |
 
 ### SAE training and fine-tuning
 
@@ -110,4 +114,4 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 
 Figure plotting scripts write to `outputs/figures/` by default. Set `FIGDIR` when writing directly into a separate manuscript checkout.
 
-Historical dataset and checkpoint labels still use `memcirc` in some paths, for example `data/memcirc_ctrl_ft/` and `runs/sae/memcirc_*`. Those labels are provenance identifiers from the experiment campaign. The current code paths use `scripts/dark_subspace/` and `results/dark_subspace/`.
+Historical dataset and checkpoint labels still use `memcirc` in some paths, for example `data/memcirc_ctrl_ft/` and `runs/sae/memcirc_*`. Those labels are retained as earlier run provenance identifiers. The current code paths use `scripts/dark_subspace/` and `results/dark_subspace/`.
