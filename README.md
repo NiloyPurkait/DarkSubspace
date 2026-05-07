@@ -36,7 +36,7 @@ python3 -m venv .venv
 
 | Path | Contents |
 | --- | --- |
-| `results/dark_subspace/` | Shipped JSON records used by the verifier and reviewer-facing claim map. |
+| `results/dark_subspace/` | Shipped JSON records used by the verifier and the claim map. |
 | `scripts/dark_subspace/` | Paper-specific experiment, aggregation, plotting, and verification scripts. |
 | `scripts/dark_subspace/shell/` | SLURM wrappers for GPU jobs and multi-seed arrays. |
 | `scripts/shared/` | Shared SAE training, plotting style, path bootstrap, and utility code. |
@@ -71,7 +71,7 @@ The repository uses several internal labels that map to terminology in the paper
 
 ## Claim-Source Map
 
-The table below connects each reviewer-facing paper passage to the script and shipped JSON source that reproduce the corresponding result. `results/dark_subspace/generated/` mirrors the relevant JSON leaves from the original run tree, so review does not require the full ignored `runs/` directory.
+The table below connects each paper passage to the script and shipped JSON source that reproduce the corresponding result. `results/dark_subspace/generated/` mirrors the relevant JSON leaves from the original run tree, so review does not require the full ignored `runs/` directory.
 
 | Paper passage | What to verify | Source script | Shipped JSON source |
 | --- | --- | --- | --- |
@@ -145,7 +145,7 @@ python3 scripts/dark_subspace/figure_data_loader.py
 
 Figure plotting scripts write generated figures under `outputs/figures/` by default; set `FIGDIR=/path/to/figures` to target a manuscript checkout. SLURM wrappers in `scripts/dark_subspace/shell/` document the cluster commands used for the main multi-seed and control jobs. The wrappers create generated outputs under `runs/dark_subspace/` and SAE checkpoints under `runs/sae/`.
 
-Some historical corpus and checkpoint labels still contain `memcirc` in paths such as `data/memcirc_ctrl_ft/` or `runs/sae/memcirc_*`. Those names are retained because they are embedded in provenance records from the experiment campaign. The reviewer-facing code and result layout use `dark_subspace`.
+Some historical corpus and checkpoint labels still contain `memcirc` in paths such as `data/memcirc_ctrl_ft/` or `runs/sae/memcirc_*`. Those names are retained because they are embedded in provenance records from the experiment campaign. The current code and result layout use `dark_subspace`.
 
 ## Scope Notes
 
@@ -170,7 +170,3 @@ Some historical corpus and checkpoint labels still contain `memcirc` in paths su
 ## License
 
 MIT. See `LICENSE`.
-
-## Submission Packaging
-
-**Submission packaging.** When preparing this artefact for anonymous submission, exclude the `.git/` directory from the archive. The local git history may contain identifying metadata (committer name/email, remote URL). Use a clean export, e.g. `git archive --format=zip HEAD -o artefact.zip`, or `zip -r artefact.zip DarkSubspace-main -x '*/.git/*'`.

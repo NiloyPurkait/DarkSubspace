@@ -110,4 +110,4 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 
 Figure plotting scripts write to `outputs/figures/` by default. Set `FIGDIR` when writing directly into a separate manuscript checkout.
 
-Historical dataset and checkpoint labels still use `memcirc` in some paths, for example `data/memcirc_ctrl_ft/` and `runs/sae/memcirc_*`. Those labels are provenance identifiers from the experiment campaign. New reviewer-facing code paths use `scripts/dark_subspace/` and `results/dark_subspace/`.
+Historical dataset and checkpoint labels still use `memcirc` in some paths, for example `data/memcirc_ctrl_ft/` and `runs/sae/memcirc_*`. Those labels are provenance identifiers from the experiment campaign. The current code paths use `scripts/dark_subspace/` and `results/dark_subspace/`.
