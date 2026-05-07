@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_p1b.sh.
 #
 # Pythia-1B mult=4 cross-architecture multiseed launcher. Trains one SAE per

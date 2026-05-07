@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=gemma2_2b_sae
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:1

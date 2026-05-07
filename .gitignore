@@ -4,6 +4,7 @@ __pycache__/
 *.so
 *.egg-info/
 .venv/
+venv/
 env/
 .env
 .env.*
@@ -15,6 +16,12 @@ env/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+
+# Editors
+*.swp
+*.swo
+.idea/
+.vscode/
 
 # Build artifacts
 dist/

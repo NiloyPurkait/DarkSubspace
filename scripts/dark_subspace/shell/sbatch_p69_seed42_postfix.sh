@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_p69_seed42_postfix.sh.
 #
 # Per-seed launcher for the Pythia-6.9B seed-42 postfix run that closes the

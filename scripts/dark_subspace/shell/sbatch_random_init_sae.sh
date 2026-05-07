@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=random_init_sae
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:1

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_p12b_multiseed_array.sh.
 #
 # SLURM array launcher for the Pythia-12B mixed-data SAE training and

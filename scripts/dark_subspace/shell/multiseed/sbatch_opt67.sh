@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=opt67_mixed
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:1
@@ -22,9 +22,10 @@
 # Per-task isolated run-dir to avoid collision-on-write.
 #
 # Goal: lift OPT-6.7B row from N=1 to N=5 AND switch from member-only to mixed-data SAE.
-# Existing single-seed: member-only SAE at L24, drop=0.217, recon_cos=0.533 (HARD FAIL,
-#   ddagger-marked). Even with N=5, recon_cos may not gate-pass; this dispatches the
-#   honest test rather than presuming the gate will be met.
+# Existing single-seed: member-only SAE at L24, drop=0.217, recon_cos=0.533 (well below
+#   the strict reconstruction-cosine threshold, ddagger-marked). Even with N=5, recon_cos
+#   may not clear the validity gate; this dispatches the honest test rather than
+#   presuming the gate will be met.
 #
 # Hyperparameters (matched to other mixed-data SAE setups; mult=8 used because OPT
 # member-only SAE used mult=8 + l1=2e-4; we widen to mult=4 + l1=5e-4 to align with

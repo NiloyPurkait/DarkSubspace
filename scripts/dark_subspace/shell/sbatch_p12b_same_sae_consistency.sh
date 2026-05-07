@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=p12b_sameSAE
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:H100:1

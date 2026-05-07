@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=rand_dir_baseline
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:1

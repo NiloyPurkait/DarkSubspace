@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=falcon_mixed
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:1
@@ -23,8 +23,9 @@
 # Per-task isolated run-dir to avoid collision-on-write.
 #
 # Goal: lift Falcon-7B row from N=1 to N=5 AND switch from member-only to mixed-data SAE.
-# Existing single-seed: member-only SAE, drop=-0.005, recon_cos=0.767 (BELOW YELLOW),
-#   marked with both dagger (only 9 active features) and ddagger (validity gate fail).
+# Existing single-seed: member-only SAE, drop=-0.005, recon_cos=0.767 (below validity
+#   gate threshold), marked with both dagger (only 9 active features) and ddagger
+#   (below strict reconstruction-cosine threshold).
 # Mixed-data + multi-seed closes the member-only SAE confound while testing seed stability.
 #
 # Hyperparameters: matched to other mixed-data SAE setups in the cross-architecture sweep.

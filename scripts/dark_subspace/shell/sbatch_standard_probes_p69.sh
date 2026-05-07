@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=std_probes_p69
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:1

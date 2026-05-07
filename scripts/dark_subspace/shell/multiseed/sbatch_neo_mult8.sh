@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_neo_mult8.sh.
 #
 # GPT-Neo-2.7B mult=8 cross-architecture multiseed launcher. Trains one SAE

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=disjoint_corpus_prep
 #SBATCH --partition=GPU
 #SBATCH --cpus-per-task=4

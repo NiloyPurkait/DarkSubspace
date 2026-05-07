@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_qwen2_mult8.sh.
 #
 # Qwen2-7B mult=8 cross-architecture multiseed launcher. Trains one SAE per

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_multiseed_mixed_sae_p69.sh.
 #
 # Per-seed launcher (alternative to the array form) for one Pythia-6.9B
@@ -39,7 +39,7 @@
 # Seeds: 43, 44, 45, 46, 47.
 #
 # For each seed: (1) train SAE, (2) run dark subspace eval.
-# Total runtime: about 3 x (30 min train + 5 min eval) = about 1.75 hours on
+# Total runtime: about 5 x (30 min train + 5 min eval) = about 3 hours on
 # an H100 node. Conservative SLURM wall time: 36h.
 
 set -euo pipefail

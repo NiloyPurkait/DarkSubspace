@@ -6,7 +6,7 @@ curated JSONs shipped under ``results/dark_subspace/``, asserts the on-disk
 values match the paper-text values to within a small numerical tolerance, and
 exits 1 on any mismatch.
 
-Used as the reviewer entry point for reproducibility (Section 5 of the paper).
+Acts as the primary reproducibility entry point (Section 5 of the paper).
 No GPU required, no SLURM submission, runs in seconds on a CPU.
 
 Reproduce::
@@ -458,6 +458,187 @@ if bib.exists():
         print(f"  {'PASS' if present else 'MISSING'}: {key}")
 else:
     print("  manuscript/references.bib not present in this code/results artifact; bibliography check skipped.")
+
+
+# -----------------------------------------------------------------------------
+# Additional asserted checks against shipped JSONs (Tables 1, 3, K-PC,
+# cohort bootstrap, held-out dK, BoW ceiling, Pythia-12B L18).
+# -----------------------------------------------------------------------------
+banner("BCD per-model channel decomposition (Table 1) [asserted]")
+
+# Paper Table 1 (tab:bcd_main) reports cos(d_K, d_R), Mem AUROC, Rec AUROC
+# at the SAE layer per model. Pythia-12B row uses layer 24 (channel-geometry
+# reference layer); other models use the same SAE layer reported elsewhere.
+# Tolerance follows the paper rounding to 3 decimals.
+bcd_table1 = [
+    ("Pythia-1B",   "p1b_epoch5",          8,  0.102,  0.577, 0.762),
+    ("Pythia-6.9B", "p69_epoch5",         16,  0.107,  0.828, 0.696),
+    ("Pythia-12B",  "p12b_epoch5",        24,  0.336,  0.781, 0.806),
+    ("GPT-Neo-2.7B","neo_epoch5",         16,  0.024,  0.504, 0.813),
+    ("OPT-6.7B",    "opt67_epoch5",       24, -0.063,  0.869, 0.883),
+    ("Falcon-7B",   "falcon7b_epoch5_v2", 16,  0.161,  0.635, 0.855),
+    ("Mistral-7B",  "mistral_epoch5_v2",  16, -0.010,  0.967, 0.714),
+    ("Llama-3-8B",  "llama3_epoch5_v2",   16,  0.223,  0.957, 0.735),
+    ("Qwen2-7B",    "qwen2_epoch5",       16,  0.390,  0.803, 0.705),
+]
+for label, dirname, layer, exp_cos, exp_mem, exp_rec in bcd_table1:
+    p = generated("behavioral_channels", dirname, "orthogonality.json")
+    d = load(p)
+    if d is None:
+        _check(f"BCD {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, None)
+        _check(f"BCD {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, None)
+        _check(f"BCD {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, None)
+        continue
+    layers = d.get("per_layer", {})
+    ld = layers.get(str(layer)) or layers.get(layer)
+    if not isinstance(ld, dict):
+        _check(f"BCD {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, None)
+        _check(f"BCD {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, None)
+        _check(f"BCD {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, None)
+        continue
+    cos = ld.get("cosine_d_K_d_R")
+    mem = get(ld, "membership_probe", "auroc_mean")
+    rec = get(ld, "recall_probe", "auroc_mean")
+    # Cosines are reported to 3 decimals, allow 1e-3 tol.
+    _check(f"BCD {label} L{layer} cos(d_K,d_R) (paper {exp_cos:+.3f})", exp_cos, cos, tol=1e-3)
+    _check(f"BCD {label} L{layer} mem AUROC (paper {exp_mem:.3f})", exp_mem, mem, tol=1e-3)
+    _check(f"BCD {label} L{layer} rec AUROC (paper {exp_rec:.3f})", exp_rec, rec, tol=1e-3)
+
+
+banner("Norm-baseline best-layer AUROCs (Table 3) [asserted]")
+
+# Paper Table 3 (tab:norm_direction) norm AUROCs at the best layer per model.
+# Source: results/dark_subspace/generated/norm_baseline/<dir>/results.json
+# We compute the maximum AUROC across per-layer entries to compare against
+# the paper-reported best-layer value.
+norm_table3 = [
+    ("Pythia-6.9B", "p69_epoch5",   0.542),
+    ("OPT-6.7B",    "opt67_epoch5", 0.534),
+    ("Falcon-7B",   "falcon_epoch5",0.557),
+    ("Pythia-1B",   "p1b_epoch5",   0.548),
+    ("Pythia-12B",  "p12b_epoch5",  0.599),
+    ("GPT-Neo-2.7B","neo_epoch5",   0.514),
+    ("Qwen2-7B",    "qwen2_epoch5", 0.542),
+    ("Mistral-7B",  "mistral_epoch5",0.877),
+    ("Llama-3-8B",  "llama3_epoch5",0.843),
+]
+for label, dirname, expected in norm_table3:
+    p = generated("norm_baseline", dirname, "results.json")
+    d = load(p)
+    if d is None:
+        _check(f"Norm-baseline {label} best-layer AUROC (paper {expected:.3f})", expected, None)
+        continue
+    per_layer = d.get("per_layer") or {}
+    aurocs = [v.get("auroc") for v in per_layer.values() if isinstance(v, dict) and isinstance(v.get("auroc"), (int, float))]
+    best = max(aurocs) if aurocs else None
+    _check(f"Norm-baseline {label} best-layer AUROC (paper {expected:.3f})", expected, best, tol=1e-3)
+
+
+banner("K-PC residual ablation magnitudes (Table tab:kpc_kten_cells) [asserted]")
+
+# Paper Table tab:kpc_kten_cells reports the AUROC reduction (delta) for the
+# Pythia-12B residual-PC ablation: K=10 -> +0.176 (95% CI [+0.165, +0.187]),
+# K=5 -> +0.103 (95% CI [+0.094, +0.112]).
+p = generated("causal_ablation", "p12b_errPC_K10", "results.json")
+d = load(p)
+if d is None:
+    _check("Pythia-12B K=10 errPC delta_auroc (paper +0.176)", 0.176, None)
+    _check("Pythia-12B K=10 errPC CI lo (paper +0.165)", 0.165, None)
+    _check("Pythia-12B K=10 errPC CI hi (paper +0.187)", 0.187, None)
+else:
+    delta = d.get("delta_auroc_mean")
+    ci_lo = get(d, "delta_bootstrap", "ci95_lo")
+    ci_hi = get(d, "delta_bootstrap", "ci95_hi")
+    _check("Pythia-12B K=10 errPC delta_auroc (paper +0.176)", 0.176, delta, tol=1e-3)
+    _check("Pythia-12B K=10 errPC CI lo (paper +0.165)", 0.165, ci_lo, tol=1e-3)
+    _check("Pythia-12B K=10 errPC CI hi (paper +0.187)", 0.187, ci_hi, tol=1e-3)
+
+p = generated("causal_ablation_K5", "p12b_errPC_K5", "results.json")
+if not p.exists():
+    p = generated("causal_ablation", "p12b_errPC_K5", "results.json")
+d = load(p)
+if d is None:
+    _check("Pythia-12B K=5 errPC delta_auroc (paper +0.103)", 0.103, None)
+    _check("Pythia-12B K=5 errPC CI lo (paper +0.094)", 0.094, None)
+    _check("Pythia-12B K=5 errPC CI hi (paper +0.112)", 0.112, None)
+else:
+    _check("Pythia-12B K=5 errPC delta_auroc (paper +0.103)", 0.103, d.get("delta_auroc_mean"), tol=1e-3)
+    _check("Pythia-12B K=5 errPC CI lo (paper +0.094)", 0.094, get(d, "delta_bootstrap", "ci95_lo"), tol=1e-3)
+    _check("Pythia-12B K=5 errPC CI hi (paper +0.112)", 0.112, get(d, "delta_bootstrap", "ci95_hi"), tol=1e-3)
+
+
+banner("Cohort bootstrap sign test (paper_claims/cohort_bootstrap.json) [asserted]")
+
+# Paper cohort_bootstrap pre-registered sign test on the inverting cohort:
+# "5 of 5 inverting rows have positive margin (residual > original), 4 of 5
+# have CI excluding zero, one-sided binomial p = 0.03125, decision ACCEPT."
+cb = load(PAPER_CLAIMS / "cohort_bootstrap.json")
+if cb is None:
+    _check("Cohort bootstrap n_inverting_cohort_rows (paper 5)", 5, None)
+    _check("Cohort bootstrap n_positive_margin (paper 5)", 5, None)
+    _check("Cohort bootstrap n_ci_excludes_zero (paper 4)", 4, None)
+    _check("Cohort bootstrap p_one_sided (paper 0.03125)", 0.03125, None)
+else:
+    st = cb.get("sign_test", {})
+    _check("Cohort bootstrap n_inverting_cohort_rows (paper 5)", 5, st.get("n_inverting_cohort_rows"), tol=0)
+    _check("Cohort bootstrap n_positive_margin (paper 5)", 5, st.get("n_positive_margin"), tol=0)
+    _check("Cohort bootstrap n_ci_excludes_zero (paper 4)", 4, st.get("n_ci_excludes_zero"), tol=0)
+    _check("Cohort bootstrap p_one_sided (paper 0.03125)", 0.03125,
+           st.get("p_one_sided_binomial_05"), tol=1e-6)
+    decision_ok = st.get("pre_reg_decision") == "ACCEPT"
+    _CHECK_RESULTS.append(("Cohort bootstrap pre_reg_decision (paper ACCEPT)", decision_ok,
+                           f"actual={st.get('pre_reg_decision')!r}"))
+    flag = "PASS" if decision_ok else "FAIL"
+    print(f"    [{flag}] Cohort bootstrap pre_reg_decision (paper ACCEPT): actual={st.get('pre_reg_decision')!r}")
+
+
+banner("Held-out d_K reductions (paper_claims/heldout_dk.json, app:heldout_dk_protocol) [asserted]")
+
+# Paper app:heldout_dk_protocol reports Pythia-6.9B held-out mean reduction
+# 0.149 and Pythia-12B held-out mean reduction 0.105.
+hd = load(PAPER_CLAIMS / "heldout_dk.json")
+if hd is None:
+    _check("Pythia-6.9B held-out drop mean (paper 0.149)", 0.149, None)
+    _check("Pythia-12B held-out drop mean (paper 0.105)", 0.105, None)
+else:
+    anchors = hd.get("anchors", [])
+    p69_drop = next(
+        (a.get("heldout_drop_mean") for a in anchors if a.get("model") == "p69"),
+        None,
+    )
+    p12b_drop = next(
+        (a.get("heldout_drop_mean") for a in anchors if a.get("model") == "p12b"),
+        None,
+    )
+    _check("Pythia-6.9B held-out drop mean (paper 0.149)", 0.149, p69_drop, tol=1e-3)
+    _check("Pythia-12B held-out drop mean (paper 0.105)", 0.105, p12b_drop, tol=1e-3)
+
+
+banner("Bag-of-Words vocabulary baseline (app:bow_baseline) [asserted]")
+
+# Paper app:bow_baseline cites pooled AUROC 0.4566 (rounded to 0.457).
+bow = load(generated("bow_ceiling", "memcirc_ctrl_ft", "results.json"))
+if bow is None:
+    _check("BoW pooled AUROC (paper 0.4566)", 0.4566, None)
+else:
+    pooled = get(bow, "variants", "tfidf_lr", "pooled_auroc")
+    _check("BoW pooled AUROC (paper 0.4566)", 0.4566, pooled, tol=1e-3)
+
+
+banner("Pythia-12B L18 SAE-reconstruction drop (Table 2 row) [asserted]")
+
+# Paper Table 2 reports Pythia-12B at L18 with about 16 percentage points
+# original-minus-reconstructed drop. Source:
+# results/.../sae_dark_subspace/p12b_epoch5_layer18/results.json
+p = generated("sae_dark_subspace", "p12b_epoch5_layer18", "results.json")
+d = load(p)
+if d is None:
+    _check("Pythia-12B L18 orig-recon drop (paper +0.16, ~16pp)", 0.16, None)
+else:
+    orig = get(d, "original", "score_K_auroc")
+    recon = get(d, "sae_reconstructed", "score_K_auroc")
+    drop = orig - recon if (orig is not None and recon is not None) else None
+    _check("Pythia-12B L18 orig-recon drop (paper +0.16, ~16pp)", 0.16, drop, tol=0.01)
 
 
 print()

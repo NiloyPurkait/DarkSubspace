@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_p69_mixed_seeds_array.sh.
 #
 # Array launcher for the additional Pythia-6.9B mixed-data SAE seeds (45, 46,

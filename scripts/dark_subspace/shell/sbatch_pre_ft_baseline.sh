@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # sbatch_pre_ft_baseline.sh.
 #
 # SLURM wrapper for scripts/dark_subspace/behavioral_channels.py on the

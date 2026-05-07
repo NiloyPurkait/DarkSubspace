@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #SBATCH --job-name=errPC_K5
 #SBATCH --partition=GPU
 #SBATCH --gres=gpu:1
