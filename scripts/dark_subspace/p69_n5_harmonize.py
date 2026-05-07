@@ -4,22 +4,13 @@ p69_n5_harmonize.py.
 
 Harmonisation utility for the Pythia-6.9B (mixed) row of `tab:dark_subspace`.
 
-Background.
-  The N=6 P69 mixed-data SAE cohort lives at
-    runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed{42_postfix,43,44,45,46,47}/
-  with seed labels {42_postfix, 43, 44, 45, 46, 47}. The seed_label "42_postfix"
-  is the post-fix retraining of the original seed 42; the
-  cohort is the canonical mult=4 / L1=5e-4 mixed-data SAE family. The pre-fix
-  seed 42 was discarded under L0 bi-modality disambiguation.
-
-  This script subselects an N=5 cluster from that N=6 cohort to match the
-  Pythia-1B canonical seed list of {42, 43, 44, 45, 46}, which
-  enables uniform "five SAE seeds" reporting across the multi-seed Pythia rows
-  of `tab:dark_subspace`.
-
-  Pattern A (PREFERRED, applied here): drop seed 47, keep [42_postfix, 43, 44,
-  45, 46]. The seed_label "42_postfix" is canonically the seed-42 row of the
-  cohort (post-fix replacement of the original seed 42 SAE).
+Aggregates the canonical mult=4 / L1=5e-4 Pythia-6.9B mixed-data SAE cohort
+at
+  runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed{42_postfix,43,44,45,46,47}/
+into the N=5 cluster reported in `tab:dark_subspace`, matching the Pythia-1B
+seed list of {42, 43, 44, 45, 46}. The selection keeps seeds 42_postfix, 43,
+44, 45, 46 and drops seed 47, giving a uniform "five SAE seeds" reporting
+basis across the multi-seed Pythia rows of `tab:dark_subspace`.
 
 Reproduce.
     env/bin/python3 scripts/dark_subspace/p69_n5_harmonize.py
@@ -27,7 +18,7 @@ Reproduce.
 
 Outputs.
   Stdout. Human-readable per-seed and cluster summary tables for the harmonised
-  N=5 set, alongside the existing N=6 cluster summary, with per-metric deltas.
+  N=5 set, alongside the underlying N=6 cluster summary, with per-metric deltas.
 
   Disk. JSON file at
     results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json

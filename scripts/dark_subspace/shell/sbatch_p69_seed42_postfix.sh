@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 # sbatch_p69_seed42_postfix.sh.
 #
-# Per-seed launcher for the Pythia-6.9B seed-42 postfix run that closes the
-# six-seed mixed-data SAE cohort.
+# Per-seed launcher for the Pythia-6.9B seed-42 mixed-data SAE training run.
 #
-# Used in Appendix (P6.9B six-seed cohort) of the paper.
+# Used by the Pythia-6.9B mixed-data SAE cohort feeding `tab:dark_subspace`.
 # Reproduce: sbatch scripts/dark_subspace/shell/sbatch_p69_seed42_postfix.sh
 #
 #SBATCH --job-name=p69_seed42_postfix
@@ -15,18 +14,11 @@
 #SBATCH --output=logs/p69_seed42_postfix_%j.out
 #SBATCH --error=logs/p69_seed42_postfix_%j.err
 #
-# Purpose: disambiguate whether the L0=551 vs L0=11 gap observed between the
-# pre-existing seed-42 P69 SAE (L0=551) and the seed-43 P69 SAE (L0=11) is:
-#   (a) seed variance (expected spread across SAE seeds), or
-#   (b) a pre/post-corpus-cycling-fix training artifact.
+# Trains a mixed-data SAE on Pythia-6.9B layer 16 with the canonical
+# multi-seed hyperparameters and runs the SAE reconstruction/residual
+# evaluation against the channel-decomposition directions.
 #
-# Method: retrain seed 42 with IDENTICAL HP to the matched-HP multi-seed
-# runs (mult=4, l1=5e-4, 200M tokens) using the post-fix sae_corpus.py
-# cycling behavior. If new-seed-42 L0 lands near seed-43's L0=11, the
-# original seed-42 result was a pre-fix artifact. If it lands near 551,
-# the variance is seed-driven.
-#
-# Hyperparameters (matched to the p69 multi-seed sweep):
+# Hyperparameters (matched to the Pythia-6.9B multi-seed sweep):
 #   model: runs/controlled_ft/run_20260306_055225/ft_epoch5/model
 #   layer: 16
 #   d_model_mult: 4  (d_sae = 16384)
@@ -52,7 +44,7 @@ SEED=42
 SEED_TAG="seed${SEED}_postfix"
 
 echo "================================================================"
-echo "=== P69 Mixed SAE Seed 42 Post-Fix Rerun ==="
+echo "=== Pythia-6.9B Mixed-Data SAE Seed 42 ==="
 echo "================================================================"
 echo "Started: $(date)"
 echo "SLURM_JOB_ID=${SLURM_JOB_ID:-N/A}"
@@ -113,7 +105,7 @@ env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \
   --model-id "p69_mixed_${SEED_TAG}"
 
 echo "================================================================"
-echo "=== P69 Seed 42 Post-Fix Rerun COMPLETE ==="
+echo "=== Pythia-6.9B Seed 42 Run COMPLETE ==="
 echo "================================================================"
 echo "Finished: $(date)"
 echo "SAE checkpoint: $SAE_PATH"
