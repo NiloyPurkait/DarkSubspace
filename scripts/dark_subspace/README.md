@@ -2,7 +2,7 @@
 
 This directory contains the paper-specific code for this artefact. Scripts are grouped by experiment role rather than combined into one large driver, so that individual claims and controls can be verified independently.
 
-For the code-to-paper terminology mapping (BCD, K-OC-2, errPC, OC, memcirc), see the **Glossary** in the root `README.md`. For the paper-passage-to-script-and-JSON mapping, see the **Claim-Source Map** in the root `README.md`.
+A small number of engineering labels (`errPC`, `kocl2`, `memcirc`) survive in path strings and one filename; their paper-passage equivalents are tabulated under **Naming notes** in the root `README.md`. The full paper-passage-to-script-and-JSON mapping is the **Claim-Source Map**, also in the root `README.md`.
 
 ## Recommended starting points
 
@@ -91,7 +91,7 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 | `sae_noise_floor_aggregate.py` | Aggregates the Pythia-6.9B mixed-SAE noise-floor cohort. |
 | `p69_n5_harmonize.py` | Produces the canonical harmonised N=5 Pythia-6.9B cohort record. |
 | `p12b_multiseed_query.py` | Reads `runs/dark_subspace/sae_dark_subspace/p12b_mixed_sae_seed{47..51}/results.json` and reports the multi-seed table. |
-| `per_row_bootstrap_kocl2.py` | Per-row paired bootstrap for the K-OC-2 cohort (`app:koc2_bootstrap`). |
+| `per_row_bootstrap_kocl2.py` | Per-row paired bootstrap for the directional sign-test cohort (Appendix `app:koc2_bootstrap`). The script filename uses `kocl2` as an engineering label. |
 | `per_row_bootstrap_kocl2_residual_minus_recon.py` | Same bootstrap with the residual-minus-reconstruction margin. |
 | `rerun_bootstrap_cis.py` | Reruns bootstrap confidence intervals in place on the JSON records (used to refresh paraphrase and BoW intervals; recorded in `bootstrap_history` fields). |
 

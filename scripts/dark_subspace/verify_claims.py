@@ -643,7 +643,7 @@ else:
 
 print()
 print("=" * 70)
-print("END OF VERIFICATION DUMP")
+print("End of verification dump")
 print("=" * 70)
 
 
@@ -658,7 +658,7 @@ n_fail = n_total - n_pass
 
 print()
 print("=" * 70)
-print(f"ASSERTED CHECK SUMMARY: {n_pass}/{n_total} PASS, {n_fail} FAIL")
+print(f"Asserted check summary: {n_pass}/{n_total} pass, {n_fail} fail")
 print("=" * 70)
 if n_fail:
     print("Failures:")

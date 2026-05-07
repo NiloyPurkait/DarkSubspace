@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "sae-mia-audit"
 version = "0.1.0"
-description = "Support package for the Dark Subspace sparse-autoencoder membership-auditing artifact."
+description = "Support package for the Dark Subspace sparse-autoencoder membership-auditing artefact."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}

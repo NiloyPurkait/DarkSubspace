@@ -637,6 +637,14 @@ def main():
         )
 
     # Summary (headline numbers)
+    # The headline block binds to args.sae_layer, the pre-specified per-model
+    # analysis layer documented in the paper's tab:model_details (selected once,
+    # before any SAE training, by maximising cross-validated AUROC of a logistic
+    # membership probe on raw mean-pooled residual-stream activations under a
+    # fixed five-fold split; see methods.tex paragraph "For each model, we first
+    # choose the SAE analysis layer."). The best_membership_layer/_auroc fields
+    # below are diagnostic only -- they report which layer in this run's --layers
+    # sweep peaked, as a sanity check, and are not the values cited by the paper.
     best_layer = max(results_per_layer.values(),
                      key=lambda x: x["membership_probe"]["auroc_mean"])
     sae_layer_key = str(args.sae_layer) if args.sae_layer is not None else None
@@ -668,7 +676,7 @@ def main():
 
     # ── Print summary ───────────────────────────────────────────────
     print("\n" + "=" * 70)
-    print("BEHAVIORAL CHANNEL DECOMPOSITION SUMMARY")
+    print("Behavioural channel decomposition summary")
     print("=" * 70)
     print(f"Model: {args.model_path}")
     print(f"Layers analysed: {layers}")

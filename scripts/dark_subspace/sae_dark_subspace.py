@@ -374,7 +374,7 @@ def main():
 
     # Print summary
     print("\n" + "=" * 72)
-    print("SAE DARK SUBSPACE EXPERIMENT SUMMARY")
+    print("SAE dark subspace experiment summary")
     print("=" * 72)
     print(f"Model: {args.model_id}  |  Layer: {args.layer}  |  SAE: {args.sae_path}")
     print()

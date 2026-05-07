@@ -6,6 +6,22 @@ gate-passing models, with paired bootstrap drops and three controls
 (C1 random rotation, C2 matched Gaussian noise, C4 random column mask).
 
 Used in the K-PC causal ablation appendix table.
+
+Validity-gate handling:
+The script defaults to strict-gate behaviour (the model-level err_ratio
+gate raises on failure and the loop stops on the first model that
+fails any gate). Two opt-in CLI flags loosen this for diagnostic use:
+``--continue-on-fail`` keeps iterating after a per-model failure, and
+``--bypass-err-ratio-gate`` converts the err_ratio assertion into a
+logged warning. Any cell evaluated under the bypass carries
+``err_ratio_gate_bypassed=True`` in its validity block, and the
+Holm-correction summary at the end of this script restricts to cells
+with ``gate_pass=True``. The shipped paper-claim JSONs in
+``results/dark_subspace/generated/causal_ablation/`` and
+``results/dark_subspace/generated/causal_ablation_K5/`` were produced
+without these bypass flags; they are present in the script for
+reviewer diagnostic reproducibility, not for the headline numbers.
+
 Reproduce:
     env/bin/python3 scripts/dark_subspace/subspace_ablation_eval.py \\
         --roster scripts/dark_subspace/configs/subspace_ablation_roster.json \\

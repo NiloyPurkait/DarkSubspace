@@ -479,7 +479,7 @@ def main():
 
     # --- Print summary ---
     print("\n" + "=" * 76)
-    print("FEATURE ABLATION DARK SUBSPACE EXPERIMENT")
+    print("Feature ablation dark subspace experiment")
     print("=" * 76)
     print(f"Model: {args.model_id}  |  Layer: {args.layer}  |  SAE: {args.sae_path}")
     print()
