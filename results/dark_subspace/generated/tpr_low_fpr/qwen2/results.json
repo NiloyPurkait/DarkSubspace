@@ -1,0 +1,17 @@
+{
+  "model": "qwen2",
+  "fpr_target": 0.001,
+  "n_boot": 10000,
+  "seed": 12345,
+  "method": "residual_d_K",
+  "orientation_sign": 1,
+  "tpr_point": 0.01,
+  "tpr_boot_mean": 0.007354510213580663,
+  "tpr_ci_lo": 0.0,
+  "tpr_ci_hi": 0.02346938775510204,
+  "n_member": 1000,
+  "n_nonmember": 1000,
+  "source": "(per-text scores produced by scripts/dark_subspace/sae_dark_subspace.py for the qwen2 model; the source per-text array is not bundled in this artefact and regenerates from the same script)",
+  "script": "scripts/dark_subspace/tpr_at_low_fpr.py",
+  "note": "TPR at 0.1% FPR for the residual d_K membership channel. Backs Appendix Table tab:tpr_at_0p1pct_fpr (see app:tpr_paraphrase). Paired n_boot=10000 bootstrap with seed 12345 over n_member=n_nonmember=1000 per model."
+}

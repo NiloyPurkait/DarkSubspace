@@ -312,7 +312,7 @@ def main():
 
     # --- Summary ---
     print("\n" + "=" * 76)
-    print("RANDOM-K FEATURE ABLATION NULL BASELINE")
+    print("Random-K feature ablation null baseline")
     print("=" * 76)
     print(f"Model: {args.model_id}  |  Layer: {args.layer}")
     print(f"Seeds: {args.seeds}  |  k values: {args.k_values}")

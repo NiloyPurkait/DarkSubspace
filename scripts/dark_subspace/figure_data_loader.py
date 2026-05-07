@@ -344,8 +344,8 @@ def get_scaling_curve_data(model_labels: list[str]) -> dict:
 # ── CLI smoke test ─────────────────────────────────────────────────────────
 if __name__ == "__main__":
     import sys
-    print("REPO_ROOT =", REPO_ROOT)
-    print("RESULTS_ROOT =", RESULTS_ROOT)
+    print("repo_root =", REPO_ROOT)
+    print("results_root =", RESULTS_ROOT)
     print("sae_dark_subspace sources present =", DARK.exists())
     print()
     labels_full = [

@@ -287,7 +287,7 @@ def main():
         print(json.dumps(all_results, indent=2))
     else:
         print("\n" + "=" * 100)
-        print("FSC RANDOM-FEATURE NULL BASELINE")
+        print("FSC random-feature null baseline")
         print("=" * 100)
 
         for r in all_results:
@@ -307,7 +307,7 @@ def main():
 
         # Summary table
         print("\n" + "=" * 100)
-        print("SUMMARY TABLE")
+        print("Summary table")
         print(f"{'Model':<10} {'n_cf':>6} {'d_sae':>8} {'Obs FSC':>10} {'Null mean':>10} {'Null p95':>10} {'Null p99':>10} {'Obs %ile':>10}")
         print("-" * 80)
         for r in all_results:

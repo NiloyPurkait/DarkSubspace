@@ -644,7 +644,7 @@ def main():
     # Print summary
     print()
     print("=" * 76)
-    print("FRESH PROBE TEST SUMMARY")
+    print("Fresh probe test summary")
     print("=" * 76)
     print(f"Model: {args.model_id}  |  Layer: {args.layer}  |  SAE: {args.sae_path}")
     print(f"Folds: {args.n_folds}  |  N: {len(labels)} ({sum(labels)} mem, {sum(1 - labels)} nonmem)")

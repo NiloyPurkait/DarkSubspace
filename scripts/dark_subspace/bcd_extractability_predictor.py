@@ -570,7 +570,7 @@ def main():
     # ── Print summary ───────────────────────────────────────────────────
     print()
     print("=" * 72)
-    print("CHANNEL-DECOMPOSITION EXTRACTABILITY PREDICTOR SUMMARY")
+    print("Channel-decomposition extractability predictor summary")
     print("=" * 72)
     print(f"Model:           {args.model_path}")
     print(f"Directions dir:  {args.bcd_dir}")

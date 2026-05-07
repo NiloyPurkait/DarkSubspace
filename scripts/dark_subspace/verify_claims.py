@@ -592,6 +592,39 @@ else:
     print(f"    [{flag}] Cohort bootstrap pre_reg_decision (paper ACCEPT): actual={st.get('pre_reg_decision')!r}")
 
 
+banner("Body sign test on tab:dark_subspace gate-passing rows (paper_claims/tab_dark_subspace_sign_test.json) [asserted]")
+
+# Paper results.tex paragraph after tab:dark_subspace and appendix paragraph
+# 'Binomial sign-test arithmetic.' under app:koc2_bootstrap report two
+# binomial sign tests on the gate-passing rows of tab:dark_subspace:
+#   Non-Pythia subset (n=4): one-sided p approx 0.0625
+#   Full gate-passing set (n=7): one-sided p approx 0.008
+# This denominator differs from the cohort sign test asserted above
+# (n_inverting_cohort_rows=5).
+ts = load(PAPER_CLAIMS / "tab_dark_subspace_sign_test.json")
+if ts is None:
+    _check("Body sign test non-Pythia n (paper 4)", 4, None)
+    _check("Body sign test non-Pythia p_one_sided (paper 0.0625)", 0.0625, None)
+    _check("Body sign test full gate-passing n (paper 7)", 7, None)
+    _check("Body sign test full gate-passing p_one_sided (paper 0.008)", 0.0078125, None)
+else:
+    bst = ts.get("binomial_sign_test", {})
+    np_block = bst.get("non_pythia_subset", {})
+    full_block = bst.get("full_gate_passing_set", {})
+    _check("Body sign test non-Pythia n (paper 4)", 4, np_block.get("n"), tol=0)
+    _check("Body sign test non-Pythia k positive (paper 4)", 4, np_block.get("k_residual_above_recon"), tol=0)
+    _check("Body sign test non-Pythia p_one_sided (paper 0.0625)", 0.0625,
+           np_block.get("p_one_sided"), tol=1e-6)
+    _check("Body sign test full gate-passing n (paper 7)", 7, full_block.get("n"), tol=0)
+    _check("Body sign test full gate-passing k positive (paper 7)", 7, full_block.get("k_residual_above_recon"), tol=0)
+    _check("Body sign test full gate-passing p_one_sided (paper 0.0078125 ~= 0.008)", 0.0078125,
+           full_block.get("p_one_sided"), tol=1e-6)
+    rows = ts.get("gate_passing_rows", [])
+    _check("Body sign test gate-passing row count (paper 7)", 7, len(rows), tol=0)
+    n_above = sum(1 for r in rows if r.get("residual_above_recon"))
+    _check("Body sign test rows with residual > recon (paper 7)", 7, n_above, tol=0)
+
+
 banner("Held-out d_K reductions (paper_claims/heldout_dk.json, app:heldout_dk_protocol) [asserted]")
 
 # Paper app:heldout_dk_protocol reports Pythia-6.9B held-out mean reduction
@@ -612,6 +645,124 @@ else:
     )
     _check("Pythia-6.9B held-out drop mean (paper 0.149)", 0.149, p69_drop, tol=1e-3)
     _check("Pythia-12B held-out drop mean (paper 0.105)", 0.105, p12b_drop, tol=1e-3)
+
+
+banner("TPR at 0.1% FPR for residual d_K (generated/tpr_low_fpr, tab:tpr_at_0p1pct_fpr) [asserted]")
+
+# Paper Appendix Table tab:tpr_at_0p1pct_fpr reports TPR point estimates,
+# bootstrap means and 95% CIs at FPR=0.001 across four models.
+TPR_PAPER = {
+    "p69":   {"point": 0.015, "mean": 0.018, "ci_lo": 0.005, "ci_hi": 0.050},
+    "p12b":  {"point": 0.032, "mean": 0.035, "ci_lo": 0.020, "ci_hi": 0.071},
+    "neo":   {"point": 0.025, "mean": 0.025, "ci_lo": 0.014, "ci_hi": 0.042},
+    "qwen2": {"point": 0.010, "mean": 0.007, "ci_lo": 0.000, "ci_hi": 0.023},
+}
+for tag, paper_vals in TPR_PAPER.items():
+    p = GENERATED / "tpr_low_fpr" / tag / "results.json"
+    d = load(p)
+    if d is None:
+        _check(f"TPR@0.1%FPR {tag} point (paper {paper_vals['point']:.3f})", paper_vals["point"], None)
+        _check(f"TPR@0.1%FPR {tag} mean (paper {paper_vals['mean']:.3f})", paper_vals["mean"], None)
+        _check(f"TPR@0.1%FPR {tag} CI lo (paper {paper_vals['ci_lo']:.3f})", paper_vals["ci_lo"], None)
+        _check(f"TPR@0.1%FPR {tag} CI hi (paper {paper_vals['ci_hi']:.3f})", paper_vals["ci_hi"], None)
+    else:
+        _check(f"TPR@0.1%FPR {tag} point (paper {paper_vals['point']:.3f})",
+               paper_vals["point"], d.get("tpr_point"), tol=2e-3)
+        _check(f"TPR@0.1%FPR {tag} mean (paper {paper_vals['mean']:.3f})",
+               paper_vals["mean"], d.get("tpr_boot_mean"), tol=2e-3)
+        _check(f"TPR@0.1%FPR {tag} CI lo (paper {paper_vals['ci_lo']:.3f})",
+               paper_vals["ci_lo"], d.get("tpr_ci_lo"), tol=2e-3)
+        _check(f"TPR@0.1%FPR {tag} CI hi (paper {paper_vals['ci_hi']:.3f})",
+               paper_vals["ci_hi"], d.get("tpr_ci_hi"), tol=2e-3)
+        _check(f"TPR@0.1%FPR {tag} fpr_target=0.001", 0.001, d.get("fpr_target"), tol=0)
+        _check(f"TPR@0.1%FPR {tag} n_boot=10000", 10000, d.get("n_boot"), tol=0)
+
+
+banner("Per-model channel decomposition (generated/behavioral_channels, tab:bcd_main) [asserted]")
+
+# Paper Appendix Table tab:bcd_main reports cos(d_K, d_R) and per-layer
+# membership / recall probe AUROC at the channel-geometry reference layer
+# for each of the nine models. Verified at the per-model SAE layer
+# (Pythia-12B reports at layer 24, the channel-geometry reference layer,
+# rather than the layer-18 SAE-evaluation layer cited in tab:dark_subspace).
+BCD_MAIN_PAPER = [
+    ("p1b_epoch5",          "Pythia-1B",       8,   0.102, 0.577, 0.762),
+    ("p69_epoch5",          "Pythia-6.9B",     16,  0.107, 0.828, 0.696),
+    ("p12b_epoch5",         "Pythia-12B",      24,  0.336, 0.781, 0.806),
+    ("neo_epoch5",          "GPT-Neo-2.7B",    16,  0.024, 0.504, 0.813),
+    ("opt67_epoch5",        "OPT-6.7B",        24, -0.063, 0.869, 0.883),
+    ("falcon7b_epoch5_v2",  "Falcon-7B",       16,  0.161, 0.635, 0.855),
+    ("mistral_epoch5_v2",   "Mistral-7B",      16, -0.010, 0.967, 0.714),
+    ("llama3_epoch5_v2",    "Llama-3-8B",      16,  0.223, 0.957, 0.735),
+    ("qwen2_epoch5",        "Qwen2-7B",        16,  0.390, 0.803, 0.705),
+]
+for tag, label, layer, p_cos, p_mem, p_rec in BCD_MAIN_PAPER:
+    p = GENERATED / "behavioral_channels" / tag / "orthogonality.json"
+    d = load(p)
+    if d is None:
+        _check(f"BCD-main {label} cos(d_K,d_R) (paper {p_cos:.3f})", p_cos, None)
+        _check(f"BCD-main {label} Mem AUROC (paper {p_mem:.3f})", p_mem, None)
+        _check(f"BCD-main {label} Rec AUROC (paper {p_rec:.3f})", p_rec, None)
+    else:
+        pl = d.get("per_layer", {}).get(str(layer), {})
+        _check(f"BCD-main {label} cos(d_K,d_R) (paper {p_cos:.3f})", p_cos, pl.get("cosine_d_K_d_R"), tol=2e-3)
+        _check(f"BCD-main {label} Mem AUROC (paper {p_mem:.3f})", p_mem,
+               pl.get("membership_probe", {}).get("auroc_mean"), tol=2e-3)
+        _check(f"BCD-main {label} Rec AUROC (paper {p_rec:.3f})", p_rec,
+               pl.get("recall_probe", {}).get("auroc_mean"), tol=2e-3)
+
+
+banner("Privacy-aware SAE score_K (generated/sae_dark_subspace/*_ft_dk*, tab:fresh_probe_v2) [asserted]")
+
+# Paper Appendix Table tab:fresh_probe_v2 reports score_K AUROC across
+# four conditions and three compartments. The probe-AUROC and permutation-null
+# columns of that table are produced by a separate fresh-probe pipeline and
+# are not bundled in this artefact; the score_K column is verifiable from
+# the shipped sae_dark_subspace results.json files for the privacy-aware
+# SAE conditions (the fourth condition, the Pythia-6.9B baseline mixed SAE,
+# is verified above against the p69_n5 / p69_epoch5 cells of tab:dark_subspace).
+FRESH_PROBE_PAPER = {
+    "p69_ft_dk0.1": {"original": 0.803, "sae_reconstructed": 0.803, "residual": 0.520},
+    "p69_ft_dk1.0": {"original": 0.803, "sae_reconstructed": 0.798, "residual": 0.537},
+    "neo_ft_dk1.0": {"original": 0.615, "sae_reconstructed": 0.612, "residual": 0.565},
+}
+for tag, paper_vals in FRESH_PROBE_PAPER.items():
+    p = GENERATED / "sae_dark_subspace" / tag / "results.json"
+    d = load(p)
+    if d is None:
+        for compartment, paper_val in paper_vals.items():
+            _check(f"Fresh-probe v2 {tag} {compartment} score_K (paper {paper_val:.3f})", paper_val, None)
+    else:
+        for compartment, paper_val in paper_vals.items():
+            block = d.get(compartment, {})
+            _check(f"Fresh-probe v2 {tag} {compartment} score_K (paper {paper_val:.3f})",
+                   paper_val, block.get("score_K_auroc"), tol=5e-3)
+
+
+banner("Pythia scaling curve (generated/behavioral_channels, tab:scaling) [asserted]")
+
+# Paper Appendix Table tab:scaling reports score_K AUROC across seven
+# Pythia sizes at each model's best membership-probe layer.
+SCALING_PAPER = {
+    "p70m_epoch5":  ("Pythia-70M",   0.507),
+    "p160m_epoch5": ("Pythia-160M",  0.588),
+    "p410m_epoch5": ("Pythia-410M",  0.716),
+    "p1b_epoch5":   ("Pythia-1B",    0.800),
+    "p2.8b_epoch5": ("Pythia-2.8B",  0.842),
+    "p69_epoch5":   ("Pythia-6.9B",  0.876),
+    "p12b_epoch5":  ("Pythia-12B",   0.781),
+}
+for tag, (label, paper_val) in SCALING_PAPER.items():
+    p = GENERATED / "behavioral_channels" / tag / "orthogonality.json"
+    d = load(p)
+    if d is None:
+        _check(f"Scaling {label} score_K AUROC (paper {paper_val:.3f})", paper_val, None)
+    else:
+        pl = d.get("per_layer", {})
+        aurocs = [v.get("membership_probe", {}).get("auroc_mean")
+                  for v in pl.values() if v.get("membership_probe", {}).get("auroc_mean") is not None]
+        best = max(aurocs) if aurocs else None
+        _check(f"Scaling {label} score_K AUROC (paper {paper_val:.3f})", paper_val, best, tol=2e-3)
 
 
 banner("Bag-of-Words vocabulary baseline (app:bow_baseline) [asserted]")

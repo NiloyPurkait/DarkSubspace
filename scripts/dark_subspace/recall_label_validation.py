@@ -114,7 +114,7 @@ def main():
         print(json.dumps({"bcd_extractability": all_results, "recall_proxy_validation": rpv_results}, indent=2))
     else:
         print("\n" + "=" * 120)
-        print("RECALL LABEL VALIDATION: Loss vs ROUGE-L Correlation")
+        print("Recall label validation: loss vs ROUGE-L correlation")
         print("=" * 120)
 
         # Primary table: loss vs ROUGE-L (Spearman)
@@ -142,11 +142,11 @@ def main():
                 print(f"{r['model']:<18} {r['n_texts']:>6} {sp:>14} {pr:>12} {ag:>12}")
 
         # Source files
-        print("\nSOURCE FILES (bcd_extractability):")
+        print("\nSource files (bcd_extractability):")
         for r in all_results:
             print(f"  {r['source']}")
         if rpv_results:
-            print("SOURCE FILES (recall_proxy_validation):")
+            print("Source files (recall_proxy_validation):")
             for r in rpv_results:
                 print(f"  {r['source']}")
 

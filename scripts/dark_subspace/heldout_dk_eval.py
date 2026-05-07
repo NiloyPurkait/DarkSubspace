@@ -542,7 +542,7 @@ def main():
         with open(out_path, "w") as f:
             json.dump(out, f, indent=2)
         print()
-        print("STATUS: BLOCKED. Wrote blocker manifest to:")
+        print("Status: blocked. Wrote blocker manifest to:")
         print(f"  {out_path}")
         sys.exit(2)
 
@@ -581,7 +581,7 @@ def main():
     # Summary print.
     print()
     print("=" * 78)
-    print("RESULT SUMMARY")
+    print("Result summary")
     print("=" * 78)
     for r in anchor_results:
         print(f"  {r['anchor']}")

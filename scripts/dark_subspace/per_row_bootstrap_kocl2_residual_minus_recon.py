@@ -288,6 +288,14 @@ def main():
     print(f"Across all 9 rows: {n_positive_all9} / {len(all_rows)} have margin > 0")
     print("-" * 78)
 
+    # The decision rule is the pre-registered ACCEPT / NUANCED / NULL rule
+    # printed verbatim under sign_test.decision_rule below. The rule itself
+    # was not modified during harmonisation; only the margin definition
+    # changed from residual-minus-original to residual-minus-reconstruction
+    # (see harmonisation_note). The pre_reg_decision field below records
+    # what the unchanged pre-registered rule says when applied to the new
+    # margin definition. The sister script per_row_bootstrap_kocl2.py uses
+    # the same field name on the original-margin variant.
     output = {
         "experiment": "K-OC-2 cohort per-row paired bootstrap on residual minus reconstruction margin",
         "supersedes_in_appendix": "results/dark_subspace/paper_claims/k_oc2_bootstrap_2026-05-02.json (residual minus original margin)",
@@ -295,7 +303,8 @@ def main():
             "The main-text binomial sign test anchors to residual > reconstruction. "
             "This file recomputes the appendix per-row CIs on the same 9 cohort rows "
             "under the new margin definition so app:koc2_bootstrap supports the "
-            "main-text claim."
+            "main-text claim. The pre-registered decision rule is unchanged; only "
+            "the margin definition was updated."
         ),
         "n_boot": int(args.n_boot),
         "bootstrap_seed": int(args.seed),
@@ -307,7 +316,7 @@ def main():
             "n_positive_margin": n_positive,
             "n_ci_excludes_zero": n_ci_excluding_zero_inverting,
             "p_one_sided_binomial_05": sign_test_p_one_sided,
-            "pre_reg_decision_under_old_rule": decision,
+            "pre_reg_decision": decision,
             "decision_rule": (
                 "ACCEPT  if >=3 of 5 inverting rows have 95% CI excluding zero AND sign test p < 0.05; "
                 "NUANCED if  =2 of 5 with CI excluding zero AND sign test p < 0.05; "
