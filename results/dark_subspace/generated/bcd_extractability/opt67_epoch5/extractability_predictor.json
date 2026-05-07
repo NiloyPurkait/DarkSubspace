@@ -1,6 +1,6 @@
 {
-  "model": "/home/u517685/files/sae-mia-audit/runs/controlled_ft/run_20260222_130923/ft_epoch5/model",
-  "bcd_dir": "/home/u517685/files/sae-mia-audit/runs/memcirc/behavioral_channels/opt67_epoch5",
+  "model": "<runs>/sae-mia-audit/runs/controlled_ft/run_20260222_130923/ft_epoch5/model",
+  "bcd_dir": "<runs>/sae-mia-audit/runs/memcirc/behavioral_channels/opt67_epoch5",
   "layer": 16,
   "n_texts": 1000,
   "n_texts_valid": 1000,

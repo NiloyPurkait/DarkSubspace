@@ -118,3 +118,7 @@ Some historical corpus and checkpoint labels still contain `memcirc` in paths su
 ## License
 
 MIT. See `LICENSE`.
+
+## Submission Packaging
+
+**Submission packaging.** When preparing this artefact for anonymous submission, exclude the `.git/` directory from the archive. The local git history may contain identifying metadata (committer name/email, remote URL). Use a clean export, e.g. `git archive --format=zip HEAD -o artefact.zip`, or `zip -r artefact.zip DarkSubspace-main -x '*/.git/*'`.
