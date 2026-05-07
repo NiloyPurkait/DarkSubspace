@@ -1,10 +1,8 @@
 # ---------------------------------------------------------------------------
 # Source: Raoof et al., "Infilling Score: A Pretraining Data Detection
 #         Algorithm for Large Language Models" (ICLR 2025).
-# Original repo: No public code repository found as of 2026-02-20.
-#   Verified: first author (NRaoof) and co-author (giannisdaras) GitHub
-#   profiles have no infilling-score repo.  Paper has no code link.
-# Our implementation follows the paper's algorithm (Section 3).
+# No public reference implementation is available; this module follows the
+# algorithm described in Section 3 of the paper.
 # ---------------------------------------------------------------------------
 from __future__ import annotations
 

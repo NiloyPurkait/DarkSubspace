@@ -166,7 +166,7 @@ def snapshot_reproducibility(run_dir: Path, config: Mapping[str, Any]) -> None:
         encoding="utf-8",
     )
 
-    # New: run_metadata.json (camera-ready artifact)
+    # run_metadata.json: per-run provenance record
     meta = {
         "timestamp_utc": datetime.utcnow().isoformat() + "Z",
         "argv": list(sys.argv),

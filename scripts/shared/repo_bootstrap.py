@@ -14,8 +14,8 @@ or job runners) may not preserve the expected working directory or ``PYTHONPATH`
 when launching ``python scripts/<name>.py``. This helper makes the repo runnable
 in those settings without requiring an editable install.
 
-Best practice for camera-ready runs is still ``pip install -e .``, but this
-file removes a common footgun.
+An editable install (``pip install -e .``) remains the recommended setup;
+this helper removes a common footgun in environments where it is not used.
 
 Reproduce::
 

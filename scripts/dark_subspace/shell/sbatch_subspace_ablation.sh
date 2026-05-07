@@ -7,7 +7,6 @@
 # Used in the K-PC causal ablation appendix.
 # Reproduce. sbatch scripts/dark_subspace/shell/sbatch_subspace_ablation.sh
 #
-# Original internal design note. causal_intervention.md.
 # Script. scripts/dark_subspace/subspace_ablation_eval.py (error-PC target).
 #
 # Math. E = H - H_hat. U_K = top-K right singular vectors of (E - E.mean(0)).

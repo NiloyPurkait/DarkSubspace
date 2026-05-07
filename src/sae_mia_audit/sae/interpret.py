@@ -23,12 +23,13 @@ def heuristic_label_from_contexts(
     ngram_max: int = 3,
     top_k: int = 8,
 ) -> FeatureLabel:
-    """Crude 'auto-interpretability' placeholder:
-    - build n-gram frequency from top contexts
-    - return a short label from the most common n-gram
+    """Lightweight n-gram heuristic for feature labelling.
 
-    For camera-ready work, you can replace this with an LLM-based
-    auto-interpretability pipeline (optional).
+    Builds an n-gram frequency profile from the top activating contexts and
+    returns the most common n-gram as a short feature label. This is a
+    deterministic, dependency-free placeholder intended as a baseline; richer
+    auto-interpretability schemes can be substituted by replacing this
+    function.
     """
     tokens = []
     for c in contexts:
