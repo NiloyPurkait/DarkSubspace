@@ -103,7 +103,7 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 `shell/` contains cluster launchers for the expensive jobs. These wrappers are not required for the CPU verifier. They document the actual command lines, resources, seeds, and output directories for GPU reproduction. Per-architecture multi-seed launchers live under `shell/multiseed/`. Notable wrappers:
 
 - `shell/sbatch_p12b_multiseed_array.sh` — Pythia-12B SAE multi-seed array.
-- `shell/sbatch_p69_seed42_postfix.sh` — Pythia-6.9B seed-42 retrain that closes the six-seed mixed-data cohort under the post-corpus-cycling-fix pipeline.
+- `shell/sbatch_p69_seed42_postfix.sh` — Pythia-6.9B seed-42 mixed-data SAE training run.
 - `shell/sbatch_pre_ft_baseline.sh` — Pre-FT negative control on the un-fine-tuned base Pythia-6.9B.
 - `shell/sbatch_p69_disjoint_owt_sae.sh` — Corpus-disjoint dictionary control on Pythia-6.9B.
 - `shell/sbatch_random_direction_baseline.sh`, `shell/sbatch_random_init_sae.sh` — Random-direction and random-init SAE controls.
