@@ -32,6 +32,12 @@ python3 -m venv .venv
 .venv/bin/python scripts/dark_subspace/subspace_ablation_eval.py --help
 ```
 
+## Compute requirements
+
+- Verifier (recommended first check). CPU only, no GPU, no network, no model loading. Completes in a few seconds. Reads only JSON files under `results/dark_subspace/`.
+- Full reproduction. GPU cluster. Per-job wallclocks range from 30 minutes to 36 hours on H100 or any A40 or L40S class node, depending on model size and SAE token budget. The Pythia-6.9B and Pythia-12B multi-seed SAE training jobs dominate the budget. Per-script SLURM wrappers under `scripts/dark_subspace/shell/` document the exact `--time`, `--gres`, and partition.
+- Disk. Bundled JSONs total a few MB. SAE checkpoints, fine-tuned model weights, and the controlled corpus regenerate to a separate `runs/` tree (see `.gitignore`) and total tens of GB across the bundled experiments.
+
 ## Pre-Registration
 
 `PROTOCOL_DISCLOSURE.md` documents the pre-registered methodological items (PR-1 to PR-8), the SAE validity gates, the K-PC ablation decisive criteria, the bag-of-words confound control, the paraphrase sensitivity diagnostic, and the statistical reporting protocol. It also records a single post-hoc audit, the held-out partition-fit falsification audit on $d_K$, which is documented as post-hoc rather than pre-registered.
@@ -74,6 +80,7 @@ The Claim-Source Map below uses paper terminology throughout. A small number of 
 | `_postfix` in seed labels (notably `42_postfix` in the Pythia-6.9B mixed cohort) | The Pythia-6.9B seed-42 SAE was retrained once after the initial run to correct an SAE-checkpoint inconsistency identified during the validity-gate sweep. The `_postfix` suffix is retained on disk for provenance. The original seed-42 SAE is no longer used by any paper-cited number. The cohort label `42_postfix` is canonically labelled `42` in `tab:dark_subspace` and the harmonised JSON's `seed_label` field. |
 | `_v2` in `behavioral_channels/{falcon7b,mistral,llama3}_epoch5_v2/`, `figure_data_loader.py`, `verify_claims.py` | Second-pass run of the channel-decomposition pipeline on the larger non-Pythia SAEs. The `_v1` cohort is not used by any paper-cited number. `_v2` is the canonical run. The suffix is retained on disk for provenance. |
 | `_secondary` in `cohort_bootstrap.json` (`qwen2_mult4_secondary_seeds`) | Two additional Qwen2 mult=4 fine-tuning seeds (43 and 44) reported separately from the directional-sign-test cohort. They examine whether the inversion is specific to the original fine-tuning seed. They are not entered into the cohort sign-test denominator (which keeps n=5). The full per-row CIs for these two seeds appear in `tab:koc2_bootstrap_per_row` ("Qwen2-7B mult=4 across additional fine-tuning seeds" subsection). |
+| `dd_table_render.py`, runtime paths under `generated/double_dissociation/` and `generated/double_dissociation_epochs/` | Extraction-detection separation tables `tab:dd_full`, `tab:dd_extraction`, `tab:epoch_dd` (paper §3.5 and §4.4). The earlier "double dissociation" label is retained as engineering shorthand in the renderer filename and runtime output paths. |
 
 ## Claim-Source Map
 

@@ -132,8 +132,9 @@ def render_markdown(records_dir: Path, table: str) -> str:
     if not paths:
         raise FileNotFoundError(
             f"No results.json files found under {records_dir}. "
-            f"The cached double-dissociation records ship under "
-            f"results/dark_subspace/generated/double_dissociation/"
+            f"The expected path for these extraction-detection separation records is "
+            f"results/dark_subspace/generated/double_dissociation/, regenerated from the GPU pipeline. "
+            f"See the 'Outputs' section in this script's docstring."
         )
 
     rows = []
@@ -166,7 +167,7 @@ def render_markdown(records_dir: Path, table: str) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser(
         description=(
-            "Render the double-dissociation tables (tab:dd_full, "
+            "Render the extraction-detection separation tables (tab:dd_full, "
             "tab:dd_extraction, tab:epoch_dd) from cached per-condition JSONs."
         )
     )
