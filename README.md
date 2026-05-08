@@ -1,6 +1,6 @@
 # The Dark Subspace of Fine-Tuning Memorisation
 
-Code and results artefact for an anonymous double-blind submission to the ICML 2026 Mechanistic Interpretability Workshop.
+Code and results artefact for an anonymous double-blind workshop submission.
 
 This repository contains the paper-specific experiment code, a curated set of JSON results, and a CPU-only verifier that checks the paper-cited numerical claims against the included JSON records. The manuscript is distributed separately and is not in this repository.
 
@@ -15,7 +15,7 @@ python3 scripts/dark_subspace/verify_claims.py
 Expected output (final summary line):
 
 ```text
-Asserted check summary: 244/244 pass, 0 fail
+Asserted check summary: N/N pass, 0 fail
 All asserted checks pass within tolerance.
 ```
 
@@ -183,7 +183,7 @@ The paper-cited values were produced under `SeedConfig.deterministic=False` (the
 @inproceedings{anonymous2026darksubspace,
   title  = {The Dark Subspace of Fine-Tuning Memorisation},
   author = {Anonymous},
-  booktitle = {ICML 2026 Workshop on Mechanistic Interpretability},
+  booktitle = {Anonymous workshop submission},
   year   = {2026},
   note   = {Anonymous double-blind submission}
 }

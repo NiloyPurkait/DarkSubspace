@@ -43,9 +43,9 @@ LAYER=16
 
 SEED=$((45 + SLURM_ARRAY_TASK_ID))
 
-echo "================================================================"
-echo "=== P69 Mixed SAE Array Task ${SLURM_ARRAY_TASK_ID}, Seed ${SEED} ==="
-echo "================================================================"
+echo "----------------------------------------------------------------"
+echo "Pythia-6.9B mixed SAE array task ${SLURM_ARRAY_TASK_ID}, seed ${SEED}"
+echo "----------------------------------------------------------------"
 echo "Started: $(date)"
 echo "SLURM_ARRAY_JOB_ID=${SLURM_ARRAY_JOB_ID:-N/A} SLURM_ARRAY_TASK_ID=${SLURM_ARRAY_TASK_ID:-N/A}"
 echo "Node: $(hostname)"
@@ -117,8 +117,8 @@ env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \
   --output-dir "$OUTPUT_DIR" \
   --model-id "p69_mixed_seed${SEED}"
 
-echo "================================================================"
-echo "=== Seed ${SEED} COMPLETE: $(date) ==="
-echo "================================================================"
+echo "----------------------------------------------------------------"
+echo "Seed ${SEED} complete: $(date)"
+echo "----------------------------------------------------------------"
 echo "SAE checkpoint: $SAE_PATH"
 echo "Dark subspace results: $OUTPUT_DIR/results.json"

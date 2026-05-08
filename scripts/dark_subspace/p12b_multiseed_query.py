@@ -241,7 +241,7 @@ def main():
         print()
 
     if drops:
-        print("=== N=5 CLUSTER SUMMARY ===")
+        print("N=5 cluster summary")
         print(f"  drop:        n={cluster['drop.n']}, mean={cluster['drop.mean']:.4f}, "
               f"std={cluster['drop.std']:.4f}, range=[{cluster['drop.min']:.4f}, {cluster['drop.max']:.4f}]")
         print(f"  recon_cos:   n={cluster['recon_cos.n']}, mean={cluster['recon_cos.mean']:.4f}, "
@@ -254,7 +254,7 @@ def main():
               f"std={cluster['recon_K.std']:.4f}, range=[{cluster['recon_K.min']:.4f}, {cluster['recon_K.max']:.4f}]")
         print()
 
-        print("=== COMPARISON vs PRIOR N=3 ===")
+        print("Comparison vs prior N=3")
         print(f"  Prior N=3 (seeds 47,48,49):    drop_mean={PRIOR_N3_DROP_MEAN:.4f}, drop_std={PRIOR_N3_DROP_STD:.4f}")
         print(f"  Current N=5 (seeds 47-51):     drop_mean={cluster['drop.mean']:.4f}, drop_std={cluster['drop.std']:.4f}")
         print(f"  Delta mean (N=5 - N=3):        {prior['n5_minus_n3.drop.mean.delta']:+.4f}")
@@ -265,7 +265,7 @@ def main():
 
     if anchor is not None:
         print()
-        print("=== ANCHOR (seed 42) ===")
+        print("Anchor (seed 42)")
         for k in ("original.score_K_auroc",
                   "sae_reconstructed.score_K_auroc",
                   "residual.score_K_auroc",

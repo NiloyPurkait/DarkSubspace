@@ -6,9 +6,9 @@ Each test exercises a CPU-only contract that must hold on a fresh clone:
   and asserts the asserted-check summary reports N/N pass with zero failures.
 * ``test_paper_claim_jsons_parse`` walks every ``.json`` under
   ``results/dark_subspace/`` and asserts each parses as valid JSON.
-* ``test_no_internal_paths_leak`` greps the shipped JSONs for the path tokens
-  ``/home/u517685``, ``runs/memcirc/``, and ``<runs>/sae-mia-audit`` and
-  asserts none survive.
+* ``test_no_internal_paths_leak`` greps the shipped JSONs for cluster-style
+  absolute paths (``/home/u<digits>``), legacy run-directory tokens, and
+  unresolved path placeholders, and asserts none survive.
 
 These tests do not exercise the GPU pipeline scripts. End-to-end re-execution
 is documented in ``README.md`` ("Reproducibility caveat") and requires GPU
@@ -64,14 +64,19 @@ def test_paper_claim_jsons_parse() -> None:
 
 def test_no_internal_paths_leak() -> None:
     """Shipped JSONs must not leak internal absolute paths or sprint codes."""
-    forbidden = ["/home/u517685", "runs/memcirc/", "<runs>/sae-mia-audit"]
+    forbidden_patterns: list[tuple[str, re.Pattern[str]]] = [
+        ("cluster home directory", re.compile(r"/home/u\d{6,}")),
+        ("legacy memcirc run path", re.compile(r"runs/memcirc/")),
+        ("unresolved <runs> placeholder", re.compile(r"<runs>/sae-mia-audit")),
+    ]
     json_root = REPO_ROOT / "results" / "dark_subspace"
-    leaks: list[tuple[Path, str]] = []
+    leaks: list[tuple[Path, str, str]] = []
     for p in json_root.rglob("*.json"):
         text = p.read_text()
-        for token in forbidden:
-            if token in text:
-                leaks.append((p, token))
+        for label, pattern in forbidden_patterns:
+            match = pattern.search(text)
+            if match:
+                leaks.append((p, label, match.group(0)))
     assert not leaks, "internal paths leak in shipped JSONs:\n" + "\n".join(
-        f"  {p}: {token}" for p, token in leaks
+        f"  {p}: {label} ({match!r})" for p, label, match in leaks
     )

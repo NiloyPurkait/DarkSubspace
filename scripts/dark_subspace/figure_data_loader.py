@@ -352,24 +352,24 @@ if __name__ == "__main__":
         "Pythia-6.9B", "Pythia-6.9B (mixed)", "Pythia-1B", "GPT-Neo-2.7B",
         "OPT-6.7B", "Pythia-12B", "Mistral-7B", "Qwen2-7B", "Falcon-7B",
     ]
-    print("=== dark_subspace table ===")
+    print("Dark-subspace table")
     for k, v in get_dark_subspace_table(labels_full).items():
         print(f"  {k:24s}  orig={v['orig']:.3f} recon={v['recon']:.3f} resid={v['resid']:.3f} cos={v['recon_cos']:.3f}")
     print()
-    print("=== norm vs channel-decomposition ===")
+    print("Norm baseline vs channel decomposition")
     for k, v in get_norm_table([
         "Pythia-1B","GPT-Neo-2.7B","Pythia-6.9B","OPT-6.7B","Pythia-12B",
         "Falcon-7B","Mistral-7B","Llama-3-8B","Qwen2-7B"]).items():
         print(f"  {k:24s}  norm={v['norm_auroc']:.3f}  d_K={v['bcd_auroc']:.3f}")
     print()
-    print("=== scaling curve ===")
+    print("Scaling curve")
     sc = get_scaling_curve_data(["Pythia-70M","Pythia-160M","Pythia-410M",
                                   "Pythia-1B","Pythia-2.8B","Pythia-6.9B","Pythia-12B"])
     for lbl, p, a, ph in zip(sc["labels"], sc["params"], sc["aurocs"], sc["provisional"]):
         flag = "  (single-run source)" if ph else ""
         print(f"  {lbl:14s}  {p:>10.2e}  AUROC={a:.3f}{flag}")
     print()
-    print("=== bootstrap CIs (count) ===")
+    print("Bootstrap CIs (count)")
     cis = load_bootstrap_cis()
     if cis:
         print(f"  {len(cis)} entries with paired bootstrap CIs (n_boot=10000)")

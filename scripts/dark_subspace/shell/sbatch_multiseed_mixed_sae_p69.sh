@@ -58,9 +58,9 @@ SEEDS=(43 44 45 46 47)
 
 for SEED in "${SEEDS[@]}"; do
   echo ""
-  echo "================================================================"
-  echo "=== P69 Mixed SAE Seed $SEED ==="
-  echo "================================================================"
+  echo "----------------------------------------------------------------"
+  echo "Pythia-6.9B mixed-data SAE seed $SEED"
+  echo "----------------------------------------------------------------"
   echo "Started: $(date)"
 
   # Step 1: Train mixed-data SAE
@@ -113,15 +113,15 @@ for SEED in "${SEEDS[@]}"; do
     --output-dir "$OUTPUT_DIR" \
     --model-id "p69_mixed_seed${SEED}"
 
-  echo "=== Seed $SEED done: $(date) ==="
+  echo "Seed $SEED done: $(date)"
   echo "Results: $OUTPUT_DIR/results.json"
 done
 
 echo ""
-echo "================================================================"
-echo "=== ALL P69 MULTI-SEED TRAINING COMPLETE ==="
-echo "================================================================"
-echo "New matched-HP seeds (4x/l1=5e-4):"
+echo "----------------------------------------------------------------"
+echo "Pythia-6.9B multi-seed training complete"
+echo "----------------------------------------------------------------"
+echo "Matched-hyperparameter seeds (mult=4, L1=5e-4):"
 for SEED in "${SEEDS[@]}"; do
   echo "  Seed $SEED: runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed${SEED}/results.json"
 done
