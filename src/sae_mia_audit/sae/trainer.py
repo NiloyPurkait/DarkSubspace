@@ -439,7 +439,7 @@ class SAETrainer:
                     skipped += 1
                     skip_pbar.update(1)
                 except StopIteration:
-                    self._log_info(f"WARNING: Ran out of data while skipping! Only skipped {skipped}/{skip_steps}")
+                    self._log_info(f"Warning. Ran out of data while skipping. Only skipped {skipped}/{skip_steps}")
                     break
             skip_pbar.close()
             self._log_info(f"Skipped {skipped} batches, resuming training from step {self.step}")
@@ -811,7 +811,7 @@ class MultiSAETrainer:
             if loaded_step is None:
                 loaded_step = step
             elif loaded_step != step:
-                self._log_info(f"WARNING: Step mismatch across SAEs: {loaded_step} vs {step}")
+                self._log_info(f"Warning. Step mismatch across SAEs. {loaded_step} vs {step}")
             
             self._total_resampled[key] = state.get("total_resampled", 0)
             self._log_info(f"Loaded {key} from step {step}: {ckpt_path}")
@@ -873,7 +873,7 @@ class MultiSAETrainer:
                     skipped += 1
                     skip_pbar.update(1)
                 except StopIteration:
-                    self._log_info(f"WARNING: Ran out of data while skipping! Only skipped {skipped}/{skip_steps}")
+                    self._log_info(f"Warning. Ran out of data while skipping. Only skipped {skipped}/{skip_steps}")
                     break
             skip_pbar.close()
             self._log_info(f"Skipped {skipped} batches, resuming training from step {self.step}")

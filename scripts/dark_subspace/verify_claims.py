@@ -853,10 +853,10 @@ for tag, paper_vals in TPR_PAPER.items():
 banner("P69 N=6 cohort aggregate (paper_claims/p69_n6_complete.json) [asserted]")
 
 # N=6 alternative framing of the Pythia-6.9B mixed-data cohort. The paper
-# reports N=5 (drops seed 47 to share Pythia-1B's seed list); this artefact
-# bundles the N=6 aggregate as well. The conclusion is unchanged. The
-# materiality is recorded directly in this file plus the materiality block
-# of p69_n5_harmonized_2026-05-06.json.
+# reports N=5 (drops seed 47 to share Pythia-1B's seed list). The N=6
+# aggregate is bundled as well. The conclusion is unchanged. Per-metric
+# mean shifts between N=5 and N=6 are below 0.005 on all reported metrics,
+# recorded in p69_n5_harmonized_2026-05-06.json.
 n6 = load(PAPER_CLAIMS / "p69_n6_complete.json")
 if n6 is not None:
     s = n6.get("cluster_summary_n6", {})
