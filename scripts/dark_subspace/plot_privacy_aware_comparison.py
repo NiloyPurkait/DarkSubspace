@@ -12,6 +12,8 @@ Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_privacy_aware_comparison
 (writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 """
 
+import os
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

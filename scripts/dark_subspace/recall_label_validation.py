@@ -33,7 +33,7 @@ def main():
     parser.add_argument("--json", action="store_true", help="Output JSON")
     args = parser.parse_args()
 
-    # Source 1: bcd_extractability (9 models, 1000 texts each)
+    # Source 1: bcd_extractability (1000 texts per per-model record)
     ext_base = ROOT / "runs" / "dark_subspace" / "bcd_extractability"
     # Source 2: recall_proxy_validation (subset of models)
     rpv_base = ROOT / "runs" / "dark_subspace" / "recall_proxy_validation"

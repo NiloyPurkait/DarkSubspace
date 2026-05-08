@@ -27,11 +27,12 @@ env/
 dist/
 build/
 
-# Generated data and runs (not shipped; download or regenerate)
+# Generated data and runs (not shipped, regenerate or download)
 data/
 runs/
 logs/
 artifacts/
+outputs/
 *.log
 *.err
 slurm-*.out
