@@ -7,25 +7,141 @@
     "body_sign_test_denominator": 7
   },
   "gate_passing_rows": [
-    {"setting": "Pythia-6.9B", "subgroup": "controlled_pythia", "n_seeds": 5, "original_auroc": 0.803, "recon_auroc": 0.633, "residual_auroc": 0.833, "delta_recon_pp": -17, "recon_cosine": 0.940, "residual_above_recon": true, "source_jsons": ["results/dark_subspace/paper_claims/p69_member_only_n5.json (canonical 5-seed cohort aggregate; the per-seed source runs at runs/memcirc/sae_dark_subspace/p69_member_only_sae_seed{42..46}/results.json are not bundled because each carries an SAE checkpoint, but the aggregate cluster summary and per-seed metric values are bundled)"]},
-    {"setting": "Pythia-6.9B (mixed)", "subgroup": "controlled_pythia", "n_seeds": 5, "original_auroc": 0.803, "recon_auroc": 0.594, "residual_auroc": 0.781, "delta_recon_pp": -21, "recon_cosine": 0.976, "residual_above_recon": true, "source_jsons": ["results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json"]},
-    {"setting": "Pythia-12B", "subgroup": "controlled_pythia", "n_seeds": 5, "original_auroc": 0.764, "recon_auroc": 0.612, "residual_auroc": 0.723, "delta_recon_pp": -15, "recon_cosine": 0.991, "residual_above_recon": true, "source_jsons": ["results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed47/results.json", "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed48/results.json", "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed49/results.json"]},
-    {"setting": "GPT-Neo-2.7B", "subgroup": "non_pythia", "n_seeds": 1, "original_auroc": 0.615, "recon_auroc": 0.571, "residual_auroc": 0.699, "delta_recon_pp": -4, "recon_cosine": 0.998, "residual_above_recon": true, "source_jsons": ["results/dark_subspace/generated/sae_dark_subspace/neo_epoch5/results.json"]},
-    {"setting": "GPT-Neo-2.7B (mixed)", "subgroup": "non_pythia", "n_seeds": 1, "original_auroc": 0.616, "recon_auroc": 0.558, "residual_auroc": 0.646, "delta_recon_pp": -6, "recon_cosine": 0.997, "residual_above_recon": true, "source_jsons": ["results/dark_subspace/generated/sae_dark_subspace/neo_mixed_sae/results.json"]},
-    {"setting": "Qwen2-7B", "subgroup": "non_pythia", "n_seeds": 1, "original_auroc": 0.638, "recon_auroc": 0.526, "residual_auroc": 0.849, "delta_recon_pp": -11, "recon_cosine": 0.850, "residual_above_recon": true, "source_jsons": ["results/dark_subspace/generated/sae_dark_subspace/qwen2_epoch5/results.json"]},
-    {"setting": "Gemma-2-2B", "subgroup": "non_pythia", "n_seeds": 1, "original_auroc": 0.801, "recon_auroc": 0.769, "residual_auroc": 0.820, "delta_recon_pp": -3, "recon_cosine": 0.911, "residual_above_recon": true, "source_jsons": ["results/dark_subspace/generated/sae_dark_subspace/gemma2_2b_epoch5/results.json"]}
+    {
+      "setting": "Pythia-6.9B",
+      "subgroup": "controlled_pythia",
+      "n_seeds": 5,
+      "original_auroc": 0.803,
+      "recon_auroc": 0.633,
+      "residual_auroc": 0.833,
+      "delta_recon_pp": -17,
+      "recon_cosine": 0.94,
+      "residual_above_recon": true,
+      "source_jsons": [
+        "results/dark_subspace/paper_claims/p69_member_only_n5.json (canonical 5-seed cohort aggregate; the per-seed source runs at runs/dark_subspace/sae_dark_subspace/p69_member_only_sae_seed{42..46}/results.json are not bundled because each carries an SAE checkpoint, but the aggregate cluster summary and per-seed metric values are bundled)"
+      ]
+    },
+    {
+      "setting": "Pythia-6.9B (mixed)",
+      "subgroup": "controlled_pythia",
+      "n_seeds": 5,
+      "original_auroc": 0.803,
+      "recon_auroc": 0.594,
+      "residual_auroc": 0.781,
+      "delta_recon_pp": -21,
+      "recon_cosine": 0.976,
+      "residual_above_recon": true,
+      "source_jsons": [
+        "results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json"
+      ]
+    },
+    {
+      "setting": "Pythia-12B",
+      "subgroup": "controlled_pythia",
+      "n_seeds": 5,
+      "original_auroc": 0.764,
+      "recon_auroc": 0.612,
+      "residual_auroc": 0.723,
+      "delta_recon_pp": -15,
+      "recon_cosine": 0.991,
+      "residual_above_recon": true,
+      "source_jsons": [
+        "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed47/results.json",
+        "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed48/results.json",
+        "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed49/results.json"
+      ]
+    },
+    {
+      "setting": "GPT-Neo-2.7B",
+      "subgroup": "non_pythia",
+      "n_seeds": 1,
+      "original_auroc": 0.615,
+      "recon_auroc": 0.571,
+      "residual_auroc": 0.699,
+      "delta_recon_pp": -4,
+      "recon_cosine": 0.998,
+      "residual_above_recon": true,
+      "source_jsons": [
+        "results/dark_subspace/generated/sae_dark_subspace/neo_epoch5/results.json"
+      ]
+    },
+    {
+      "setting": "GPT-Neo-2.7B (mixed)",
+      "subgroup": "non_pythia",
+      "n_seeds": 1,
+      "original_auroc": 0.616,
+      "recon_auroc": 0.558,
+      "residual_auroc": 0.646,
+      "delta_recon_pp": -6,
+      "recon_cosine": 0.997,
+      "residual_above_recon": true,
+      "source_jsons": [
+        "results/dark_subspace/generated/sae_dark_subspace/neo_mixed_sae/results.json"
+      ]
+    },
+    {
+      "setting": "Qwen2-7B",
+      "subgroup": "non_pythia",
+      "n_seeds": 1,
+      "original_auroc": 0.638,
+      "recon_auroc": 0.526,
+      "residual_auroc": 0.849,
+      "delta_recon_pp": -11,
+      "recon_cosine": 0.85,
+      "residual_above_recon": true,
+      "source_jsons": [
+        "results/dark_subspace/generated/sae_dark_subspace/qwen2_epoch5/results.json"
+      ]
+    },
+    {
+      "setting": "Gemma-2-2B",
+      "subgroup": "non_pythia",
+      "n_seeds": 1,
+      "original_auroc": 0.801,
+      "recon_auroc": 0.769,
+      "residual_auroc": 0.82,
+      "delta_recon_pp": -3,
+      "recon_cosine": 0.911,
+      "residual_above_recon": true,
+      "source_jsons": [
+        "results/dark_subspace/generated/sae_dark_subspace/gemma2_2b_epoch5/results.json"
+      ]
+    }
   ],
   "diagnostic_context_rows_excluded": [
-    {"setting": "Pythia-1B", "reason": "recon cosine 0.869 below 0.90 strict threshold"},
-    {"setting": "OPT-6.7B", "reason": "recon cosine 0.533 below 0.85 permissive threshold"},
-    {"setting": "Falcon-7B", "reason": "recon cosine 0.767 below 0.85 permissive threshold; activates only 9 SAE features"}
+    {
+      "setting": "Pythia-1B",
+      "reason": "recon cosine 0.869 below 0.90 strict threshold"
+    },
+    {
+      "setting": "OPT-6.7B",
+      "reason": "recon cosine 0.533 below 0.85 permissive threshold"
+    },
+    {
+      "setting": "Falcon-7B",
+      "reason": "recon cosine 0.767 below 0.85 permissive threshold; activates only 9 SAE features"
+    }
   ],
   "binomial_sign_test": {
     "prereg_status": "post_hoc_summary",
     "prereg_note": "The constituent gate-passing rows of tab:dark_subspace are each pre-registered single-seed or multi-seed evaluations. The aggregation onto a binomial sign test on the full gate-passing denominator is a post-hoc summary of those per-row directional outcomes, distinct from the cohort sign test in cohort_bootstrap.json which has a pre-registered ACCEPT/NUANCED/NULL decision rule.",
+    "independence_caveats": {
+      "unit": "The binomial test treats each validity-gate-passing setting (model + SAE-training-data variant) as the unit, not each fine-tuned model.",
+      "within_family_correlations": [
+        "Pythia-6.9B (member-only, N=5) and Pythia-6.9B (mixed, N=5) share the same fine-tuned model; they differ in SAE training data only. Their residual-above-reconstruction outcomes are not statistically independent.",
+        "GPT-Neo-2.7B and GPT-Neo-2.7B (mixed) share the same fine-tuned model; they differ in SAE training data only. Their outcomes are likewise not statistically independent.",
+        "Pythia-6.9B (member-only, N=5), Pythia-6.9B (mixed, N=5), and Pythia-12B (N=5) share the same Pythia architecture family and fine-tuning protocol on the same controlled corpus. The architecturally-independent comparison in the paper (results.tex paragraph 'The broader question is whether this ordering is specific to Pythia') is the four-row non-Pythia subset (GPT-Neo-2.7B, GPT-Neo-2.7B mixed, Qwen2-7B, Gemma-2-2B), reported with one-sided p approx 0.0625."
+      ],
+      "interpretation": "Under strict independence the seven-setting sign test gives p approx 0.008. Under the correlation structure above, that p-value is a lower bound on the effective Type-I error; the four-row non-Pythia subset (p approx 0.0625) is the architecturally-independent figure quoted in the paper. The paper reports both."
+    },
     "null": "50/50 (independent residual-above-or-below-recon under no effect)",
     "non_pythia_subset": {
-      "settings": ["GPT-Neo-2.7B", "GPT-Neo-2.7B (mixed)", "Qwen2-7B", "Gemma-2-2B"],
+      "settings": [
+        "GPT-Neo-2.7B",
+        "GPT-Neo-2.7B (mixed)",
+        "Qwen2-7B",
+        "Gemma-2-2B"
+      ],
       "n": 4,
       "k_residual_above_recon": 4,
       "p_one_sided": 0.0625,
@@ -33,7 +149,15 @@
       "paper_value": 0.0625
     },
     "full_gate_passing_set": {
-      "settings": ["Pythia-6.9B", "Pythia-6.9B (mixed)", "Pythia-12B", "GPT-Neo-2.7B", "GPT-Neo-2.7B (mixed)", "Qwen2-7B", "Gemma-2-2B"],
+      "settings": [
+        "Pythia-6.9B",
+        "Pythia-6.9B (mixed)",
+        "Pythia-12B",
+        "GPT-Neo-2.7B",
+        "GPT-Neo-2.7B (mixed)",
+        "Qwen2-7B",
+        "Gemma-2-2B"
+      ],
       "n": 7,
       "k_residual_above_recon": 7,
       "p_one_sided": 0.0078125,

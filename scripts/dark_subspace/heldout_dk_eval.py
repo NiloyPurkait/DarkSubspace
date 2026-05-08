@@ -21,7 +21,7 @@ Goal. Falsification probe on the channel-decomposition direction d_K.
     partition-fit).
 
 This is a falsification probe. A NULL outcome (held-out below in-partition
-by more than 2 sigma) is publishable and is disclosed honestly.
+by more than 2 sigma) is reported in the manuscript Limitations.
 
 Inputs (canonical caches).
   P69 layer 16 (Pythia-6.9B FT epoch 5).

@@ -32,6 +32,12 @@ python3 -m venv .venv
 .venv/bin/python scripts/dark_subspace/subspace_ablation_eval.py --help
 ```
 
+## Pre-Registration
+
+`PROTOCOL_DISCLOSURE.md` documents the pre-registered methodological items (PR-1 to PR-8), the SAE validity gates, the K-PC ablation decisive criteria, the bag-of-words confound control, the paraphrase sensitivity diagnostic, and the statistical reporting protocol. Each item lists the date it was committed.
+
+The Amendment Log records three post-commit changes: the 2026-05-02 SAE validity-gate hierarchy refinement (0.95 → tiered 0.90/0.85/below), the 2026-05-02 post-hoc held-out falsification audit on $d_K$, and the 2026-05-06 Pythia-6.9B cohort harmonisation from N=6 to N=5.
+
 ## Repository Layout
 
 | Path | Contents |
@@ -59,7 +65,7 @@ The verifier does not load models, require GPUs, submit SLURM jobs, access the n
 
 ## Naming notes
 
-The Claim-Source Map below uses paper terminology throughout. A small number of engineering labels survive in JSON path strings and a few script filenames; the table below maps each one back to the paper passage so reviewers can navigate directly.
+The Claim-Source Map below uses paper terminology throughout. A small number of engineering labels survive in JSON path strings and a few script filenames; the table below maps each one back to the paper passage.
 
 | Label in path or filename | Paper passage |
 | --- | --- |
@@ -163,9 +169,13 @@ Some historical corpus and checkpoint labels still contain `memcirc` in paths su
 
 - The verifier checks numerical consistency against cached JSON records; it is not a substitute for rerunning model training.
 - Full reproduction requires controlled corpora, fine-tuned checkpoints, SAE checkpoints, and GPU resources.
-- Mistral-7B and Llama-3-8B SAE rows are retained as documented exclusions where reconstruction-quality gates failed.
-- Gemma-2-2B is reported in `tab:dark_subspace` (single seed, `app:gemma_stretch`); the JSON records and verifier do not cover the Gemma row directly. Gemma is referenced through the qualitative cross-architecture set; a Gemma-specific SAE result JSON is not included in `results/dark_subspace/generated/sae_dark_subspace/`.
+- Mistral-7B and Llama-3-8B SAE rows are retained as documented exclusions where reconstruction-quality gates failed; the per-row recon-cosine values that triggered each exclusion are bundled in `results/dark_subspace/paper_claims/sae_quality_exclusions.json`.
+- Gemma-2-2B SAE row is bundled at `results/dark_subspace/generated/sae_dark_subspace/gemma2_2b_epoch5/results.json` (recon_cosine 0.911 above the strict 0.90 gate); the verifier asserts this row.
 - The controlled fine-tuning corpus is OpenWebText-derived; cross-corpus generalisation is outside the scope of this artefact.
+
+### Reproducibility caveat (CUDA non-determinism)
+
+The paper-cited values were produced under `SeedConfig.deterministic=False` (the default in `src/sae_mia_audit/utils/seed.py`). This enables CUDNN heuristics (`cudnn.benchmark=True`) needed for tractable walltime on the 12B-parameter pipeline; in exchange, CUDNN selects different convolution kernels per-run, so bit-reproducibility of GPU outputs is not guaranteed across reruns even at fixed Python/NumPy/torch RNG seeds. The bundled JSONs record `seed` and `bootstrap_seed` fields so the random-number streams at the Python/NumPy/torch level can be matched. Reviewers who require bit-reproducible CUDA outputs should pass `deterministic=True` to `SeedConfig`; the paper-cited values were not produced under that setting and small numerical differences (typically below the 0.002 verifier tolerance) are expected from CUDNN-kernel non-determinism.
 
 ## Citation
 

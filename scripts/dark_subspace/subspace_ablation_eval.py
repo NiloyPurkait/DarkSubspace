@@ -21,15 +21,10 @@ with ``gate_pass=True``.
 Provenance of shipped paper-claim JSONs:
 ``results/dark_subspace/generated/causal_ablation/p12b_errPC_K10/results.json``
 was produced without bypass flags. ``causal_ablation_K5/p12b_errPC_K5/results.json``
-was produced with ``--bypass-err-ratio-gate`` set defensively in the
-shell wrapper, but the ``err_ratio_mean`` evaluated to 0.192, well inside
-the strict pass range [0.01, 0.30], so the shipped K=5 cell would have
-passed the strict gate identically without the bypass. The
-``err_ratio_gate_bypassed=True`` flag in that JSON's validity block
-is therefore a record of what the run script did, not of any rule
-relaxation. The current shell wrapper ``shell/sbatch_subspace_ablation_K5.sh``
-no longer passes the bypass flag, so any rerun produces an identical
-JSON with ``err_ratio_gate_bypassed=False``.
+was produced with ``--bypass-err-ratio-gate``; the measured ``err_ratio_mean``
+of 0.192 sits inside the strict pass range [0.01, 0.30], so the K=5 cell
+passes the strict gate identically. The current shell wrapper
+``shell/sbatch_subspace_ablation_K5.sh`` does not pass the bypass flag.
 
 Validity-gate threshold tier:
 ``MIN_RECON_COS = 0.85`` corresponds to the permissive tier of the

@@ -1,0 +1,163 @@
+{
+  "experiment": "Pythia-6.9B mixed-data SAE N=6 cohort aggregate (full cohort, no harmonisation)",
+  "scope": "Backs the Pythia-6.9B (mixed) row of tab:dark_subspace as an N=6-primary alternative framing. The paper reports N=5 to share an identical seed list with the Pythia-1B row in the same table; this artefact bundles the N=6 aggregate as well. The residual-above-reconstruction ordering and the magnitude of the reduction are unchanged at N=5 and N=6. The N=5/N=6 materiality JSON at p69_n5_harmonized_2026-05-06.json records the per-metric |Delta_mean| < 0.005 (verdict NEGLIGIBLE) and the verifier asserts that verdict directly. This file is the corresponding N=6-primary cluster summary.",
+  "note": "All six SAEs were trained at identical hyperparameters (layer 16, multiplier 4, L1 5e-4, 200M tokens, dead-feature resampling). Different random initialisation per SAE training run. The seed_label 42_postfix is canonically labelled 42 in the cohort and refers to the postfix retrain at canonical hyperparameters; see p69_seed42_pre_vs_postfix.json for the audit trail.",
+  "seeds_kept": [
+    "42_postfix",
+    "43",
+    "44",
+    "45",
+    "46",
+    "47"
+  ],
+  "cluster_summary_n6": {
+    "original_score_K_auroc": {
+      "mean": 0.8030446666666667,
+      "std": 9.59180205522754e-05,
+      "min": 0.802965,
+      "max": 0.803197,
+      "n": 6,
+      "values": [
+        0.803197,
+        0.802965,
+        0.802965,
+        0.802965,
+        0.803088,
+        0.803088
+      ]
+    },
+    "reconstructed_score_K_auroc": {
+      "mean": 0.5937298333333334,
+      "std": 0.003317371333852565,
+      "min": 0.5900989999999999,
+      "max": 0.598114,
+      "n": 6,
+      "values": [
+        0.590669,
+        0.5900989999999999,
+        0.597069,
+        0.598114,
+        0.5923280000000001,
+        0.5941000000000001
+      ]
+    },
+    "residual_score_K_auroc": {
+      "mean": 0.7787288333333333,
+      "std": 0.006768713952197015,
+      "min": 0.7686320000000001,
+      "max": 0.7850170000000001,
+      "n": 6,
+      "values": [
+        0.7834289999999999,
+        0.7850170000000001,
+        0.77948,
+        0.772269,
+        0.7835460000000001,
+        0.7686320000000001
+      ]
+    },
+    "recon_cos": {
+      "mean": 0.9758665064970652,
+      "std": 0.0021523419486168768,
+      "min": 0.9728530049324036,
+      "max": 0.9790783524513245,
+      "n": 6,
+      "values": [
+        0.9767528176307678,
+        0.9790783524513245,
+        0.9758415818214417,
+        0.9728530049324036,
+        0.976436197757721,
+        0.9742370843887329
+      ]
+    },
+    "drop_original_minus_reconstructed": {
+      "mean": 0.20931483333333337,
+      "std": 0.0033688211835398367,
+      "min": 0.204851,
+      "max": 0.2128660000000001,
+      "n": 6,
+      "values": [
+        0.21252800000000005,
+        0.2128660000000001,
+        0.20589600000000008,
+        0.204851,
+        0.21075999999999995,
+        0.20898799999999995
+      ]
+    }
+  },
+  "rows": [
+    {
+      "seed_label": "42_postfix",
+      "original_score_K_auroc": 0.803197,
+      "reconstructed_score_K_auroc": 0.590669,
+      "residual_score_K_auroc": 0.7834289999999999,
+      "recon_cos": 0.9767528176307678,
+      "drop": 0.21252800000000005
+    },
+    {
+      "seed_label": "43",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.5900989999999999,
+      "residual_score_K_auroc": 0.7850170000000001,
+      "recon_cos": 0.9790783524513245,
+      "drop": 0.2128660000000001
+    },
+    {
+      "seed_label": "44",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.597069,
+      "residual_score_K_auroc": 0.77948,
+      "recon_cos": 0.9758415818214417,
+      "drop": 0.20589600000000008
+    },
+    {
+      "seed_label": "45",
+      "original_score_K_auroc": 0.802965,
+      "reconstructed_score_K_auroc": 0.598114,
+      "residual_score_K_auroc": 0.772269,
+      "recon_cos": 0.9728530049324036,
+      "drop": 0.204851
+    },
+    {
+      "seed_label": "46",
+      "original_score_K_auroc": 0.803088,
+      "reconstructed_score_K_auroc": 0.5923280000000001,
+      "residual_score_K_auroc": 0.7835460000000001,
+      "recon_cos": 0.976436197757721,
+      "drop": 0.21075999999999995
+    },
+    {
+      "seed_label": "47",
+      "original_score_K_auroc": 0.803088,
+      "reconstructed_score_K_auroc": 0.5941000000000001,
+      "residual_score_K_auroc": 0.7686320000000001,
+      "recon_cos": 0.9742370843887329,
+      "drop": 0.20898799999999995
+    }
+  ],
+  "materiality_vs_n5": {
+    "n5_seeds": [
+      "42_postfix",
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "n6_seeds": [
+      "42_postfix",
+      "43",
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "delta_mean_drop_n6_minus_n5": -6.536666666667745e-05,
+    "abs_delta_mean_drop": 6.536666666667745e-05,
+    "verdict": "NEGLIGIBLE",
+    "threshold": 0.005,
+    "reason": "See materiality block in p69_n5_harmonized_2026-05-06.json which asserts all per-metric |Delta_mean| < 0.005."
+  },
+  "script": "(N=6 aggregator; per-seed sources at runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed{42_postfix,43,44,45,46,47}/results.json which carry SAE checkpoint references and are not bundled)"
+}

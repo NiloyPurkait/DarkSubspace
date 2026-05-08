@@ -1,6 +1,6 @@
 {
-  "model": "<runs>/sae-mia-audit/runs/controlled_ft/run_20260312_170632/ft_epoch5/model",
-  "bcd_dir": "<runs>/sae-mia-audit/runs/memcirc/behavioral_channels/mistral_epoch5_v2",
+  "model": "runs/controlled_ft/run_20260312_170632/ft_epoch5/model (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+  "bcd_dir": "runs/dark_subspace/behavioral_channels/mistral_epoch5_v2 (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
   "layer": 16,
   "n_texts": 1000,
   "n_texts_valid": 1000,

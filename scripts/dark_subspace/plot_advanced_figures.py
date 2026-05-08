@@ -180,6 +180,19 @@ def fig2_sae_quality_scatter():
         else:
             c, m = CTRL_COLOR, "D"
 
+        # CI for AUROC drop = original - reconstructed. Both bootstraps live
+        # in all_models_bootstrap_cis.json (n_boot=10000). The marginal CIs
+        # are paired across the same bootstrap resamples; we use the
+        # variance-of-difference upper bound (sum of half-widths) as a
+        # conservative drop-CI under positive correlation.
+        ci = load_bootstrap_for_model(key)
+        if ci is not None:
+            orig_hw = (ci["original"]["ci_hi"] - ci["original"]["ci_lo"]) / 2.0
+            recon_hw = (ci["recon"]["ci_hi"] - ci["recon"]["ci_lo"]) / 2.0
+            drop_hw = orig_hw + recon_hw
+            ax.errorbar(x, y, yerr=drop_hw, fmt="none", ecolor=c, alpha=0.45,
+                        capsize=2.5, capthick=0.8, elinewidth=0.9, zorder=4)
+
         if disp == "GPT-Neo":
             ax.scatter(x, y, c=c, marker="*", s=180, zorder=5,
                        edgecolors="black", linewidths=0.8)

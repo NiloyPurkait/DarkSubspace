@@ -116,7 +116,7 @@ ${PY} scripts/dark_subspace/subspace_ablation_eval.py \
 # recon-cosine and L0 sparsity gates, so bypassing it does not violate that
 # protocol.
 # The bypass flag propagates err_ratio_gate_bypassed=True through every
-# cell's validity block as an honest-disclosure audit trail.
+# cell's validity block.
 
 echo "=== DONE. $(date) ==="
 echo "Results. $OUT_DIR/results.json (K=10 sub-dir per script convention)"

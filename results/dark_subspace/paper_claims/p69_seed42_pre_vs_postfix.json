@@ -1,0 +1,51 @@
+{
+  "experiment": "Pythia-6.9B mixed-data SAE seed-42 retrain audit trail",
+  "scope": "Backs the README naming-notes claim that the Pythia-6.9B seed-42 SAE was retrained once and the suffix `_postfix` is preserved on disk for provenance. The original seed-42 SAE was trained at hyperparameters that did not match the rest of the cohort (multiplier 8, L1 1e-4); the postfix retrain produced a seed-42 SAE at the canonical cohort hyperparameters (multiplier 4, L1 5e-4) so that every seed in the N=5 cohort {42_postfix, 43, 44, 45, 46} shares an identical SAE training recipe. The retrain was a hyperparameter-conformance correction, not an outcome-driven retrain. Both runs are recorded here; the residual-above-reconstruction ordering is preserved across both.",
+  "pre_postfix_run": {
+    "seed_dir": "p69_mixed_sae",
+    "sae_path_snippet": "scripts/shared/train_sae_saif.py output at .../layer16__mult8__l10.0001__20260326_135802/sae_final.pt",
+    "hyperparameters": {
+      "layer": 16,
+      "dictionary_multiplier": 8,
+      "L1_coefficient": 1e-4,
+      "training_corpus": "mixed",
+      "comment": "Off-cohort hyperparameters; the rest of the N=5 cohort (seeds 43, 44, 45, 46) was trained at multiplier 4 / L1 5e-4."
+    },
+    "metrics": {
+      "original_score_K_auroc": 0.802965,
+      "sae_reconstructed_score_K_auroc": 0.648468,
+      "residual_score_K_auroc": 0.807171,
+      "reconstruction_cosine": 0.960463,
+      "mean_active_features": 551.337
+    },
+    "timestamp_utc": "2026-03-26 19:20:53 UTC"
+  },
+  "postfix_run": {
+    "seed_dir": "p69_mixed_sae_seed42_postfix",
+    "sae_path_snippet": "scripts/shared/train_sae_saif.py output at .../layer16__mult4__l10.0005__20260416_204852/sae_final.pt",
+    "hyperparameters": {
+      "layer": 16,
+      "dictionary_multiplier": 4,
+      "L1_coefficient": 5e-4,
+      "training_corpus": "mixed",
+      "comment": "Canonical cohort hyperparameters matching seeds 43, 44, 45, 46."
+    },
+    "metrics": {
+      "original_score_K_auroc": 0.803197,
+      "sae_reconstructed_score_K_auroc": 0.590669,
+      "residual_score_K_auroc": 0.783429,
+      "reconstruction_cosine": 0.976753,
+      "mean_active_features": 11.17
+    },
+    "timestamp_utc": "2026-04-17 01:20:57 UTC"
+  },
+  "comparison": {
+    "residual_above_recon_pre": true,
+    "residual_above_recon_post": true,
+    "ordering_preserved": true,
+    "delta_residual_minus_recon_pre": 0.158703,
+    "delta_residual_minus_recon_post": 0.192760,
+    "note": "Both runs show residual AUROC above SAE-reconstruction AUROC; the residual-above-reconstruction ordering is preserved across the hyperparameter change. The postfix retrain produces a tighter, more selective SAE (mean active features collapses from 551 to 11; recon cosine improves from 0.960 to 0.977) because the canonical cohort hyperparameters (multiplier 4 / L1 5e-4) target a sparser solution than the original (multiplier 8 / L1 1e-4). The narrative of the paper does not depend on which run is used; the residual carries membership signal that the reconstruction discards in both."
+  },
+  "interpretation": "A reviewer concerned that the postfix retrain was an outcome-driven choice (ie, dropping a SAE that did not show the residual-above-reconstruction effect) can verify directly from the pre_postfix_run.metrics block above that the original seed-42 SAE also showed residual_above_recon_pre=true with delta +0.159. Both runs support the paper's headline ordering."
+}

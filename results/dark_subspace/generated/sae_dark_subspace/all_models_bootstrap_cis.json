@@ -1,0 +1,302 @@
+{
+  "description": "Bootstrap 95% CIs for SAE dark subspace score_K AUROCs",
+  "n_bootstrap": 10000,
+  "ci_level": 0.95,
+  "seed": 42,
+  "models": [
+    {
+      "model": "P69 (member-only)",
+      "dir": "p69_epoch5",
+      "source": "runs/dark_subspace/sae_dark_subspace/p69_epoch5_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.802965,
+        "ci_lo": 0.7833,
+        "ci_hi": 0.8216,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.592666,
+        "ci_lo": 0.5678,
+        "ci_hi": 0.6178,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.804595,
+        "ci_lo": 0.7853,
+        "ci_hi": 0.8234,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "p69_epoch5_v2"
+    },
+    {
+      "model": "P69 (mixed SAE)",
+      "dir": "p69_mixed_sae",
+      "source": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.802965,
+        "ci_lo": 0.7833,
+        "ci_hi": 0.8216,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.648468,
+        "ci_lo": 0.6242,
+        "ci_hi": 0.672,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.807171,
+        "ci_lo": 0.788,
+        "ci_hi": 0.8257,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "p69_mixed_sae_v2"
+    },
+    {
+      "model": "P69 (dk=0.1)",
+      "dir": "p69_ft_dk0.1",
+      "source": "runs/dark_subspace/sae_dark_subspace/p69_ft_dk0.1/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.802965,
+        "ci_lo": 0.7833,
+        "ci_hi": 0.8216,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.802778,
+        "ci_lo": 0.7833,
+        "ci_hi": 0.8217,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.520058,
+        "ci_lo": 0.4954,
+        "ci_hi": 0.5453,
+        "n_bootstrap": 10000
+      }
+    },
+    {
+      "model": "P69 (dk=1.0)",
+      "dir": "p69_ft_dk1.0",
+      "source": "runs/dark_subspace/sae_dark_subspace/p69_ft_dk1.0/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.803088,
+        "ci_lo": 0.7834,
+        "ci_hi": 0.8218,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.801951,
+        "ci_lo": 0.7824,
+        "ci_hi": 0.8209,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.539625,
+        "ci_lo": 0.5141,
+        "ci_hi": 0.5649,
+        "n_bootstrap": 10000
+      }
+    },
+    {
+      "model": "P1B",
+      "dir": "p1b_epoch5",
+      "source": "runs/dark_subspace/sae_dark_subspace/p1b_epoch5_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.65958,
+        "ci_lo": 0.6363,
+        "ci_hi": 0.6835,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.515394,
+        "ci_lo": 0.4901,
+        "ci_hi": 0.5409,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.676492,
+        "ci_lo": 0.6533,
+        "ci_hi": 0.6996,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "p1b_epoch5_v2"
+    },
+    {
+      "model": "P12B",
+      "dir": "p12b_epoch5",
+      "source": "runs/dark_subspace/sae_dark_subspace/p12b_epoch5_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.706567,
+        "ci_lo": 0.6842,
+        "ci_hi": 0.7293,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.563916,
+        "ci_lo": 0.5388,
+        "ci_hi": 0.5887,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.814323,
+        "ci_lo": 0.7955,
+        "ci_hi": 0.8328,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "p12b_epoch5_v2"
+    },
+    {
+      "model": "Neo",
+      "dir": "neo_epoch5",
+      "source": "runs/dark_subspace/sae_dark_subspace/neo_epoch5_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.6153,
+        "ci_lo": 0.5909,
+        "ci_hi": 0.6398,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.570938,
+        "ci_lo": 0.546,
+        "ci_hi": 0.596,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.698678,
+        "ci_lo": 0.6763,
+        "ci_hi": 0.7208,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "neo_epoch5_v2"
+    },
+    {
+      "model": "Neo (mixed SAE)",
+      "dir": "neo_mixed_sae",
+      "source": "runs/dark_subspace/sae_dark_subspace/neo_mixed_sae/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.615737,
+        "ci_lo": 0.5914,
+        "ci_hi": 0.6402,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.558097,
+        "ci_lo": 0.5328,
+        "ci_hi": 0.5834,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.646042,
+        "ci_lo": 0.6221,
+        "ci_hi": 0.6701,
+        "n_bootstrap": 10000
+      }
+    },
+    {
+      "model": "OPT-6.7B",
+      "dir": "opt67_epoch5",
+      "source": "runs/dark_subspace/sae_dark_subspace/opt67_epoch5_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.773582,
+        "ci_lo": 0.7526,
+        "ci_hi": 0.7934,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.557063,
+        "ci_lo": 0.5318,
+        "ci_hi": 0.5814,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.866324,
+        "ci_lo": 0.8509,
+        "ci_hi": 0.8815,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "opt67_epoch5_v2"
+    },
+    {
+      "model": "Mistral",
+      "dir": "mistral_epoch5",
+      "source": "runs/dark_subspace/sae_dark_subspace/mistral_epoch5_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.926662,
+        "ci_lo": 0.9152,
+        "ci_hi": 0.9375,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.578851,
+        "ci_lo": 0.5541,
+        "ci_hi": 0.6038,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.925537,
+        "ci_lo": 0.9141,
+        "ci_hi": 0.9365,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "mistral_epoch5_v2"
+    },
+    {
+      "model": "Qwen2",
+      "dir": "qwen2_epoch5",
+      "source": "runs/dark_subspace/sae_dark_subspace/qwen2_epoch5_v2/results.json (per-text scores not bundled; canonical run-time output of scripts/dark_subspace/sae_dark_subspace.py)",
+      "n_texts": 2000,
+      "n_member": 1000,
+      "n_nonmember": 1000,
+      "original": {
+        "auroc": 0.638327,
+        "ci_lo": 0.6148,
+        "ci_hi": 0.6624,
+        "n_bootstrap": 10000
+      },
+      "recon": {
+        "auroc": 0.473687,
+        "ci_lo": 0.4491,
+        "ci_hi": 0.4994,
+        "n_bootstrap": 10000
+      },
+      "residual": {
+        "auroc": 0.8485,
+        "ci_lo": 0.8313,
+        "ci_hi": 0.865,
+        "n_bootstrap": 10000
+      },
+      "dir_alias_v2": "qwen2_epoch5_v2"
+    }
+  ]
+}

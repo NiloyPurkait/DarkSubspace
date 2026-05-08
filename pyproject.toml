@@ -31,11 +31,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-server = [
-  "fastapi>=0.111",
-  "uvicorn>=0.30",
-]
-
 # Optional SAE tooling (ai-safety-foundation/sparse_autoencoder)
 saif = [
   "sparse_autoencoder>=1.10.0",

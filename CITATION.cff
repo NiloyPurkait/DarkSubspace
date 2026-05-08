@@ -7,5 +7,5 @@ abstract: |
   Cross-architecture residual concentration with Pythia-6.9B and 12B causal reference points.
 license: MIT
 version: 0.1.0
-date-released: 2026-05-07
+date-released: 2026-05-08
 type: software

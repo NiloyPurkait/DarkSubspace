@@ -9,6 +9,20 @@ exits 1 on any mismatch.
 Acts as the primary reproducibility entry point (Section 5 of the paper).
 No GPU required, no SLURM submission, runs in seconds on a CPU.
 
+Scope statement.
+This verifier checks paper-vs-JSON consistency only. It does not regenerate
+the underlying GPU-pipeline outputs (per-text scores, SAE activations, layer
+sweeps, decoded continuations, ROUGE-L scores) because those carry SAE
+checkpoint references and large array fields that are not bundled in this
+artefact. The bundled paper-claim JSONs under ``results/dark_subspace/paper_claims/``
+mirror the manuscript-rendered cell values; the bundled generated JSONs under
+``results/dark_subspace/generated/`` mirror the canonical run-time outputs of
+the paper scripts. A passing run of this verifier confirms that every
+paper-cited number traces to a bundled JSON within tolerance; it does NOT
+confirm that the bundled JSONs were freshly produced by reviewer-side
+re-execution. Reviewers wanting end-to-end re-execution must run the paper
+scripts under ``scripts/dark_subspace/`` against their own cluster setup.
+
 Reproduce::
 
     env/bin/python3 scripts/dark_subspace/verify_claims.py
@@ -69,6 +83,25 @@ def banner(title: str):
     print("=" * 70)
     print(title)
     print("=" * 70)
+
+
+# -----------------------------------------------------------------------------
+# Scope banner printed at runtime.
+# -----------------------------------------------------------------------------
+print("=" * 70)
+print("Verifier scope")
+print("=" * 70)
+print("Checks paper-vs-JSON consistency. The bundled paper-claim JSONs under")
+print("results/dark_subspace/paper_claims/ mirror the manuscript-rendered cell")
+print("values; the bundled generated JSONs under results/dark_subspace/generated/")
+print("mirror canonical run-time outputs of the paper scripts. Underlying")
+print("GPU-pipeline records (per-text scores, SAE activations, decoded")
+print("continuations) are not bundled because they carry SAE checkpoint")
+print("references and large array fields. A passing run confirms paper-text ==")
+print("bundled-JSON to within tolerance. End-to-end re-execution requires")
+print("running the paper scripts under scripts/dark_subspace/ against an")
+print("appropriate cluster setup.")
+print()
 
 
 def show_layer(label, layers, layer_key):
@@ -197,7 +230,7 @@ banner("Top block of Table 2.Pythia-6.9B and GPT-Neo-2.7B rows (member SAE / mix
 _CHECK_RESULTS: list[tuple[str, bool, str]] = []
 
 
-def _check(label: str, expected: float, actual: float | None, tol: float = 0.005) -> None:
+def _check(label: str, expected: float, actual: float | None, tol: float = 0.002) -> None:
     """Compare a disk value with a paper claim, recording PASS/FAIL.
 
     Parameters
@@ -815,6 +848,113 @@ for tag, paper_vals in TPR_PAPER.items():
                paper_vals["ci_hi"], d.get("tpr_ci_hi"), tol=2e-3)
         _check(f"TPR@0.1%FPR {tag} fpr_target=0.001", 0.001, d.get("fpr_target"), tol=0)
         _check(f"TPR@0.1%FPR {tag} n_boot=10000", 10000, d.get("n_boot"), tol=0)
+
+
+banner("P69 N=6 cohort aggregate (paper_claims/p69_n6_complete.json) [asserted]")
+
+# N=6 alternative framing of the Pythia-6.9B mixed-data cohort. The paper
+# reports N=5 (drops seed 47 to share Pythia-1B's seed list); this artefact
+# bundles the N=6 aggregate as well. The conclusion is unchanged. The
+# materiality is recorded directly in this file plus the materiality block
+# of p69_n5_harmonized_2026-05-06.json.
+n6 = load(PAPER_CLAIMS / "p69_n6_complete.json")
+if n6 is not None:
+    s = n6.get("cluster_summary_n6", {})
+    drop_n6 = s.get("drop_original_minus_reconstructed", {}).get("mean")
+    rs_n6 = s.get("residual_score_K_auroc", {}).get("mean")
+    r_n6 = s.get("reconstructed_score_K_auroc", {}).get("mean")
+    rc_n6 = s.get("recon_cos", {}).get("mean")
+    # N=6 must show residual > reconstruction (headline ordering)
+    _CHECK_RESULTS.append((
+        "P69 N=6 residual > recon (headline ordering)",
+        rs_n6 is not None and r_n6 is not None and rs_n6 > r_n6,
+        f"resid={rs_n6}, recon={r_n6}",
+    ))
+    print(f"    [{'PASS' if rs_n6 > r_n6 else 'FAIL'}] P69 N=6 residual > recon: resid={rs_n6:.4f}, recon={r_n6:.4f}")
+    # N=6 row count == 6
+    _check("P69 N=6 row count (paper 6)", 6,
+           s.get("drop_original_minus_reconstructed", {}).get("n"), tol=0)
+    # Materiality vs N=5 must be NEGLIGIBLE
+    mat = n6.get("materiality_vs_n5", {})
+    verdict_ok = mat.get("verdict") == "NEGLIGIBLE"
+    _CHECK_RESULTS.append((
+        "P69 N=6 vs N=5 materiality verdict (NEGLIGIBLE)",
+        verdict_ok,
+        f"actual={mat.get('verdict')!r}",
+    ))
+    print(f"    [{'PASS' if verdict_ok else 'FAIL'}] P69 N=6 vs N=5 materiality verdict: actual={mat.get('verdict')!r}")
+    threshold = mat.get("threshold", 0.005)
+    abs_delta = mat.get("abs_delta_mean_drop")
+    within = abs_delta is not None and abs_delta < threshold
+    _CHECK_RESULTS.append((
+        f"P69 N=6 vs N=5 |delta_mean_drop| < {threshold}",
+        within,
+        f"actual={abs_delta:.6f}",
+    ))
+    print(f"    [{'PASS' if within else 'FAIL'}] P69 N=6 vs N=5 |delta_mean_drop| < {threshold}: actual={abs_delta:.6f}")
+
+
+banner("P69 seed-42 pre-vs-postfix audit trail (paper_claims/p69_seed42_pre_vs_postfix.json) [asserted]")
+
+# Backs the README naming-notes claim that the Pythia-6.9B seed-42 SAE was
+# retrained once at corrected hyperparameters. Asserts that both runs show
+# residual > sae_reconstructed (the headline ordering), so the postfix
+# retrain is a hyperparameter-conformance correction rather than an
+# outcome-driven retrain.
+pp = load(PAPER_CLAIMS / "p69_seed42_pre_vs_postfix.json")
+if pp is not None:
+    pre = pp.get("pre_postfix_run", {}).get("metrics", {})
+    post = pp.get("postfix_run", {}).get("metrics", {})
+    cmp = pp.get("comparison", {})
+    pre_resid_above_recon = (pre.get("residual_score_K_auroc", 0) >
+                             pre.get("sae_reconstructed_score_K_auroc", 0))
+    post_resid_above_recon = (post.get("residual_score_K_auroc", 0) >
+                              post.get("sae_reconstructed_score_K_auroc", 0))
+    _CHECK_RESULTS.append((
+        "P69 seed-42 pre-postfix run shows residual > recon (ordering preserved)",
+        pre_resid_above_recon,
+        f"resid={pre.get('residual_score_K_auroc')}, recon={pre.get('sae_reconstructed_score_K_auroc')}",
+    ))
+    print(f"    [{'PASS' if pre_resid_above_recon else 'FAIL'}] P69 seed-42 pre-postfix run shows residual > recon (ordering preserved)")
+    _CHECK_RESULTS.append((
+        "P69 seed-42 postfix run shows residual > recon (ordering preserved)",
+        post_resid_above_recon,
+        f"resid={post.get('residual_score_K_auroc')}, recon={post.get('sae_reconstructed_score_K_auroc')}",
+    ))
+    print(f"    [{'PASS' if post_resid_above_recon else 'FAIL'}] P69 seed-42 postfix run shows residual > recon (ordering preserved)")
+    _CHECK_RESULTS.append((
+        "P69 seed-42 ordering preserved across retrain",
+        cmp.get("ordering_preserved") is True,
+        f"actual={cmp.get('ordering_preserved')!r}",
+    ))
+    print(f"    [{'PASS' if cmp.get('ordering_preserved') is True else 'FAIL'}] P69 seed-42 ordering preserved across retrain")
+
+
+banner("SAE-quality exclusions (paper_claims/sae_quality_exclusions.json) [asserted]")
+
+# Backs the manuscript's exclusion of Mistral-7B and Llama-3-8B from
+# tab:dark_subspace. The validity-gate threshold is 0.85 (YELLOW permissive
+# tier); recon cosine below 0.85 disqualifies the row from the quantitative
+# claim. Both excluded settings have recon cosine below 0.85.
+ex = load(PAPER_CLAIMS / "sae_quality_exclusions.json")
+if ex is not None:
+    settings_seen = set()
+    for row in ex.get("exclusions", []):
+        settings_seen.add(row.get("setting"))
+        rc = row.get("reconstruction_cosine")
+        below = rc is not None and rc < 0.85
+        _CHECK_RESULTS.append((f"SAE exclusion {row.get('setting')} recon_cos < 0.85 (permissive gate)",
+                                below, f"actual={rc}"))
+        flag = "PASS" if below else "FAIL"
+        print(f"    [{flag}] SAE exclusion {row.get('setting')} recon_cos < 0.85: actual={rc}")
+    _check("SAE exclusions row count == 2 (Mistral, Llama-3)", 2, len(settings_seen), tol=0)
+    _CHECK_RESULTS.append((
+        "SAE exclusions cover Mistral-7B and Llama-3-8B",
+        settings_seen == {"Mistral-7B", "Llama-3-8B"},
+        f"actual={sorted(settings_seen)}",
+    ))
+    flag = "PASS" if settings_seen == {"Mistral-7B", "Llama-3-8B"} else "FAIL"
+    print(f"    [{flag}] SAE exclusions cover Mistral-7B and Llama-3-8B: actual={sorted(settings_seen)}")
 
 
 banner("Per-model channel decomposition (generated/behavioral_channels, tab:bcd_main) [asserted]")

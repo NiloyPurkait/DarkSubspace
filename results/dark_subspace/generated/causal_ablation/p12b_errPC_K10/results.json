@@ -1,7 +1,7 @@
 {
   "model_tag": "p12b",
   "model_path": "runs/controlled_ft/run_20260308_001316/ft_epoch5/model",
-  "bcd_dir": "runs/memcirc/behavioral_channels/p12b_epoch5",
+  "bcd_dir": "runs/dark_subspace/behavioral_channels/p12b_epoch5 (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
   "sae_path": "runs/sae/memcirc_p12b_epoch5_layer18_4x_l1_5e4_member/sae_final.pt",
   "layer": 18,
   "K": 10,

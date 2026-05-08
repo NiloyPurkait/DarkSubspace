@@ -7,7 +7,7 @@ so figures can be regenerated without invoking the GPU pipeline.
 
 Used in the paper figure-generation pipeline (Methods, Results, Appendix).
 Reproduce: ``python3 scripts/dark_subspace/figure_data_loader.py``
-(prints a smoke summary of every loader; does not write artifacts).
+(prints a diagnostic summary of every loader; does not write artifacts).
 
 Sources.
 * score_K AUROC and recon_cos   results/dark_subspace/generated/sae_dark_subspace/{dir}/results.json
@@ -68,7 +68,7 @@ MODEL_REGISTRY = {
     "Qwen2-7B":     {"dark": "qwen2_epoch5",        "norm": "qwen2_epoch5", "bc": "qwen2_epoch5",           "family": "LLaMA","params": 7e9},
     # ── Mixed-data control (uses the same P69 source rows but different SAE)
     "Pythia-6.9B (mixed)":
-                    {"dark": "p69_mixed_sae_v2",    "norm": "p69_epoch5",   "bc": "p69_epoch5",             "family": "GPT", "params": 6.9e9},
+                    {"dark": "p69_mixed_sae",       "norm": "p69_epoch5",   "bc": "p69_epoch5",             "family": "GPT", "params": 6.9e9},
 }
 
 
@@ -341,7 +341,7 @@ def get_scaling_curve_data(model_labels: list[str]) -> dict:
     }
 
 
-# ── CLI smoke test ─────────────────────────────────────────────────────────
+# ── CLI integration check ─────────────────────────────────────────────────
 if __name__ == "__main__":
     import sys
     print("repo_root =", REPO_ROOT)
@@ -372,7 +372,14 @@ if __name__ == "__main__":
     print("=== bootstrap CIs (count) ===")
     cis = load_bootstrap_cis()
     if cis:
-        print(f"  {len(cis)} entries:", list(cis.keys()))
+        print(f"  {len(cis)} entries with paired bootstrap CIs (n_boot=10000)")
+        print(f"  source: results/dark_subspace/generated/sae_dark_subspace/all_models_bootstrap_cis.json")
+        sample = next(iter(cis.values()))
+        print(f"  sample: original CI=[{sample['original']['ci_lo']:.4f}, {sample['original']['ci_hi']:.4f}]"
+              f", recon CI=[{sample['recon']['ci_lo']:.4f}, {sample['recon']['ci_hi']:.4f}]"
+              f", residual CI=[{sample['residual']['ci_lo']:.4f}, {sample['residual']['ci_hi']:.4f}]")
+        print(f"  callers: load_bootstrap_for_model(model_key) returns the per-model CI dict")
+        print(f"  figures: plot_advanced_figures.py:fig2_sae_quality_scatter renders error bars from these")
     else:
         print("  no shipped CI table; figure scripts draw points without CI bands")
     sys.exit(0)
