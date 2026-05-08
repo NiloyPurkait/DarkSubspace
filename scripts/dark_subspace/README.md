@@ -2,11 +2,11 @@
 
 This directory contains the paper-specific code for this artefact. Scripts are grouped by experiment role rather than combined into one large driver, so that individual claims and controls can be verified independently.
 
-A small number of engineering labels (`errPC`, `kocl2`, `memcirc`) survive in path strings and one filename; their paper-passage equivalents are tabulated under **Naming notes** in the root `README.md`. The full paper-passage-to-script-and-JSON mapping is the **Claim-Source Map**, also in the root `README.md`.
+A small number of engineering labels (`errPC`, `kocl2`, `memcirc`) survive in path strings and one filename. Their paper-passage equivalents are tabulated under **Naming notes** in the root `README.md`. The full paper-passage-to-script-and-JSON mapping is the **Claim-Source Map**, also in the root `README.md`.
 
 ## Recommended starting points
 
-The verifier is the recommended first check; it reads only the JSON files under `results/dark_subspace/`.
+The verifier is the recommended first check. It reads only the JSON files under `results/dark_subspace/`.
 
 | Script | Purpose |
 | --- | --- |
@@ -21,14 +21,14 @@ The verifier is the recommended first check; it reads only the JSON files under 
 
 ## Full script index
 
-All 37 scripts under `scripts/dark_subspace/`, grouped by role:
+All 37 scripts under `scripts/dark_subspace/`, grouped by role.
 
 ### Entry points
 
 | Script | Purpose |
 | --- | --- |
 | `verify_claims.py` | CPU-only verifier (asserted-check summary). |
-| `figure_data_loader.py` | Validates that all JSON sources for the figure scripts exist; defines `MODEL_REGISTRY` (preferred `_v2` re-runs noted in source comment). |
+| `figure_data_loader.py` | Validates that all JSON sources for the figure scripts exist, and defines `MODEL_REGISTRY` (preferred `_v2` re-runs noted in source comment). |
 
 ### Plotting
 
@@ -43,8 +43,8 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 
 | Script | Purpose |
 | --- | --- |
-| `behavioral_channels.py` | Channel decomposition: fits $d_K$, $d_R$, $S_K$, $S_R$, principal angles, and per-layer probe AUROC. |
-| `sae_dark_subspace.py` | Computes original / SAE-reconstructed / SAE-residual membership scores at the SAE layer. |
+| `behavioral_channels.py` | Channel decomposition. Fits $d_K$, $d_R$, $S_K$, $S_R$, principal angles, and per-layer probe AUROC. |
+| `sae_dark_subspace.py` | Computes original, SAE-reconstructed, and SAE-residual membership scores at the SAE layer. |
 | `subspace_ablation_eval.py` | K-PC (errPC) residual ablation with random-rotation, matched-Gaussian, and column-mask controls. |
 | `standard_mia_probe_decomposition.py` | Standard MIA probes (loss attack, MIN-K%, zlib) under the same decomposition. |
 | `bcd_extractability_predictor.py` | Per-text loss / ROUGE-L / score_K / score_R / score_SK / score_SR predictor. |
@@ -72,7 +72,7 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 | `fresh_probe_test.py` | Fresh-probe permutation null for `tab:fresh_probe_v2`. |
 | `fsc_random_null.py` | Random-subset null for the feature sufficiency criterion (`tab:fsc_values`). |
 | `baseline_attacks_suite.py` | Standard pre-training-MIA attack suite for output-level scope checks. |
-| `dd_table_render.py` | Renders the double-dissociation tables (`tab:dd_full`, `tab:dd_extraction`, `tab:epoch_dd`) from cached per-cell records. |
+| `dd_table_render.py` | Renders the extraction-detection separation tables (`tab:dd_full`, `tab:dd_extraction`, `tab:epoch_dd`) from cached per-cell records. |
 
 ### SAE training and fine-tuning
 
@@ -93,24 +93,24 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role:
 | `p12b_multiseed_query.py` | Reads `runs/dark_subspace/sae_dark_subspace/p12b_mixed_sae_seed{47..51}/results.json` and reports the multi-seed table. |
 | `per_row_bootstrap_kocl2.py` | Per-row paired bootstrap for the directional sign-test cohort (Appendix `app:koc2_bootstrap`). The script filename uses `kocl2` as an engineering label. |
 | `per_row_bootstrap_kocl2_residual_minus_recon.py` | Same bootstrap with the residual-minus-reconstruction margin. |
-| `rerun_bootstrap_cis.py` | Reruns bootstrap confidence intervals in place on the JSON records (used to refresh paraphrase and BoW intervals; recorded in `bootstrap_history` fields). |
+| `rerun_bootstrap_cis.py` | Reruns bootstrap confidence intervals in place on the JSON records (used to refresh paraphrase and BoW intervals, recorded in `bootstrap_history` fields). |
 
 ### Path bootstrap
 
 | Script | Purpose |
 | --- | --- |
-| `_bootstrap.py` | Local sys.path shim; imported as the first line of each paper script. |
+| `_bootstrap.py` | Local sys.path shim, imported as the first line of each paper script. |
 | `configs/` | JSON config files (e.g. `subspace_ablation_roster.json`) consumed by the experiment scripts. |
 
 ## SLURM wrappers
 
-`shell/` contains the cluster launchers for the GPU jobs. The wrappers are not required for the CPU verifier; they document the command lines, resources, seeds, and output directories used for GPU reproduction. Per-architecture multi-seed launchers live under `shell/multiseed/`. Selected entries:
+`shell/` contains the cluster launchers for the GPU jobs. The wrappers are not required for the CPU verifier. They document the command lines, resources, seeds, and output directories used for GPU reproduction. Per-architecture multi-seed launchers live under `shell/multiseed/`. Selected entries follow.
 
-- `shell/sbatch_p12b_multiseed_array.sh` — Pythia-12B SAE multi-seed array.
-- `shell/sbatch_p69_seed42_postfix.sh` — Pythia-6.9B seed-42 mixed-data SAE training run.
-- `shell/sbatch_pre_ft_baseline.sh` — Pre-fine-tuning control on the un-fine-tuned base Pythia-6.9B.
-- `shell/sbatch_p69_disjoint_owt_sae.sh` — Corpus-disjoint dictionary control on Pythia-6.9B.
-- `shell/sbatch_random_direction_baseline.sh`, `shell/sbatch_random_init_sae.sh` — Random-direction and random-init SAE controls.
+- `shell/sbatch_p12b_multiseed_array.sh`. Pythia-12B SAE multi-seed array.
+- `shell/sbatch_p69_seed42_postfix.sh`. Pythia-6.9B seed-42 mixed-data SAE training run.
+- `shell/sbatch_pre_ft_baseline.sh`. Pre-fine-tuning control on the un-fine-tuned base Pythia-6.9B.
+- `shell/sbatch_p69_disjoint_owt_sae.sh`. Corpus-disjoint dictionary control on Pythia-6.9B.
+- `shell/sbatch_random_direction_baseline.sh`, `shell/sbatch_random_init_sae.sh`. Random-direction and random-init SAE controls.
 
 Figure plotting scripts write to `outputs/figures/` by default. Set `FIGDIR` to redirect output to a separate manuscript directory.
 

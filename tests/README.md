@@ -10,7 +10,7 @@ Three CPU-only integration tests that exercise contracts on the public artefact.
 
 These tests do not exercise the GPU pipeline scripts. End-to-end re-execution requires GPU resources and is out of scope for the CI workflow at `.github/workflows/verify.yml`.
 
-Run locally:
+Run locally.
 
 ```bash
 python3 -m pip install pytest

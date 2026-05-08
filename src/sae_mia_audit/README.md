@@ -19,7 +19,7 @@ python3 -m venv .venv
 .venv/bin/python -m pip install -e .
 ```
 
-The CPU-only claim verifier (`scripts/dark_subspace/verify_claims.py`) does not require installing this package; it reads only the JSON files under `results/dark_subspace/`.
+The CPU-only claim verifier (`scripts/dark_subspace/verify_claims.py`) does not require installing this package. It reads only the JSON files under `results/dark_subspace/`.
 
 ## Console script
 

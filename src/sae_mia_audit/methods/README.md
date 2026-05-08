@@ -1,6 +1,6 @@
 # `sae_mia_audit.methods`
 
-A single module shipped in the public artefact:
+A single module shipped in the public artefact.
 
 | Module | Purpose | Used by |
 | --- | --- | --- |
