@@ -36,7 +36,7 @@
     "p50": -4.40741229057312,
     "p95": -2.8257649898529054
   },
-  "paraphrase_cache_file": "runs/dark_subspace/paraphrase_sensitivity/qwen2/paraphrase_cache_word_shuffle.jsonl (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+  "paraphrase_cache_file": "runs/dark_subspace/paraphrase_sensitivity/qwen2/paraphrase_cache_word_shuffle.jsonl",
   "script": "paraphrase_sensitivity_c5.py",
   "timestamp": "2026-04-21 15:49:43 UTC",
   "seed": 42,

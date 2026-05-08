@@ -115,7 +115,7 @@ def fig_dark_subspace():
     recon  = [table[k]["recon"] for k in keys]
     resid  = [table[k]["resid"] for k in keys]
     # "clean" residual flag.True for models whose norm-AUROC is well below
-    # residual, i.e. the residual signal is not a norm artifact. Hard-coded to
+    # residual, i.e. the residual signal is not a norm artefact. Hard-coded to
     # match the prior figure's hatching policy (style choice, not a metric).
     clean  = [True,  True,  True,  True,  False, False, True,  False, False]
 
@@ -197,7 +197,7 @@ def fig_scaling_curve():
     # Annotate the P12B point
     idx_12b = labels.index("12B")
     is_ph = provisional[idx_12b]
-    note  = "(single-run source)" if is_ph else "(layer-selection\n artifact)"
+    note  = "(single-run source)" if is_ph else "(layer-selection\n artefact)"
     ax.annotate(note,
                 xy=(sizes[idx_12b], aurocs[idx_12b]),
                 xytext=(sizes[idx_12b] * 1.05, aurocs[idx_12b] - 0.065),

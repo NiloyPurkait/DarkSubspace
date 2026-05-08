@@ -1,6 +1,6 @@
 {
   "experiment": "Pythia-6.9B mixed-data SAE N=6 cohort aggregate (full cohort, no harmonisation)",
-  "scope": "Backs the Pythia-6.9B (mixed) row of tab:dark_subspace as an N=6-primary alternative framing. The paper reports N=5 to share an identical seed list with the Pythia-1B row in the same table; this artefact bundles the N=6 aggregate as well. The residual-above-reconstruction ordering and the magnitude of the reduction are unchanged at N=5 and N=6. The N=5/N=6 materiality JSON at p69_n5_harmonized_2026-05-06.json records the per-metric |Delta_mean| < 0.005 (verdict NEGLIGIBLE) and the verifier asserts that verdict directly. This file is the corresponding N=6-primary cluster summary.",
+  "scope": "Pythia-6.9B (mixed) row of tab:dark_subspace at N=6 SAE seeds. The paper reports N=5 to match the Pythia-1B cohort seed list. The residual-above-reconstruction ordering and reduction magnitude are unchanged at N=5 and N=6; per-metric mean shifts are below 0.005 on all reported metrics, recorded in p69_n5_harmonized_2026-05-06.json.",
   "note": "All six SAEs were trained at identical hyperparameters (layer 16, multiplier 4, L1 5e-4, 200M tokens, dead-feature resampling). Different random initialisation per SAE training run. The seed_label 42_postfix is canonically labelled 42 in the cohort and refers to the postfix retrain at canonical hyperparameters; see p69_seed42_pre_vs_postfix.json for the audit trail.",
   "seeds_kept": [
     "42_postfix",

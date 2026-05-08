@@ -165,6 +165,6 @@
       "paper_value_rounded": 0.008
     }
   },
-  "script": "Recomputable from scripts/dark_subspace/verify_claims.py and the per-setting source_jsons listed above. Some non-Pythia subgroup JSONs are GPU-pipeline outputs not bundled in this artefact and regenerate to the listed paths on rerun; the AUROC values cached in this file mirror those reported in tab:dark_subspace.",
+  "script": "Recomputable from scripts/dark_subspace/verify_claims.py and the per-setting source_jsons listed above. Some non-Pythia subgroup JSONs are GPU-pipeline outputs not bundled here and regenerate to the listed paths on rerun; the AUROC values cached in this file mirror those reported in tab:dark_subspace.",
   "n_boot_unused": "This is a binomial sign test. Bootstrap CIs are not used; the per-row paired bootstrap CIs live in tab:koc2_bootstrap_per_row backed by cohort_bootstrap.json."
 }

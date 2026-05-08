@@ -15,7 +15,7 @@
     {
       "seed_dir": "p69_mixed_sae_seed42_postfix",
       "seed_label": "42_postfix",
-      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed42_postfix/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed42_postfix/results.json",
       "original_score_K_auroc": 0.803197,
       "reconstructed_score_K_auroc": 0.590669,
       "residual_score_K_auroc": 0.7834289999999999,
@@ -25,7 +25,7 @@
     {
       "seed_dir": "p69_mixed_sae_seed43",
       "seed_label": "43",
-      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed43/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed43/results.json",
       "original_score_K_auroc": 0.802965,
       "reconstructed_score_K_auroc": 0.5900989999999999,
       "residual_score_K_auroc": 0.7850170000000001,
@@ -35,7 +35,7 @@
     {
       "seed_dir": "p69_mixed_sae_seed44",
       "seed_label": "44",
-      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed44/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed44/results.json",
       "original_score_K_auroc": 0.802965,
       "reconstructed_score_K_auroc": 0.597069,
       "residual_score_K_auroc": 0.77948,
@@ -45,7 +45,7 @@
     {
       "seed_dir": "p69_mixed_sae_seed45",
       "seed_label": "45",
-      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed45/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed45/results.json",
       "original_score_K_auroc": 0.802965,
       "reconstructed_score_K_auroc": 0.598114,
       "residual_score_K_auroc": 0.772269,
@@ -55,7 +55,7 @@
     {
       "seed_dir": "p69_mixed_sae_seed46",
       "seed_label": "46",
-      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed46/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed46/results.json",
       "original_score_K_auroc": 0.803088,
       "reconstructed_score_K_auroc": 0.5923280000000001,
       "residual_score_K_auroc": 0.7835460000000001,
@@ -67,7 +67,7 @@
     {
       "seed_dir": "p69_mixed_sae_seed47",
       "seed_label": "47",
-      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed47/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+      "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed47/results.json",
       "original_score_K_auroc": 0.803088,
       "reconstructed_score_K_auroc": 0.5941000000000001,
       "residual_score_K_auroc": 0.7686320000000001,
@@ -152,7 +152,7 @@
       {
         "seed_dir": "p69_mixed_sae_seed42_postfix",
         "seed_label": "42_postfix",
-        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed42_postfix/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed42_postfix/results.json",
         "original_score_K_auroc": 0.803197,
         "reconstructed_score_K_auroc": 0.590669,
         "residual_score_K_auroc": 0.7834289999999999,
@@ -162,7 +162,7 @@
       {
         "seed_dir": "p69_mixed_sae_seed43",
         "seed_label": "43",
-        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed43/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed43/results.json",
         "original_score_K_auroc": 0.802965,
         "reconstructed_score_K_auroc": 0.5900989999999999,
         "residual_score_K_auroc": 0.7850170000000001,
@@ -172,7 +172,7 @@
       {
         "seed_dir": "p69_mixed_sae_seed44",
         "seed_label": "44",
-        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed44/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed44/results.json",
         "original_score_K_auroc": 0.802965,
         "reconstructed_score_K_auroc": 0.597069,
         "residual_score_K_auroc": 0.77948,
@@ -182,7 +182,7 @@
       {
         "seed_dir": "p69_mixed_sae_seed45",
         "seed_label": "45",
-        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed45/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed45/results.json",
         "original_score_K_auroc": 0.802965,
         "reconstructed_score_K_auroc": 0.598114,
         "residual_score_K_auroc": 0.772269,
@@ -192,7 +192,7 @@
       {
         "seed_dir": "p69_mixed_sae_seed46",
         "seed_label": "46",
-        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed46/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed46/results.json",
         "original_score_K_auroc": 0.803088,
         "reconstructed_score_K_auroc": 0.5923280000000001,
         "residual_score_K_auroc": 0.7835460000000001,
@@ -202,7 +202,7 @@
       {
         "seed_dir": "p69_mixed_sae_seed47",
         "seed_label": "47",
-        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed47/results.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+        "results_path": "runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed47/results.json",
         "original_score_K_auroc": 0.803088,
         "reconstructed_score_K_auroc": 0.5941000000000001,
         "residual_score_K_auroc": 0.7686320000000001,
@@ -287,7 +287,7 @@
         ]
       }
     },
-    "cached_aggregate_path": "runs/dark_subspace/sae_noise_floor/p69_aggregate.json (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+    "cached_aggregate_path": "runs/dark_subspace/sae_noise_floor/p69_aggregate.json",
     "cached_aggregate_summary": {
       "original_score_K_auroc": {
         "mean": 0.8030446666666666,
@@ -406,7 +406,7 @@
     "All 6 P69 SAEs share identical HP (layer=16, d_mult=4, L1=5e-4, 200M tokens, dead-feat resample).",
     "Different random init per SAE training run.",
     "Eval seed=42 on every cohort member; score computation deterministic given SAE.",
-    "Cohort mirrors the noise-floor aggregator at runs/dark_subspace/sae_noise_floor/p69_aggregate.json. (not bundled in this artefact; canonical run-time output of the matching script in scripts/dark_subspace/)",
+    "Cohort mirrors the noise-floor aggregator at runs/dark_subspace/sae_noise_floor/p69_aggregate.json.",
     "Pattern A drops seed 47 (chronological tail of the cohort, training timestamp 20260416_155229) and aligns to the Pythia-1B multi-seed cohort seed list {42, 43, 44, 45, 46}."
   ]
 }

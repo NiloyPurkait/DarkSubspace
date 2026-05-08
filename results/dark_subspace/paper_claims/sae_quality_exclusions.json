@@ -1,9 +1,9 @@
 {
   "experiment": "SAE-quality validity-gate exclusions for tab:dark_subspace",
-  "scope": "Backs the manuscript's exclusions of Mistral-7B and Llama-3-8B from the tab:dark_subspace residual-above-reconstruction analysis. The validity gate (Methods \u00a73.7) requires reconstruction cosine in [0.85, 0.90) for the YELLOW permissive tier and at least 0.90 for the STRICT tier; SAEs with recon cosine below 0.85 are recorded as diagnostic context only and excluded from the quantitative claim. The values below are the canonical run-time outputs of scripts/dark_subspace/sae_dark_subspace.py against the per-model SAE checkpoint listed in tab:model_details (multiplier 4, layer 16, L1 5e-4, mixed-data corpus).",
+  "scope": "Mistral-7B and Llama-3-8B exclusions from the tab:dark_subspace residual-above-reconstruction analysis. The validity gate (Methods \u00a73.7) admits reconstruction cosine \u2265 0.90 (strict tier) and [0.85, 0.90) (permissive tier); SAEs with recon cosine below 0.85 are reported as diagnostic context only and excluded from the quantitative claim. Values below are run-time outputs of scripts/dark_subspace/sae_dark_subspace.py against the per-model SAE checkpoint listed in tab:model_details (multiplier 4, layer 16, L1 5e-4, mixed-data corpus).",
   "validity_gate_thresholds": {
     "strict": 0.9,
-    "permissive_yellow": 0.85,
+    "permissive": 0.85,
     "below_permissive": "diagnostic context only, excluded from quantitative tab:dark_subspace claim"
   },
   "exclusions": [
@@ -20,7 +20,7 @@
         "mean_active_features": 3.76
       },
       "interpretation": "The SAE is highly sparse (mean active 3.76 of 16384 features) and reconstructs less than half of the membership signal at the residual stream. Excluded from tab:dark_subspace because the reconstruction is not a faithful enough decomposition of the residual stream to interpret the residual-above-reconstruction ordering as a property of the model rather than of the SAE.",
-      "source_run": "runs/dark_subspace/sae_dark_subspace/mistral_epoch5/results.json (per-text scores not bundled; canonical run on the authors' cluster)"
+      "source_run": "runs/dark_subspace/sae_dark_subspace/mistral_epoch5/results.json (per-text scores not bundled)"
     },
     {
       "setting": "Llama-3-8B",
@@ -35,9 +35,9 @@
         "mean_active_features": 3814.3
       },
       "interpretation": "The SAE collapses to a near-dense decoder (mean active 3814 of 16384 features) and produces reconstructions essentially uncorrelated with the input residual stream. Excluded from tab:dark_subspace and from tab:fsc_values per the manuscript's app:fsc note 'Llama-3-8B is excluded from classifier-feature analyses because the available SAE checkpoint fails the reconstruction-quality criterion.'",
-      "source_run": "runs/dark_subspace/sae_dark_subspace/llama3_epoch5/results.json (per-text scores not bundled; canonical run on the authors' cluster)"
+      "source_run": "runs/dark_subspace/sae_dark_subspace/llama3_epoch5/results.json (per-text scores not bundled)"
     }
   ],
-  "note": "Both exclusions are gate-driven, not effect-driven. The validity gate is set in Methods \u00a73.7 before the cross-architecture table is inspected, so the exclusion decision is independent of the residual-above-reconstruction outcome. Verifier asserts that the recorded recon-cosine values are below 0.85 (the permissive YELLOW threshold).",
+  "note": "Both exclusions are gate-driven. The validity gate is set in Methods \u00a73.7 before the cross-architecture table is inspected, so the exclusion decision is independent of the residual-above-reconstruction outcome.",
   "script": "scripts/dark_subspace/sae_dark_subspace.py (canonical recon/residual pipeline) + manual aggregation"
 }

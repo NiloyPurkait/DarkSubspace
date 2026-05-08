@@ -11,7 +11,7 @@
   "tpr_ci_hi": 0.05015353121801433,
   "n_member": 1000,
   "n_nonmember": 1000,
-  "source": "(per-text scores produced by scripts/dark_subspace/sae_dark_subspace.py for the p69 model; the source per-text array is not bundled in this artefact and regenerates from the same script)",
+  "source": "per-text scores produced by scripts/dark_subspace/sae_dark_subspace.py for the p69 model; the source per-text array is not bundled and regenerates from the same script",
   "script": "scripts/dark_subspace/tpr_at_low_fpr.py",
   "note": "TPR at 0.1% FPR for the residual d_K membership channel. Backs Appendix Table tab:tpr_at_0p1pct_fpr (see app:tpr_paraphrase). Paired n_boot=10000 bootstrap with seed 12345 over n_member=n_nonmember=1000 per model."
 }

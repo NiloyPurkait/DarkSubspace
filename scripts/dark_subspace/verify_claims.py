@@ -378,14 +378,14 @@ if fsc is not None:
                1.000, r.get("fsc_R_all"), tol=1e-6)
 
 
-banner("Double dissociation paper-claim JSON (paper_claims/double_dissociation.json, tab:dd_full + tab:dd_extraction + tab:epoch_dd) [asserted]")
+banner("Extraction-detection separation paper-claim JSON (paper_claims/extraction_detection_separation.json, tab:dd_full + tab:dd_extraction + tab:epoch_dd) [asserted]")
 
-# Internal consistency of the bundled DD paper-claim JSON. Numerical values
-# trace to GPU-pipeline outputs at runs/memcirc/double_dissociation/ that
-# are not bundled. The asserts here check that the bundled JSON encodes
-# the manuscript-rendered cell values consistently across the three
-# overlapping tables (tab:dd_full, tab:dd_extraction, tab:epoch_dd).
-dd = load(PAPER_CLAIMS / "double_dissociation.json")
+# Internal consistency of the bundled extraction-detection paper-claim JSON.
+# Numerical values trace to GPU-pipeline run-time records that are not bundled.
+# The asserts here check that the bundled JSON encodes the manuscript-rendered
+# cell values consistently across the three overlapping tables (tab:dd_full,
+# tab:dd_extraction, tab:epoch_dd).
+dd = load(PAPER_CLAIMS / "extraction_detection_separation.json")
 if dd is not None:
     # tab:dd_extraction P1B at epoch 5 must equal tab:epoch_dd at epoch 5
     p1b_ext = next((r for r in dd["tab_dd_extraction"]["rows"] if r["setting"] == "Pythia-1B"), {})
@@ -631,7 +631,7 @@ if bib.exists():
         present = key in text
         print(f"  {'PASS' if present else 'MISSING'}: {key}")
 else:
-    print("  manuscript/references.bib not present in this code/results artifact; bibliography check skipped.")
+    print("  manuscript/references.bib not present; bibliography check skipped.")
 
 
 # -----------------------------------------------------------------------------
@@ -933,8 +933,8 @@ if pp is not None:
 banner("SAE-quality exclusions (paper_claims/sae_quality_exclusions.json) [asserted]")
 
 # Backs the manuscript's exclusion of Mistral-7B and Llama-3-8B from
-# tab:dark_subspace. The validity-gate threshold is 0.85 (YELLOW permissive
-# tier); recon cosine below 0.85 disqualifies the row from the quantitative
+# tab:dark_subspace. The validity-gate threshold is 0.85 (permissive tier);
+# recon cosine below 0.85 disqualifies the row from the quantitative
 # claim. Both excluded settings have recon cosine below 0.85.
 ex = load(PAPER_CLAIMS / "sae_quality_exclusions.json")
 if ex is not None:
@@ -996,9 +996,9 @@ banner("Privacy-aware SAE score_K (generated/sae_dark_subspace/*_ft_dk*, tab:fre
 # Paper Appendix Table tab:fresh_probe_v2 reports score_K AUROC across
 # four conditions and three compartments. The probe-AUROC and permutation-null
 # columns of that table are produced by a separate fresh-probe pipeline and
-# are not bundled in this artefact; the score_K column is verifiable from
-# the shipped sae_dark_subspace results.json files for the privacy-aware
-# SAE conditions (the fourth condition, the Pythia-6.9B baseline mixed SAE,
+# are not bundled. The score_K column is verifiable from the shipped
+# sae_dark_subspace results.json files for the privacy-aware SAE
+# conditions (the fourth condition, the Pythia-6.9B baseline mixed SAE,
 # is verified above against the p69_n5 / p69_epoch5 cells of tab:dark_subspace).
 FRESH_PROBE_PAPER = {
     "p69_ft_dk0.1": {"original": 0.803, "sae_reconstructed": 0.803, "residual": 0.520},

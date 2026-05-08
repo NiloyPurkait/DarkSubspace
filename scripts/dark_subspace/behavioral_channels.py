@@ -705,7 +705,7 @@ def main():
     print()
     print("KEY:")
     print("  cos(dK,dR) near 0 → knowledge and recall directions are orthogonal")
-    print("  Angles near 90° → subspaces are separable (double dissociation possible)")
+    print("  Angles near 90° → subspaces are separable (extraction-detection separation possible)")
     print("  FSC_R << FSC_K → SAE features align with knowledge, not recall (sparsity-alignment bias)")
     print("  * = SAE layer")
     print(f"\nResults saved to {out_dir}")

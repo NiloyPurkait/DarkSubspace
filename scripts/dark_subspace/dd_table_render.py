@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
 """dd_table_render.py.
 
-Renders the double-dissociation tables `tab:dd_full`, `tab:dd_extraction`,
-and `tab:epoch_dd` from cached per-condition JSON records.
+Renders the extraction-detection separation tables `tab:dd_full`,
+`tab:dd_extraction`, and `tab:epoch_dd` from cached per-condition JSON
+records.
 
-The double-dissociation analysis applies subspace erasure (Methods Eq. 3)
-to the knowledge basis $\\mathbf{V}_K$ and the recall basis $\\mathbf{V}_R$,
-then measures membership detection AUROC on the erased activation and
-verbatim extraction (mean member loss, exact-match rate, ROUGE-L) on text
-generated from the erased activation. Each per-condition JSON record holds
-the AUROC and extraction metrics for one (model, intervention) cell.
+The analysis applies subspace erasure (Methods Eq. 3) to the knowledge
+basis $\\mathbf{V}_K$ and the recall basis $\\mathbf{V}_R$, then measures
+membership detection AUROC on the erased activation and verbatim
+extraction (mean member loss, exact-match rate, ROUGE-L) on text
+generated from the erased activation. Each per-condition JSON record
+holds the AUROC and extraction metrics for one (model, intervention)
+cell.
 
 Used in Methods §3.5 (Interventions separate extraction from detection),
-Results §4.4 (Feature edits do not close the residual membership gap), and
-the corresponding appendix tables.
+Results §4.4 (Feature edits do not close the residual membership gap),
+and the corresponding appendix tables.
 
 Reproduce:
     env/bin/python3 scripts/dark_subspace/dd_table_render.py \\
@@ -50,18 +52,17 @@ Inputs.
           }
 
 Outputs.
-  Markdown table to stdout. The script does not regenerate the cached JSONs.
-  Generating those records requires loading the fine-tuned model, fitting
-  the channel-decomposition bases, applying the forward-pass erasure hook,
-  decoding continuations, and scoring ROUGE-L; the resulting per-cell
-  records ship under ``results/dark_subspace/generated/double_dissociation/``
-  so the table is reproducible from the artefact via this renderer.
+  Markdown table to stdout. The script does not regenerate the cached
+  JSONs. Generating those records requires loading the fine-tuned model,
+  fitting the channel-decomposition bases, applying the forward-pass
+  erasure hook, decoding continuations, and scoring ROUGE-L; per-cell
+  records are written under
+  ``results/dark_subspace/generated/double_dissociation/``.
 
 Notes.
-  This renderer is deliberately small: it reads the cached records and
-  prints. The forward-pass surgery, generation, and scoring that produced
-  those records run on GPU outside this artefact. Reviewers reproducing
-  the table should run this script against the shipped JSONs.
+  This renderer reads the cached records and prints. The forward-pass
+  surgery, generation, and scoring that produced those records run on
+  GPU outside this artefact.
 """
 
 import _bootstrap  # noqa: F401
