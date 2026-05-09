@@ -6,9 +6,10 @@ Each test exercises a CPU-only contract that must hold on a fresh clone:
   and asserts the asserted-check summary reports N/N pass with zero failures.
 * ``test_paper_claim_jsons_parse`` walks every ``.json`` under
   ``results/dark_subspace/`` and asserts each parses as valid JSON.
-* ``test_no_internal_paths_leak`` greps the shipped JSONs for cluster-style
-  absolute paths (``/home/u<digits>``), legacy run-directory tokens, and
-  unresolved path placeholders, and asserts none survive.
+* ``test_no_internal_paths_leak`` scans every text file shipped in the
+  artefact (Markdown, Python, JSON, shell, YAML, TOML, CITATION.cff, .bib,
+  .txt, config) for cluster-style absolute paths (``/home/u<digits>``),
+  legacy run-directory tokens, and unresolved path placeholders.
 
 These tests do not exercise the GPU pipeline scripts. End-to-end re-execution
 is documented in ``README.md`` ("Reproducibility caveat") and requires GPU
@@ -63,20 +64,40 @@ def test_paper_claim_jsons_parse() -> None:
 
 
 def test_no_internal_paths_leak() -> None:
-    """Shipped JSONs must not leak internal absolute paths or sprint codes."""
+    """Shipped text files must not leak internal absolute paths or sprint codes."""
     forbidden_patterns: list[tuple[str, re.Pattern[str]]] = [
         ("cluster home directory", re.compile(r"/home/u\d{6,}")),
         ("legacy memcirc run path", re.compile(r"runs/memcirc/")),
         ("unresolved <runs> placeholder", re.compile(r"<runs>/sae-mia-audit")),
     ]
-    json_root = REPO_ROOT / "results" / "dark_subspace"
+    extensions = {
+        ".md", ".py", ".json", ".sh", ".yml", ".yaml", ".toml", ".cff",
+        ".bib", ".txt", ".cfg", ".ini", ".tex",
+    }
+    excluded_dirs = {
+        ".git", ".venv", "venv", "env", "__pycache__", "node_modules",
+        ".pytest_cache", ".mypy_cache", ".ruff_cache", ".idea", ".vscode",
+        "runs", "data", "logs", "outputs", "artifacts", "build", "dist",
+    }
+    self_path = Path(__file__).resolve()
     leaks: list[tuple[Path, str, str]] = []
-    for p in json_root.rglob("*.json"):
-        text = p.read_text()
+    for p in REPO_ROOT.rglob("*"):
+        if not p.is_file():
+            continue
+        if any(part in excluded_dirs for part in p.relative_to(REPO_ROOT).parts):
+            continue
+        if p.suffix.lower() not in extensions:
+            continue
+        if p.resolve() == self_path:
+            continue
+        try:
+            text = p.read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
         for label, pattern in forbidden_patterns:
             match = pattern.search(text)
             if match:
                 leaks.append((p, label, match.group(0)))
-    assert not leaks, "internal paths leak in shipped JSONs:\n" + "\n".join(
-        f"  {p}: {label} ({match!r})" for p, label, match in leaks
+    assert not leaks, "internal paths leak in shipped files:\n" + "\n".join(
+        f"  {p.relative_to(REPO_ROOT)}: {label} ({match!r})" for p, label, match in leaks
     )

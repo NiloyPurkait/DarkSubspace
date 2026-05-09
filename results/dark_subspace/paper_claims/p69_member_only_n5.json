@@ -103,5 +103,5 @@
       "recon_cos": 0.9437629580497742
     }
   ],
-  "script": "scripts/shared/aggregate_member_only_cohort.py (run-time aggregator, not bundled; the per-seed runs/dark_subspace/sae_dark_subspace/p69_member_only_sae_seed{42..46}/results.json are the source of truth and regenerate from scripts/shared/train_sae_saif.py + scripts/dark_subspace/sae_dark_subspace.py)"
+  "script": "Aggregated from per-seed runs at runs/dark_subspace/sae_dark_subspace/p69_member_only_sae_seed{42..46}/results.json (per-seed runs not bundled, regenerate from scripts/shared/train_sae.py + scripts/dark_subspace/sae_dark_subspace.py). The cluster_summary_n5 fields are the per-seed mean, min, and max of the rows_kept array bundled in this file. The per-seed values themselves are the source of truth."
 }

@@ -3,7 +3,7 @@
   "scope": "Backs the README naming-notes claim that the Pythia-6.9B seed-42 SAE was retrained once and the suffix `_postfix` is preserved on disk for provenance. The original seed-42 SAE was trained at hyperparameters that did not match the rest of the cohort (multiplier 8, L1 1e-4); the postfix retrain produced a seed-42 SAE at the canonical cohort hyperparameters (multiplier 4, L1 5e-4) so that every seed in the N=5 cohort {42_postfix, 43, 44, 45, 46} shares an identical SAE training recipe. The retrain was a hyperparameter-conformance correction, not an outcome-driven retrain. Both runs are recorded here; the residual-above-reconstruction ordering is preserved across both.",
   "pre_postfix_run": {
     "seed_dir": "p69_mixed_sae",
-    "sae_path_snippet": "scripts/shared/train_sae_saif.py output at .../layer16__mult8__l10.0001__20260326_135802/sae_final.pt",
+    "sae_path_snippet": "scripts/shared/train_sae.py output at .../layer16__mult8__l10.0001__20260326_135802/sae_final.pt",
     "hyperparameters": {
       "layer": 16,
       "dictionary_multiplier": 8,
@@ -22,7 +22,7 @@
   },
   "postfix_run": {
     "seed_dir": "p69_mixed_sae_seed42_postfix",
-    "sae_path_snippet": "scripts/shared/train_sae_saif.py output at .../layer16__mult4__l10.0005__20260416_204852/sae_final.pt",
+    "sae_path_snippet": "scripts/shared/train_sae.py output at .../layer16__mult4__l10.0005__20260416_204852/sae_final.pt",
     "hyperparameters": {
       "layer": 16,
       "dictionary_multiplier": 4,

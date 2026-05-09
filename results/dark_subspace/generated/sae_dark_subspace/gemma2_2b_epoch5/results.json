@@ -1,7 +1,7 @@
 {
   "model": "gemma2_2b_mixed",
   "layer": 16,
-  "sae_path": "(SAE checkpoint not bundled; regenerates from scripts/shared/train_sae_saif.py)",
+  "sae_path": "(SAE checkpoint not bundled, regenerates from scripts/shared/train_sae.py)",
   "n_member": 1000,
   "n_nonmember": 1000,
   "original": {

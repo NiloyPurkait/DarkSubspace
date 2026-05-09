@@ -48,7 +48,9 @@
       "source_jsons": [
         "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed47/results.json",
         "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed48/results.json",
-        "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed49/results.json"
+        "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed49/results.json",
+        "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed50/results.json",
+        "results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed51/results.json"
       ]
     },
     {

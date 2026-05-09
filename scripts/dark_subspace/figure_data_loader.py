@@ -41,6 +41,7 @@ DARK = RESULTS_ROOT / "sae_dark_subspace"
 NORM = RESULTS_ROOT / "norm_baseline"
 BC = RESULTS_ROOT / "behavioral_channels"
 NOISE_FLOOR = RESULTS_ROOT / "sae_noise_floor"
+PAPER_CLAIMS = REPO_ROOT / "results" / "dark_subspace" / "paper_claims"
 SAE_ARRAY = pathlib.Path(
     os.environ.get("DARK_SUBSPACE_SAE_ARRAY_ROOT", REPO_ROOT / "runs" / "sae_array")
 )
@@ -219,6 +220,56 @@ def load_p69_noise_floor() -> dict:
     }
 
 
+def load_p69_member_only_n5() -> dict:
+    """Return the P69 N=5 member-only SAE aggregate (orig/recon/resid means).
+
+    Reads ``paper_claims/p69_member_only_n5.json`` and returns the
+    ``cluster_summary_n5`` block plus a source-path string. Used by the
+    paper's ``tab:dark_subspace`` Pythia-6.9B (member-only) row.
+    """
+    p = PAPER_CLAIMS / "p69_member_only_n5.json"
+    d = _read_json(p)
+    return {
+        "summary": d["cluster_summary_n5"],
+        "n":       5,
+        "source":  str(p),
+    }
+
+
+def load_p12b_mixed_n5() -> dict:
+    """Return the P12B N=5 mixed-data SAE aggregate at depth-matched layer 18.
+
+    Reads the five bundled per-seed ``p12b_mixed_sae_seed{47..51}/results.json``
+    files and returns means for original, SAE-reconstructed, residual, and
+    reconstruction-cosine fields. Used by the paper's ``tab:dark_subspace``
+    Pythia-12B row (depth-matched SAE policy at layer 18 of 36, see
+    PROTOCOL_DISCLOSURE.md PR-1).
+    """
+    seeds = [47, 48, 49, 50, 51]
+    rows = []
+    for s in seeds:
+        p = DARK / f"p12b_mixed_sae_seed{s}" / "results.json"
+        d = _read_json(p)
+        rows.append({
+            "orig":      d["original"]["score_K_auroc"],
+            "recon":     d["sae_reconstructed"]["score_K_auroc"],
+            "resid":     d["residual"]["score_K_auroc"],
+            "recon_cos": d["sae_quality"]["reconstruction_cosine"],
+        })
+
+    def _mean(key: str) -> float:
+        return sum(r[key] for r in rows) / len(rows)
+
+    return {
+        "orig":      _mean("orig"),
+        "recon":     _mean("recon"),
+        "resid":     _mean("resid"),
+        "recon_cos": _mean("recon_cos"),
+        "n":         len(seeds),
+        "source":    str(DARK / "p12b_mixed_sae_seed{47..51}/results.json"),
+    }
+
+
 def load_p12b_scaling_auroc() -> ScalingValue:
     """Return the Pythia-12B AUROC for the scaling curve.
 
@@ -276,6 +327,33 @@ def get_dark_subspace_table(model_labels: list[str]) -> dict:
                 "resid":     s["residual_score_K_auroc"]["mean"],
                 "recon_cos": s["recon_cos"]["mean"],
                 "drop":      s["drop_original_minus_reconstructed"]["mean"],
+                "source":    agg["source"],
+                "n":         agg["n"],
+            }
+            continue
+        if lbl == "Pythia-6.9B":
+            agg = load_p69_member_only_n5()
+            s = agg["summary"]
+            orig_mean = s["original_score_K_auroc"]["mean"]
+            recon_mean = s["reconstructed_score_K_auroc"]["mean"]
+            out[lbl] = {
+                "orig":      orig_mean,
+                "recon":     recon_mean,
+                "resid":     s["residual_score_K_auroc"]["mean"],
+                "recon_cos": s["recon_cos"]["mean"],
+                "drop":      orig_mean - recon_mean,
+                "source":    agg["source"],
+                "n":         agg["n"],
+            }
+            continue
+        if lbl == "Pythia-12B":
+            agg = load_p12b_mixed_n5()
+            out[lbl] = {
+                "orig":      agg["orig"],
+                "recon":     agg["recon"],
+                "resid":     agg["resid"],
+                "recon_cos": agg["recon_cos"],
+                "drop":      agg["orig"] - agg["recon"],
                 "source":    agg["source"],
                 "n":         agg["n"],
             }

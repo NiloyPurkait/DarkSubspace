@@ -6,7 +6,7 @@ Three CPU-only integration tests that exercise contracts on the public artefact.
 | --- | --- |
 | `test_verifier_exits_zero` | `scripts/dark_subspace/verify_claims.py` runs to completion and reports `Asserted check summary: N/N pass, 0 fail`. |
 | `test_paper_claim_jsons_parse` | Every `.json` under `results/dark_subspace/` parses as valid JSON. |
-| `test_no_internal_paths_leak` | No shipped JSON contains a cluster-style home directory (`/home/u<digits>`), the legacy `runs/memcirc/` token, or the unresolved `<runs>/sae-mia-audit` placeholder. |
+| `test_no_internal_paths_leak` | No shipped text file (Markdown, Python, JSON, shell, YAML, TOML, CITATION, BibTeX, plain text, or LaTeX) contains a cluster-style home directory pattern, a legacy run-path token, or an unresolved path placeholder. The exact regex patterns are defined in this test module. |
 
 These tests do not exercise the GPU pipeline scripts. End-to-end re-execution requires GPU resources and is out of scope for the CI workflow at `.github/workflows/verify.yml`.
 

@@ -61,7 +61,7 @@ Large inputs, generated checkpoints, and manuscript source are not included in t
 - Channel-decomposition geometry and layer-sweep values.
 - Main reconstruction-and-residual AUROC rows.
 - Pythia-6.9B N=5 mixed-data SAE cohort (harmonised across the multi-seed runs).
-- Pythia-12B three-seed mixed-data SAE replication.
+- Pythia-12B five-seed mixed-data SAE replication.
 - Norm-baseline and scaling-table values.
 - Standard MIA probe results.
 
@@ -94,6 +94,7 @@ Rows are grouped into **main claims** (the headline argument, channel decomposit
 | --- | --- | --- | --- |
 | Methods §3.2 ("Separating the knowledge channel from the recall channel"), Results §4.1, Appendix Table `tab:bcd_main` | Channel-decomposition geometry, recall-direction separation, stability across SAE seeds | `scripts/dark_subspace/behavioral_channels.py`, `scripts/dark_subspace/sae_noise_floor_aggregate.py` | `results/dark_subspace/generated/behavioral_channels/*/orthogonality.json`, `results/dark_subspace/generated/sae_noise_floor/p69_aggregate.json` |
 | Results §4.2 ("SAE reconstruction fails to preserve membership signal recoverable from the residual"), Table `tab:dark_subspace` | Pythia-6.9B N=5 mixed-data SAE reconstruction reduction | `scripts/dark_subspace/p69_n5_harmonize.py` | `results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json`. Five SAEs (seeds 42, 43, 44, 45, 46) at identical hyperparameters (layer 16, multiplier 4, L1 5e-4, 200M tokens, dead-feature resampling). The seed list matches the Pythia-1B multi-seed cohort. The N=6 aggregate is also bundled at `paper_claims/p69_n6_complete.json`. Per-metric mean shifts between N=5 and N=6 are below 0.005 on all reported metrics. |
+| Results §4.2, Table `tab:dark_subspace` (Pythia-6.9B member-only N=5 row) | Pythia-6.9B N=5 member-only SAE reconstruction reduction | Aggregated from per-seed `runs/dark_subspace/sae_dark_subspace/p69_member_only_sae_seed{42..46}/results.json` (per-seed runs not bundled, regenerate from `scripts/shared/train_sae.py` + `scripts/dark_subspace/sae_dark_subspace.py`) | `results/dark_subspace/paper_claims/p69_member_only_n5.json`. Five SAEs trained on member-only documents at the same hyperparameters as the mixed cohort. The `cluster_summary_n5` block carries the per-seed mean, min, and max for the table cell values. |
 | Appendix `app:p12b_replication`, Table `tab:dark_subspace` | Pythia-12B mixed-data SAE multi-seed replication, full five-seed cohort (47, 48, 49, 50, 51) | `scripts/dark_subspace/p12b_multiseed_query.py`, `scripts/dark_subspace/shell/sbatch_p12b_multiseed_array.sh` (covers seeds 47 to 51 via `--array=0-4`) | `results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed{47,48,49,50,51}/results.json`. All five per-seed `results.json` files are bundled. The underlying SAE checkpoints are not bundled and regenerate from the array script on rerun. |
 | Appendix `app:koc2_bootstrap` ("Paired Bootstrap for the Directional Sign-Test Settings") and Table `tab:koc2_bootstrap_per_row` | Per-row paired-bootstrap CIs for the directional-sign-test cohort plus the cohort-level sign test on five inverting rows (anchors recorded but not entered into the cohort sign test). Two Qwen2 mult=4 secondary seeds are reported separately | `scripts/dark_subspace/per_row_bootstrap_kocl2.py` | `results/dark_subspace/paper_claims/cohort_bootstrap.json`. The file's `cohort_rows` array carries seven entries (five inverting plus two anchors). The `qwen2_mult4_secondary_seeds` array carries the two extra Qwen2 rows. The `sign_test` block records `n_inverting_cohort_rows=5` and the cohort one-sided binomial $p \approx 0.03125$. The cohort sign test is distinct from the body sign test on `tab:dark_subspace` (n=7). See the next row. |
 | Results §4.2 (paragraph beginning "Every validity-gate-passing setting shows residual above SAE-Recon...") and Appendix `app:koc2_bootstrap` paragraph "Binomial sign-test arithmetic" | Body binomial sign test on the seven gate-passing rows of `tab:dark_subspace` (no $\dagger$ or $\ddagger$). Full set p$\approx$0.008, non-Pythia subset (n=4) p$\approx$0.0625 | `scripts/dark_subspace/verify_claims.py` (asserted-check section "Body sign test on `tab:dark_subspace` gate-passing rows") | `results/dark_subspace/paper_claims/tab_dark_subspace_sign_test.json`. The body sign test uses the seven `tab:dark_subspace` gate-passing rows as its denominator. The cohort sign test (previous row) uses the five inverting cohort rows. The two denominators overlap but are not identical. The JSON's `relationship_to_cohort_bootstrap` field documents the difference. |
@@ -142,7 +143,7 @@ Figures are regenerated from the JSON tree under `results/dark_subspace/` by the
 
 | Figure(s) | Producing script |
 | --- | --- |
-| `fig:score_distributions` | `scripts/dark_subspace/plot_score_distributions.py` |
+| `fig:score_distributions`, `fig:score_distributions_full` | `scripts/dark_subspace/plot_score_distributions.py` (writes both the body 1x3 simple variant and the appendix 2x3 full variant) |
 | `fig:privacy_aware` | `scripts/dark_subspace/plot_privacy_aware_comparison.py` |
 | `fig:layer_trajectories`, `fig:arch_and_scaling`, `fig:dark_subspace_heatmap`, `fig:fsc`, `fig:epoch`, `fig:norm_direction`, `fig:layer_heatmap`, `fig:sae_quality_scatter` | `scripts/dark_subspace/plot_figures.py`, `scripts/dark_subspace/plot_advanced_figures.py` |
 
@@ -177,6 +178,7 @@ Some historical corpus and checkpoint labels still contain `memcirc` in paths su
 - Mistral-7B and Llama-3-8B SAE rows are retained as documented exclusions where reconstruction-quality gates failed. The per-row recon-cosine values that triggered each exclusion are bundled in `results/dark_subspace/paper_claims/sae_quality_exclusions.json`.
 - Gemma-2-2B SAE row is bundled at `results/dark_subspace/generated/sae_dark_subspace/gemma2_2b_epoch5/results.json` (recon_cosine 0.911 above the strict 0.90 gate). The verifier asserts this row.
 - The controlled fine-tuning corpus is OpenWebText-derived. Cross-corpus generalisation is outside the scope of this artefact.
+- Two appendix-only analyses are described in the paper but their analysis scripts and per-cell records are not bundled here. Appendix `app:zh_probe` (sparse-code adequacy, fold-matched logistic detector on SAE codes $\mathbf{z}$ versus the raw hidden state $\mathbf{h}$) and Appendix `app:steering` (single-direction residual-stream steering on Pythia-1B and Pythia-6.9B at $\alpha \in \{-5,-3,-2,-1,0,1,2,3,5\}$). The summary outcomes reported in those two appendices are not asserted by the verifier and do not regenerate from the bundled JSONs.
 
 ### Reproducibility caveat (CUDA non-determinism)
 
