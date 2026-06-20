@@ -7,7 +7,7 @@ the layer-local effect appears at the LM head.
 
 Used in the standard-probes appendix.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/standard_mia_probe_decomposition.py \
+    .venv/bin/python scripts/dark_subspace/standard_mia_probe_decomposition.py \
         --model-path runs/controlled_ft/run_20260306_055225/ft_epoch5/model \
         --sae-path runs/sae/<trained_sae>/sae_final.pt \
         --layer 16 \

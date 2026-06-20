@@ -80,7 +80,7 @@ echo "Task runs-dir:  ${TASK_RUNS_DIR}  (isolated per task)"
 echo "DSS output:     ${DSS_OUTPUT_DIR}"
 
 echo ">>> Step 1: Train SAE (isolated --runs-dir)"
-env/bin/python3 scripts/shared/train_sae.py \
+.venv/bin/python scripts/shared/train_sae.py \
   --model "${FALCON_MODEL}" \
   --layers "${LAYER}" \
   --d-model-mult 4 \
@@ -118,7 +118,7 @@ echo "SAE trained at: ${SAE_PATH}"
 
 echo ""
 echo ">>> Step 2: Dark subspace eval"
-env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \
+.venv/bin/python scripts/dark_subspace/sae_dark_subspace.py \
   --model-path "${FALCON_MODEL}" \
   --bcd-dir "${FALCON_BCD}" \
   --sae-path "${SAE_PATH}" \
@@ -130,7 +130,7 @@ env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \
 
 echo ""
 echo "=== falcon mixed seed ${SEED} done: $(date) ==="
-env/bin/python3 -c "
+.venv/bin/python -c "
 import json
 d = json.load(open('${DSS_OUTPUT_DIR}/results.json'))
 rc = d.get('sae_quality', {}).get('reconstruction_cosine')

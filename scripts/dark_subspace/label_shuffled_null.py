@@ -12,7 +12,7 @@ not an artefact of label assignment.
 Used in Appendix `app:label_shuffled_null` of the paper.
 
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/label_shuffled_null.py \\
+    .venv/bin/python scripts/dark_subspace/label_shuffled_null.py \\
         --activations runs/dark_subspace/canonical_activations/<model_tag>/activations.npz \\
         --bcd-dir runs/dark_subspace/behavioral_channels/<model_tag> \\
         --output-dir runs/dark_subspace/label_shuffled_null/<model_tag> \\

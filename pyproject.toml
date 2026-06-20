@@ -4,12 +4,17 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sae-mia-audit"
-version = "0.1.0"
+version = "1.0.0"
 description = "Support package for the Dark Subspace sparse-autoencoder membership-auditing artefact."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
-authors = [{name="SAE-MIA-Audit Contributors"}]
+authors = [
+  {name="Niloy Purkait", email="n.purkait@tilburguniversity.edu"},
+  {name="Gonzalo Nápoles"},
+  {name="Henry Brighton"},
+  {name="Emmanuel Keuleers"},
+]
 dependencies = [
   "torch>=2.2",
   "transformers>=4.41",
@@ -47,6 +52,10 @@ dev = [
 
 [project.scripts]
 sae-mia-audit = "sae_mia_audit.cli:app"
+
+[project.urls]
+Repository = "https://github.com/NiloyPurkait/DarkSubspace"
+Homepage = "https://github.com/NiloyPurkait/DarkSubspace"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

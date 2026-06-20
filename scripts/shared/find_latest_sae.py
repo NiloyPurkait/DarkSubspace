@@ -9,7 +9,7 @@ to resolve a checkpoint path without hard-coding run directories.
 
 Reproduce::
 
-    env/bin/python3 scripts/shared/find_latest_sae.py \\
+    .venv/bin/python scripts/shared/find_latest_sae.py \\
         --runs-dir runs/sae --model EleutherAI/pythia-6.9b --layer 16
 """
 

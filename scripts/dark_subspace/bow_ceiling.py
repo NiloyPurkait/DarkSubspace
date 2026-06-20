@@ -6,7 +6,7 @@ CountVectorizer features over the same 1000+1000 split, with five-fold
 stratified cross-validation and AUROC pooled across out-of-fold predictions.
 
 Used in Section Results and Appendix app:bow_baseline of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/bow_ceiling.py \
+Reproduce: .venv/bin/python scripts/dark_subspace/bow_ceiling.py \
     --member-texts data/memcirc_ctrl_ft/member.jsonl \
     --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \
     --output-dir runs/dark_subspace/bow_ceiling/memcirc_ctrl_ft \

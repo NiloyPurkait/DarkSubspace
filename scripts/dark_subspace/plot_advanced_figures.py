@@ -5,7 +5,7 @@ Generates the higher-density supplementary figures (architecture scatter
 overlays, layer heatmaps with annotations) from JSON via ``figure_data_loader``.
 
 Used in the Appendix of the paper (advanced and supplementary figure variants).
-Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_advanced_figures.py``
+Reproduce: ``.venv/bin/python scripts/dark_subspace/plot_advanced_figures.py``
 (writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 
 All numeric values are sourced via ``figure_data_loader``. Style choices

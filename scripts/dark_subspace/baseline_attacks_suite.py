@@ -7,7 +7,7 @@ plus paired bootstrap AUROC, TPR@1%FPR, and TPR@5%FPR.
 
 Used in Appendix app:tpr_paraphrase and the per-method results paragraph of
 the paper. Reproduce per-roster:
-    env/bin/python3 scripts/dark_subspace/baseline_attacks_suite.py \
+    .venv/bin/python scripts/dark_subspace/baseline_attacks_suite.py \
         --roster scripts/dark_subspace/configs/oc_roster.json \
         --gate-passing-only \
         --member-texts data/memcirc_ctrl_ft/member.jsonl \
@@ -49,7 +49,7 @@ memorised the 1000 member texts. On GPT-Neo-2.7B the loss signal sits near
 sections discuss this caveat.
 
 Single-model usage:
-    env/bin/python3 scripts/dark_subspace/baseline_attacks_suite.py \
+    .venv/bin/python scripts/dark_subspace/baseline_attacks_suite.py \
         --model-tag p69 \
         --model-path <ft_model_dir> \
         --bcd-dir runs/dark_subspace/behavioral_channels/p69_epoch5 \

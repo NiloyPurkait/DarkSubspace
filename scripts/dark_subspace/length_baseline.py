@@ -11,7 +11,7 @@ the claim that the residual-over-reconstruction ordering is not driven by a
 length artefact.
 
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/length_baseline.py \
+    .venv/bin/python scripts/dark_subspace/length_baseline.py \
         --member-texts data/memcirc_ctrl_ft/member.jsonl \
         --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \
         --output-dir runs/dark_subspace/length_baseline/memcirc_ctrl_ft \

@@ -35,7 +35,7 @@ Pythia-12B at recon_cos $\geq 0.99$, i.e. above the strict gate, so the
 choice of tier in this script does not affect the headline result.
 
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/subspace_ablation_eval.py \\
+    .venv/bin/python scripts/dark_subspace/subspace_ablation_eval.py \\
         --roster scripts/dark_subspace/configs/subspace_ablation_roster.json \\
         --member-texts data/memcirc_ctrl_ft/member.jsonl \\
         --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \\

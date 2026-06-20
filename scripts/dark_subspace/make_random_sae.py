@@ -7,7 +7,7 @@ shape only operators as the source of the effect.
 
 Used in the additional controls appendix.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/make_random_sae.py \\
+    .venv/bin/python scripts/dark_subspace/make_random_sae.py \\
         --reference-sae runs/sae/<trained_sae>/sae_final.pt \\
         --output-path runs/sae/random_init_p69_layer16/sae_final.pt \\
         --seed 42

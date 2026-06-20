@@ -8,7 +8,7 @@ Privacy-aware lambda=0.1, Privacy-aware lambda=1.0), each with
 Original, SAE-Recon, and Residual bars.
 
 Used in Results of the paper.
-Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_privacy_aware_comparison.py``
+Reproduce: ``.venv/bin/python scripts/dark_subspace/plot_privacy_aware_comparison.py``
 (writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 """
 

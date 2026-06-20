@@ -6,7 +6,7 @@ to unit length. Rules out residual-norm artefact as the explanation.
 
 Used in Section "Results" (R:109-110) and Appendix `tab:l2_normalized`
 (A:957) of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/l2_normalized_auroc.py [--json]
+Reproduce: .venv/bin/python scripts/dark_subspace/l2_normalized_auroc.py [--json]
 
 For each model with dark subspace results, loads per-text scores,
 L2-normalises residual vectors (using saved norms), and recomputes AUROC

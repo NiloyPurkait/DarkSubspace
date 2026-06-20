@@ -1,0 +1,430 @@
+{
+  "experiment": "topk_scope",
+  "experiment_label": "TopK SAE scope test, Pythia-6.9B, layer 16, multiplier 4",
+  "n_per_K": 5,
+  "Ks": [
+    32,
+    64,
+    128
+  ],
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "missing": [],
+  "per_K": {
+    "32": {
+      "n_available": 5,
+      "n_expected": 5,
+      "sign_test_residual_gt_recon": "0/5",
+      "cosine_ge_0p90_pass": "5/5",
+      "original_score_K_auroc": {
+        "mean": 0.803088,
+        "std": 0.0,
+        "min": 0.803088,
+        "max": 0.803088,
+        "n": 5
+      },
+      "sae_recon_score_K_auroc": {
+        "mean": 0.7740672,
+        "std": 0.012640781827086469,
+        "min": 0.754723,
+        "max": 0.786413,
+        "n": 5
+      },
+      "residual_score_K_auroc": {
+        "mean": 0.7400868,
+        "std": 0.01039351411698659,
+        "min": 0.7219660000000001,
+        "max": 0.7482980000000001,
+        "n": 5
+      },
+      "residual_norm_auroc": {
+        "mean": 0.5559054,
+        "std": 0.003976003668886648,
+        "min": 0.5502775,
+        "max": 0.5613935,
+        "n": 5
+      },
+      "recon_cosine": {
+        "mean": 0.9812960982322693,
+        "std": 0.0033748707383297995,
+        "min": 0.9760597944259644,
+        "max": 0.9849587678909302,
+        "n": 5
+      },
+      "delta_recon": {
+        "mean": 0.029020800000000024,
+        "std": 0.012640781827086469,
+        "min": 0.016674999999999995,
+        "max": 0.04836499999999999,
+        "n": 5
+      },
+      "mean_active_features": {
+        "mean": 6.116300000000001,
+        "std": 0.26383508106391007,
+        "min": 5.814,
+        "max": 6.46,
+        "n": 5
+      }
+    },
+    "64": {
+      "n_available": 5,
+      "n_expected": 5,
+      "sign_test_residual_gt_recon": "0/5",
+      "cosine_ge_0p90_pass": "5/5",
+      "original_score_K_auroc": {
+        "mean": 0.803088,
+        "std": 0.0,
+        "min": 0.803088,
+        "max": 0.803088,
+        "n": 5
+      },
+      "sae_recon_score_K_auroc": {
+        "mean": 0.7615678,
+        "std": 0.00690293348512064,
+        "min": 0.749854,
+        "max": 0.766609,
+        "n": 5
+      },
+      "residual_score_K_auroc": {
+        "mean": 0.7214506,
+        "std": 0.009214628549214525,
+        "min": 0.7080890000000001,
+        "max": 0.733803,
+        "n": 5
+      },
+      "residual_norm_auroc": {
+        "mean": 0.5495542,
+        "std": 0.010792361497837234,
+        "min": 0.5381480000000001,
+        "max": 0.562839,
+        "n": 5
+      },
+      "recon_cosine": {
+        "mean": 0.9847699522972106,
+        "std": 0.0012771092912121354,
+        "min": 0.9827526807785034,
+        "max": 0.9857689738273621,
+        "n": 5
+      },
+      "delta_recon": {
+        "mean": 0.04152020000000003,
+        "std": 0.00690293348512064,
+        "min": 0.03647900000000004,
+        "max": 0.053234000000000004,
+        "n": 5
+      },
+      "mean_active_features": {
+        "mean": 12.489700000000001,
+        "std": 0.9072110145936285,
+        "min": 11.203,
+        "max": 13.5515,
+        "n": 5
+      }
+    },
+    "128": {
+      "n_available": 5,
+      "n_expected": 5,
+      "sign_test_residual_gt_recon": "0/5",
+      "cosine_ge_0p90_pass": "5/5",
+      "original_score_K_auroc": {
+        "mean": 0.803088,
+        "std": 0.0,
+        "min": 0.803088,
+        "max": 0.803088,
+        "n": 5
+      },
+      "sae_recon_score_K_auroc": {
+        "mean": 0.7624468,
+        "std": 0.0048838629382897515,
+        "min": 0.75598,
+        "max": 0.769023,
+        "n": 5
+      },
+      "residual_score_K_auroc": {
+        "mean": 0.7413614,
+        "std": 0.006484347638737501,
+        "min": 0.734165,
+        "max": 0.7497560000000001,
+        "n": 5
+      },
+      "residual_norm_auroc": {
+        "mean": 0.5380157000000001,
+        "std": 0.008602021663539355,
+        "min": 0.5317415,
+        "max": 0.552699,
+        "n": 5
+      },
+      "recon_cosine": {
+        "mean": 0.9830846428871155,
+        "std": 0.00038597598240219496,
+        "min": 0.9824852347373962,
+        "max": 0.9835371375083923,
+        "n": 5
+      },
+      "delta_recon": {
+        "mean": 0.040641200000000044,
+        "std": 0.0048838629382897515,
+        "min": 0.03406500000000001,
+        "max": 0.04710800000000004,
+        "n": 5
+      },
+      "mean_active_features": {
+        "mean": 32.5673,
+        "std": 1.3826023289435048,
+        "min": 30.989,
+        "max": 34.386,
+        "n": 5
+      }
+    }
+  },
+  "per_seed": [
+    {
+      "K": 32,
+      "seed": 42,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed42/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed42/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.754723,
+      "residual_score_K_auroc": 0.742663,
+      "residual_norm_auroc": 0.555063,
+      "recon_cosine": 0.9760597944259644,
+      "delta_recon": 0.04836499999999999,
+      "mean_active_features": 6.236,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 32,
+      "seed": 43,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed43/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed43/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.780215,
+      "residual_score_K_auroc": 0.744934,
+      "residual_norm_auroc": 0.5613935,
+      "recon_cosine": 0.9849587678909302,
+      "delta_recon": 0.022873000000000032,
+      "mean_active_features": 6.18,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 32,
+      "seed": 44,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed44/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed44/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.786413,
+      "residual_score_K_auroc": 0.742573,
+      "residual_norm_auroc": 0.5502775,
+      "recon_cosine": 0.9825002551078796,
+      "delta_recon": 0.016674999999999995,
+      "mean_active_features": 6.46,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 32,
+      "seed": 45,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed45/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed45/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.7805909999999999,
+      "residual_score_K_auroc": 0.7482980000000001,
+      "residual_norm_auroc": 0.5567500000000001,
+      "recon_cosine": 0.9827470779418945,
+      "delta_recon": 0.0224970000000001,
+      "mean_active_features": 5.814,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 32,
+      "seed": 46,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed46/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk32_seed46/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.768394,
+      "residual_score_K_auroc": 0.7219660000000001,
+      "residual_norm_auroc": 0.556043,
+      "recon_cosine": 0.9802145957946777,
+      "delta_recon": 0.034694,
+      "mean_active_features": 5.8915,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 64,
+      "seed": 42,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed42/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed42/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.766609,
+      "residual_score_K_auroc": 0.7080890000000001,
+      "residual_norm_auroc": 0.5381480000000001,
+      "recon_cosine": 0.9842514395713806,
+      "delta_recon": 0.03647900000000004,
+      "mean_active_features": 13.0495,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 64,
+      "seed": 43,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed43/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed43/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.749854,
+      "residual_score_K_auroc": 0.733803,
+      "residual_norm_auroc": 0.559175,
+      "recon_cosine": 0.985479474067688,
+      "delta_recon": 0.053234000000000004,
+      "mean_active_features": 11.203,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 64,
+      "seed": 44,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed44/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed44/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.7646149999999999,
+      "residual_score_K_auroc": 0.723082,
+      "residual_norm_auroc": 0.543241,
+      "recon_cosine": 0.9827526807785034,
+      "delta_recon": 0.03847300000000009,
+      "mean_active_features": 12.5865,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 64,
+      "seed": 45,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed45/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed45/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.765842,
+      "residual_score_K_auroc": 0.722823,
+      "residual_norm_auroc": 0.544368,
+      "recon_cosine": 0.9855971932411194,
+      "delta_recon": 0.037246,
+      "mean_active_features": 13.5515,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 64,
+      "seed": 46,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed46/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk64_seed46/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.760919,
+      "residual_score_K_auroc": 0.719456,
+      "residual_norm_auroc": 0.562839,
+      "recon_cosine": 0.9857689738273621,
+      "delta_recon": 0.04216900000000001,
+      "mean_active_features": 12.058,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 128,
+      "seed": 42,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed42/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed42/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.75598,
+      "residual_score_K_auroc": 0.7414609999999999,
+      "residual_norm_auroc": 0.534734,
+      "recon_cosine": 0.9830630421638489,
+      "delta_recon": 0.04710800000000004,
+      "mean_active_features": 32.6475,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 128,
+      "seed": 43,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed43/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed43/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.769023,
+      "residual_score_K_auroc": 0.735965,
+      "residual_norm_auroc": 0.5317415,
+      "recon_cosine": 0.9824852347373962,
+      "delta_recon": 0.03406500000000001,
+      "mean_active_features": 33.353,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 128,
+      "seed": 44,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed44/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed44/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.764633,
+      "residual_score_K_auroc": 0.74546,
+      "residual_norm_auroc": 0.552699,
+      "recon_cosine": 0.9832616448402405,
+      "delta_recon": 0.03845500000000002,
+      "mean_active_features": 30.989,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 128,
+      "seed": 45,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed45/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed45/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.7600889999999999,
+      "residual_score_K_auroc": 0.7497560000000001,
+      "residual_norm_auroc": 0.538376,
+      "recon_cosine": 0.9830761551856995,
+      "delta_recon": 0.04299900000000012,
+      "mean_active_features": 34.386,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    },
+    {
+      "K": 128,
+      "seed": 46,
+      "results_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed46/results.json",
+      "config_json": "runs/dark_subspace/sae_dark_subspace/topk_p69_topk128_seed46/config.json",
+      "original_score_K_auroc": 0.803088,
+      "sae_recon_score_K_auroc": 0.762509,
+      "residual_score_K_auroc": 0.734165,
+      "residual_norm_auroc": 0.532528,
+      "recon_cosine": 0.9835371375083923,
+      "delta_recon": 0.04057900000000003,
+      "mean_active_features": 31.461,
+      "residual_gt_recon": false,
+      "cosine_ge_0p90": true
+    }
+  ],
+  "cross_K_summary": {
+    "n_total": 15,
+    "n_expected": 15,
+    "sign_test_residual_gt_recon": "0/15",
+    "cosine_ge_0p90_pass": "15/15",
+    "residual_score_K_auroc_mean": 0.7342995999999999,
+    "sae_recon_score_K_auroc_mean": 0.7660272666666668,
+    "delta_recon_mean": 0.037060733333333366,
+    "recon_cosine_mean": 0.9830502311388651
+  },
+  "cluster_verdict": {
+    "overall": "Ordering FLIPS in TopK SAE: residual > recon fails at every (K, seed) cell (0/15 sign test). Reconstruction-cosine gate >= 0.90 passes 15/15 (mean 0.9831), well-reconstructing SAEs that allocate the score_K signal to the reconstruction stream rather than the residual, opposite of the L1-ReLU pattern. Dark-subspace property is L1-ReLU specific at the tested hyperparameters.",
+    "per_K_signs": [
+      "K=32: residual > recon FLIPS at all 5 seeds (0/5)",
+      "K=64: residual > recon FLIPS at all 5 seeds (0/5)",
+      "K=128: residual > recon FLIPS at all 5 seeds (0/5)"
+    ]
+  }
+}

@@ -10,7 +10,7 @@ in the paper.
 
 Reproduce::
 
-    env/bin/python3 scripts/shared/eval_sae_features.py \\
+    .venv/bin/python scripts/shared/eval_sae_features.py \\
         --sae-checkpoint runs/sae/.../l1_3.00e-02/sae_final.pt \\
         --model EleutherAI/pythia-1b \\
         --layer 2 \\

@@ -57,7 +57,7 @@ echo "TRAIN_START epoch = ${TRAIN_START}"
 
 # Step 1: Train mixed-data SAE
 echo ">>> Step 1: Training SAE (seed $SEED)"
-env/bin/python3 scripts/shared/train_sae.py \
+.venv/bin/python scripts/shared/train_sae.py \
   --model "$P69_MODEL" \
   --layers $LAYER \
   --d-model-mult 4 \
@@ -107,7 +107,7 @@ echo "SAE trained at: $SAE_PATH (mtime $(stat -c %Y $SAE_RUN), TRAIN_START ${TRA
 # Step 2: Dark subspace eval
 OUTPUT_DIR="runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed${SEED}"
 echo ">>> Step 2: Dark subspace eval -> $OUTPUT_DIR"
-env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \
+.venv/bin/python scripts/dark_subspace/sae_dark_subspace.py \
   --model-path "$P69_MODEL" \
   --bcd-dir "$P69_BCD" \
   --sae-path "$SAE_PATH" \

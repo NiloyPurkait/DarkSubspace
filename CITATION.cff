@@ -1,11 +1,47 @@
 cff-version: 1.2.0
 title: "The Dark Subspace of Fine-Tuning Memorisation"
-message: "Anonymous double-blind workshop submission."
-authors:
-  - name: "Anonymous"
-abstract: |
-  Cross-architecture residual concentration with Pythia-6.9B and 12B causal reference points.
-license: MIT
-version: 0.1.0
-date-released: 2026-05-08
+message: "If you use this software or its results, please cite the paper below."
 type: software
+authors:
+  - given-names: Niloy
+    family-names: Purkait
+    affiliation: "Tilburg University"
+  - given-names: Gonzalo
+    family-names: "Nápoles"
+    affiliation: "Tilburg University"
+  - given-names: Henry
+    family-names: Brighton
+    affiliation: "Tilburg University"
+  - given-names: Emmanuel
+    family-names: Keuleers
+    affiliation: "Tilburg University"
+repository-code: "https://github.com/NiloyPurkait/DarkSubspace"
+url: "https://github.com/NiloyPurkait/DarkSubspace"
+abstract: |
+  Code and results artefact for "The Dark Subspace of Fine-Tuning Memorisation"
+  (ICML 2026 Workshop on Mechanistic Interpretability, Spotlight). The membership
+  signal that a sparse autoencoder discards during reconstruction remains recoverable
+  from the reconstruction residual, demonstrated across model families with Pythia-6.9B
+  and Pythia-12B as multi-seed causal reference points.
+license: MIT
+version: 1.0.0
+date-released: 2026-06-20
+preferred-citation:
+  type: conference-paper
+  title: "The Dark Subspace of Fine-Tuning Memorisation"
+  authors:
+    - given-names: Niloy
+      family-names: Purkait
+      affiliation: "Tilburg University"
+    - given-names: Gonzalo
+      family-names: "Nápoles"
+      affiliation: "Tilburg University"
+    - given-names: Henry
+      family-names: Brighton
+      affiliation: "Tilburg University"
+    - given-names: Emmanuel
+      family-names: Keuleers
+      affiliation: "Tilburg University"
+  collection-title: "Mechanistic Interpretability Workshop at the 43rd International Conference on Machine Learning (ICML)"
+  year: 2026
+  notes: "Spotlight"

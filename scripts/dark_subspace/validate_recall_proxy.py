@@ -12,7 +12,7 @@ If the correlation is strongly negative (lower loss -> higher ROUGE-L),
 the loss-based proxy is a reasonable stand-in for extraction-based recall.
 
 Usage:
-  env/bin/python3 scripts/dark_subspace/validate_recall_proxy.py \
+  .venv/bin/python scripts/dark_subspace/validate_recall_proxy.py \
     --model-path runs/controlled_ft/run_20260306_055225/ft_epoch5/model \
     --member-texts data/memcirc_ctrl_ft/member.jsonl \
     --output-dir runs/dark_subspace/recall_proxy_validation/p69_epoch5 \

@@ -9,7 +9,7 @@ margin across the K-OC-2 cohort and reports a one-sided binomial sign test on th
 Used in Methods note on cohort statistics, Introduction headline, and the
 appendix per-row bootstrap table.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/per_row_bootstrap_kocl2.py
+    .venv/bin/python scripts/dark_subspace/per_row_bootstrap_kocl2.py
 
 Inputs.
   Seven K-OC-2 cohort rows (five inverting plus two anchor) with per_text_scores

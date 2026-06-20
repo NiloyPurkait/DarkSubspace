@@ -5,7 +5,7 @@ Computes the recall-extractability predictor (loss-vs-ROUGE-L) per model
 and writes `runs/dark_subspace/bcd_extractability/<model>_epoch5/extractability_predictor.json`.
 
 Used in Appendix ``app:bcd_details`` (A:49-53) of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/bcd_extractability_predictor.py --model-path <ft_model> --bcd-dir <bcd_dir> --member-texts <member.jsonl> --layer <L> --output-dir <out>
+Reproduce: .venv/bin/python scripts/dark_subspace/bcd_extractability_predictor.py --model-path <ft_model> --bcd-dir <bcd_dir> --member-texts <member.jsonl> --layer <L> --output-dir <out>
 
 For each member text this script computes:
   - Per-text loss (cross-entropy under the fine-tuned model)

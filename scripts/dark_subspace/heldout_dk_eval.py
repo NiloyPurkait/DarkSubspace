@@ -7,7 +7,7 @@ across 10 splits with n_boot=10000.
 
 Used in the held-out d_K protocol appendix.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/heldout_dk_eval.py \\
+    .venv/bin/python scripts/dark_subspace/heldout_dk_eval.py \\
         --output results/dark_subspace/paper_claims/heldout_dk_2026-05-02.json \\
         --train-frac 0.7 --n-bootstrap 10000 --n-splits 10 --device cpu
 

@@ -7,7 +7,7 @@ trail.
 
 Used in the n_boot=10000 standardisation paragraph and Methods disclosure
 of the paper. Reproduce:
-    env/bin/python3 scripts/dark_subspace/rerun_bootstrap_cis.py --target all
+    .venv/bin/python scripts/dark_subspace/rerun_bootstrap_cis.py --target all
 
 CPU only. No GPU, no model re-loading, no SLURM jobs.
 

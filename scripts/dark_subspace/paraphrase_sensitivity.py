@@ -8,7 +8,7 @@ et al. COLM 2024.
 
 Used in the paraphrase audit appendix.
 Reproduce:
-  env/bin/python3 scripts/dark_subspace/paraphrase_sensitivity.py \\
+  .venv/bin/python scripts/dark_subspace/paraphrase_sensitivity.py \\
       --model-tag p69 \\
       --model-path runs/controlled_ft/run_20260306_055225/ft_epoch5/model \\
       --bcd-dir runs/dark_subspace/behavioral_channels/p69_epoch5 \\

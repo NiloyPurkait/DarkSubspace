@@ -20,7 +20,7 @@
 #
 #
 # Gemma-2-2B layer 16 mixed-data SAE, 4 additional seeds.
-# Step 4 already exists from job 84533 (seed 42, recon_cos in flight).
+# Step 4 already exists from the seed-42 run.
 # This array adds seeds 43, 44, 45, 46 -> N=5 total when combined with existing seed 42.
 #
 # Per-task isolated run-dir to avoid collision-on-write. Reuses Step-1 FT model + Step-2 BCD
@@ -106,7 +106,7 @@ echo "Task runs-dir:  ${TASK_RUNS_DIR}  (isolated per task)"
 echo "DSS output:     ${DSS_OUTPUT_DIR}"
 
 echo ">>> Step 1: Train SAE (isolated --runs-dir)"
-env/bin/python3 scripts/shared/train_sae.py \
+.venv/bin/python scripts/shared/train_sae.py \
   --model "${GEMMA_MODEL}" \
   --layers "${LAYER}" \
   --d-model-mult 4 \
@@ -144,7 +144,7 @@ echo "SAE trained at: ${SAE_PATH}"
 
 echo ""
 echo ">>> Step 2: Dark subspace eval"
-env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \
+.venv/bin/python scripts/dark_subspace/sae_dark_subspace.py \
   --model-path "${GEMMA_MODEL}" \
   --bcd-dir "${GEMMA_BCD}" \
   --sae-path "${SAE_PATH}" \
@@ -156,7 +156,7 @@ env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \
 
 echo ""
 echo "=== gemma2-2b mixed seed ${SEED} done: $(date) ==="
-env/bin/python3 -c "
+.venv/bin/python -c "
 import json
 d = json.load(open('${DSS_OUTPUT_DIR}/results.json'))
 rc = d.get('sae_quality', {}).get('reconstruction_cosine')

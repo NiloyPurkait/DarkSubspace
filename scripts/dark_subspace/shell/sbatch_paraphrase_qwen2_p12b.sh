@@ -26,7 +26,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
 
-PYTHON="env/bin/python3"
+PYTHON=".venv/bin/python"
 SCRIPT="scripts/dark_subspace/paraphrase_sensitivity.py"
 DATA_MEM="data/memcirc_ctrl_ft/member.jsonl"
 DATA_NONMEM="data/memcirc_ctrl_ft/nonmember.jsonl"

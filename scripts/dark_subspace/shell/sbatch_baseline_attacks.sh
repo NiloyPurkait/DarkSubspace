@@ -26,7 +26,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
 
-PYTHON="env/bin/python3"
+PYTHON=".venv/bin/python"
 SCRIPT="scripts/dark_subspace/baseline_attacks_suite.py"
 ROSTER="scripts/dark_subspace/configs/oc_roster.json"
 DATA_MEM="data/memcirc_ctrl_ft/member.jsonl"

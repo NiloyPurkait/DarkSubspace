@@ -8,7 +8,7 @@ probe sits well above chance, the geometric signal is not generic.
 
 Used in the additional controls appendix.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/random_direction_baseline.py \\
+    .venv/bin/python scripts/dark_subspace/random_direction_baseline.py \\
         --model-path runs/controlled_ft/<run>/ft_epoch5/model \\
         --member-texts data/memcirc_ctrl_ft/member.jsonl \\
         --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \\

@@ -6,7 +6,7 @@ data/memcirc_ctrl_disjoint/disjointness_proof.json with intersection_count=0.
 
 Used in the disjoint-corpus appendix.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/build_disjoint_owt_corpus.py \
+    .venv/bin/python scripts/dark_subspace/build_disjoint_owt_corpus.py \
         --member data/memcirc_ctrl_ft/member.jsonl \
         --nonmember data/memcirc_ctrl_ft/nonmember.jsonl \
         --output data/memcirc_ctrl_disjoint/mixed_disjoint.jsonl \

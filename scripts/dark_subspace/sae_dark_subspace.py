@@ -10,7 +10,7 @@ original, reconstructed, and residual streams to
 
 Used in Methods §3.3 (SAE reconstruction), Results §4.2 (dark subspace).
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/sae_dark_subspace.py \\
+    .venv/bin/python scripts/dark_subspace/sae_dark_subspace.py \\
         --model-path runs/controlled_ft/.../ft_epoch5/model \\
         --bcd-dir runs/dark_subspace/behavioral_channels/p69_epoch5 \\
         --sae-path runs/sae/memcirc_p69_epoch5_layer16_8x_l1_1e4_member/sae_final.pt \\

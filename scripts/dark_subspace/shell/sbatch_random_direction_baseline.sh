@@ -22,7 +22,7 @@ set -eu
 cd "$(dirname "$0")/../../.."
 mkdir -p logs runs/dark_subspace/random_direction_baseline
 
-PY="env/bin/python3"
+PY=".venv/bin/python"
 SCRIPT="scripts/dark_subspace/random_direction_baseline.py"
 MEM="data/memcirc_ctrl_ft/member.jsonl"
 NON="data/memcirc_ctrl_ft/nonmember.jsonl"

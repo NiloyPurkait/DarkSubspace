@@ -21,7 +21,7 @@ The verifier is the recommended first check. It reads only the JSON files under 
 
 ## Full script index
 
-All 37 scripts under `scripts/dark_subspace/`, grouped by role.
+Scripts under `scripts/dark_subspace/`, grouped by role, including the camera-ready reviewer-response additions.
 
 ### Entry points
 
@@ -38,6 +38,7 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role.
 | `plot_advanced_figures.py` | Cross-model and aggregate figures. |
 | `plot_privacy_aware_comparison.py` | Figure `fig:privacy_aware`. |
 | `plot_score_distributions.py` | Figure `fig:score_distributions` and the full appendix variant. |
+| `make_residual_audit_overview.py` | Hero concept figure `fig:residual_audit` (writes to `assets/figures/`). |
 
 ### Core experiment scripts
 
@@ -94,6 +95,18 @@ All 37 scripts under `scripts/dark_subspace/`, grouped by role.
 | `per_row_bootstrap_kocl2.py` | Per-row paired bootstrap for the directional sign-test cohort (Appendix `app:koc2_bootstrap`). The script filename uses `kocl2` as an engineering label. |
 | `per_row_bootstrap_kocl2_residual_minus_recon.py` | Same bootstrap with the residual-minus-reconstruction margin. |
 | `rerun_bootstrap_cis.py` | Reruns bootstrap confidence intervals in place on the JSON records (used to refresh paraphrase and BoW intervals, recorded in `bootstrap_history` fields). |
+
+### Reviewer scope tests (camera-ready)
+
+These answer the workshop reviewers' SAE-architecture and feature-selection questions.
+
+| Script | Purpose |
+| --- | --- |
+| `aggregate_topk_scope.py` | Aggregates the TopK SAE scope test over $K \in \{32, 64, 128\}$ at five seeds each, 15 settings (`app:topk_scope`). |
+| `frikha_baseline_ablation.py` | PrivacyScalpel-style feature-selection audit per seed, three criteria by four depths (`app:frikha_features`). |
+| `frikha_n5_aggregate.py` | Aggregates the five-seed Frikha feature-selection cohort (`app:frikha_features`). |
+
+TopK SAE training uses `scripts/shared/train_sae.py --topk`. The SLURM wrappers are `shell/sbatch_topk_p69_scope_array.sh`, `shell/sbatch_topk_p69_scope_eval_array.sh`, `shell/sbatch_frikha_baseline_p69.sh`, and `shell/sbatch_frikha_baseline_p69_array.sh`.
 
 ### Path bootstrap
 

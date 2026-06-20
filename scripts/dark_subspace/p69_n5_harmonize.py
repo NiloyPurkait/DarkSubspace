@@ -13,8 +13,8 @@ seed list of {42, 43, 44, 45, 46}. The selection keeps seeds 42_postfix, 43,
 basis across the multi-seed Pythia rows of `tab:dark_subspace`.
 
 Reproduce.
-    env/bin/python3 scripts/dark_subspace/p69_n5_harmonize.py
-    env/bin/python3 scripts/dark_subspace/p69_n5_harmonize.py --json
+    .venv/bin/python scripts/dark_subspace/p69_n5_harmonize.py
+    .venv/bin/python scripts/dark_subspace/p69_n5_harmonize.py --json
 
 Outputs.
   Stdout. Human-readable per-seed and cluster summary tables for the harmonised

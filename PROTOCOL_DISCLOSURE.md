@@ -2,7 +2,7 @@
 
 **Paper.** The Dark Subspace of Fine-Tuning Memorisation
 **Date drafted.** 2026-04-28
-**Submission target.** Anonymous workshop submission.
+**Submission target.** ICML 2026 Workshop on Mechanistic Interpretability (accepted, Spotlight).
 
 ---
 
