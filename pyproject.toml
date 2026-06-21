@@ -12,8 +12,8 @@ license = {file = "LICENSE"}
 authors = [
   {name="Niloy Purkait", email="n.purkait@tilburguniversity.edu"},
   {name="Gonzalo Nápoles"},
-  {name="Henry Brighton"},
   {name="Emmanuel Keuleers"},
+  {name="Henry Brighton"},
 ]
 dependencies = [
   "torch>=2.2",
