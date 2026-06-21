@@ -206,7 +206,7 @@ The paper-cited values were produced under `SeedConfig.deterministic=False` (the
 ```bibtex
 @inproceedings{purkait2026darksubspace,
   title     = {The Dark Subspace of Fine-Tuning Memorisation},
-  author    = {Purkait, Niloy and N\'apoles, Gonzalo and Brighton, Henry and Keuleers, Emmanuel},
+  author    = {Purkait, Niloy and N\'apoles, Gonzalo and Keuleers, Emmanuel and Brighton, Henry},
   booktitle = {Mechanistic Interpretability Workshop at the 43rd International Conference on Machine Learning (ICML)},
   year      = {2026},
   note      = {Spotlight. Code: \url{https://github.com/NiloyPurkait/DarkSubspace}}

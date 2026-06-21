@@ -9,11 +9,11 @@ authors:
   - given-names: Gonzalo
     family-names: "Nápoles"
     affiliation: "Tilburg University"
-  - given-names: Henry
-    family-names: Brighton
-    affiliation: "Tilburg University"
   - given-names: Emmanuel
     family-names: Keuleers
+    affiliation: "Tilburg University"
+  - given-names: Henry
+    family-names: Brighton
     affiliation: "Tilburg University"
 repository-code: "https://github.com/NiloyPurkait/DarkSubspace"
 url: "https://github.com/NiloyPurkait/DarkSubspace"
@@ -36,11 +36,11 @@ preferred-citation:
     - given-names: Gonzalo
       family-names: "Nápoles"
       affiliation: "Tilburg University"
-    - given-names: Henry
-      family-names: Brighton
-      affiliation: "Tilburg University"
     - given-names: Emmanuel
       family-names: Keuleers
+      affiliation: "Tilburg University"
+    - given-names: Henry
+      family-names: Brighton
       affiliation: "Tilburg University"
   collection-title: "Mechanistic Interpretability Workshop at the 43rd International Conference on Machine Learning (ICML)"
   year: 2026
