@@ -14,7 +14,8 @@ Sources.
 * norm AUROC                    results/dark_subspace/generated/norm_baseline/{dir}/results.json (best_auroc)
 * per-layer membership AUROC    results/dark_subspace/generated/behavioral_channels/{dir}/orthogonality.json
 * bootstrap CIs (n_boot=10000)  results/dark_subspace/generated/sae_dark_subspace/{all_models_bootstrap_cis,new_bootstrap_cis}.json
-* P69 N=6 noise-floor aggregate results/dark_subspace/generated/sae_noise_floor/p69_aggregate.json
+* P69 mixed-row canonical value  results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json (N=5, resid 0.781)
+* P69 N=6 noise-floor aggregate  results/dark_subspace/generated/sae_noise_floor/p69_aggregate.json (cross-check only, resid 0.779)
 * P12B fresh-init aggregate     runs/sae_array/p12b_freshinit/aggregate.json
                                 (with single-shot layer18 source when absent)
 
@@ -236,6 +237,25 @@ def load_p69_member_only_n5() -> dict:
     }
 
 
+def load_p69_mixed_n5_harmonized() -> dict:
+    """Return the canonical P69 N=5 harmonised mixed-SAE aggregate.
+
+    Reads the ``cluster_summary_n5`` block of
+    ``paper_claims/p69_n5_harmonized_2026-05-06.json`` (Pattern A: drop seed
+    47, keep [42_postfix, 43, 44, 45, 46]). This is the cohort the camera-ready
+    paper and Table 2 report for the Pythia-6.9B (mixed) row
+    (resid mean 0.780748 -> 0.781), superseding the N=6 noise-floor aggregate
+    (resid 0.778729 -> 0.779).
+    """
+    p = PAPER_CLAIMS / "p69_n5_harmonized_2026-05-06.json"
+    d = _read_json(p)
+    return {
+        "summary": d["cluster_summary_n5"],
+        "n":       5,
+        "source":  str(p),
+    }
+
+
 def load_p12b_mixed_n5() -> dict:
     """Return the P12B N=5 mixed-data SAE aggregate at depth-matched layer 18.
 
@@ -267,6 +287,41 @@ def load_p12b_mixed_n5() -> dict:
         "recon_cos": _mean("recon_cos"),
         "n":         len(seeds),
         "source":    str(DARK / "p12b_mixed_sae_seed{47..51}/results.json"),
+    }
+
+
+def load_p1b_mixed_n5() -> dict:
+    """Return the P1B N=5 mixed-data SAE aggregate at depth-matched layer 14.
+
+    Reads the five bundled per-seed ``p1b_mixed_sae_seed{42..46}/results.json``
+    files and returns means for original, SAE-reconstructed, residual, and
+    reconstruction-cosine fields. Used by the paper's ``tab:dark_subspace``
+    Pythia-1B row (N=5 mixed cohort, orig 0.663 / recon 0.593 / resid 0.670 /
+    cos 0.869). Mirrors ``load_p12b_mixed_n5``; supersedes the single-seed
+    ``p1b_epoch5`` member-only source (0.660 / 0.515 / 0.677).
+    """
+    seeds = [42, 43, 44, 45, 46]
+    rows = []
+    for s in seeds:
+        p = DARK / f"p1b_mixed_sae_seed{s}" / "results.json"
+        d = _read_json(p)
+        rows.append({
+            "orig":      d["original"]["score_K_auroc"],
+            "recon":     d["sae_reconstructed"]["score_K_auroc"],
+            "resid":     d["residual"]["score_K_auroc"],
+            "recon_cos": d["sae_quality"]["reconstruction_cosine"],
+        })
+
+    def _mean(key: str) -> float:
+        return sum(r[key] for r in rows) / len(rows)
+
+    return {
+        "orig":      _mean("orig"),
+        "recon":     _mean("recon"),
+        "resid":     _mean("resid"),
+        "recon_cos": _mean("recon_cos"),
+        "n":         len(seeds),
+        "source":    str(DARK / "p1b_mixed_sae_seed{42..46}/results.json"),
     }
 
 
@@ -302,9 +357,11 @@ def load_p12b_scaling_auroc() -> ScalingValue:
 def get_dark_subspace_table(model_labels: list[str]) -> dict:
     """Return per-label dark-subspace records used by the bar and heatmap figures.
 
-    For ``"Pythia-6.9B (mixed)"`` the function uses the N=6 mixed-data SAE
-    aggregate (orig 0.803, recon 0.594, resid 0.779) so the displayed bars
-    match the paper's results table caption.
+    For ``"Pythia-6.9B (mixed)"`` the function uses the canonical N=5
+    harmonised mixed-data SAE cohort (orig 0.803, recon 0.594, resid 0.781,
+    Pattern A: drop seed 47) so the displayed cell matches the camera-ready
+    paper and Table 2. This supersedes the earlier N=6 noise-floor aggregate
+    (resid 0.779).
 
     Parameters
     ----------
@@ -319,7 +376,11 @@ def get_dark_subspace_table(model_labels: list[str]) -> dict:
     out = {}
     for lbl in model_labels:
         if lbl == "Pythia-6.9B (mixed)":
-            agg = load_p69_noise_floor()
+            # Canonical source is the N=5 harmonised cohort (Pattern A, drop
+            # seed 47), resid 0.781, to match the camera-ready paper / Table 2.
+            # The earlier N=6 noise-floor aggregate (resid 0.779) is retained as
+            # a cross-check only, not the displayed value.
+            agg = load_p69_mixed_n5_harmonized()
             s = agg["summary"]
             out[lbl] = {
                 "orig":      s["original_score_K_auroc"]["mean"],
@@ -348,6 +409,22 @@ def get_dark_subspace_table(model_labels: list[str]) -> dict:
             continue
         if lbl == "Pythia-12B":
             agg = load_p12b_mixed_n5()
+            out[lbl] = {
+                "orig":      agg["orig"],
+                "recon":     agg["recon"],
+                "resid":     agg["resid"],
+                "recon_cos": agg["recon_cos"],
+                "drop":      agg["orig"] - agg["recon"],
+                "source":    agg["source"],
+                "n":         agg["n"],
+            }
+            continue
+        if lbl == "Pythia-1B":
+            # Canonical source is the N=5 mixed cohort (seeds 42..46), to match
+            # the camera-ready paper / Table 2 (orig 0.663 / recon 0.593 /
+            # resid 0.670 / cos 0.869). Supersedes the single-seed p1b_epoch5
+            # member-only source (0.660 / 0.515 / 0.677).
+            agg = load_p1b_mixed_n5()
             out[lbl] = {
                 "orig":      agg["orig"],
                 "recon":     agg["recon"],

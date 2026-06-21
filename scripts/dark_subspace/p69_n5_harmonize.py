@@ -21,8 +21,10 @@ Outputs.
   N=5 set, alongside the underlying N=6 cluster summary, with per-metric deltas.
 
   Disk. JSON file at
-    results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json
-  with schema {seeds_kept, seeds_dropped, rows[per-seed metrics],
+    results/dark_subspace/paper_claims/p69_n5_harmonized_recomputed.json
+  (a NON-committed verification copy; pass --out to redirect). The committed
+  canonical record p69_n5_harmonized_2026-05-06.json is never overwritten.
+  Schema: {seeds_kept, seeds_dropped, rows[per-seed metrics],
   cluster_summary{original_score_K_auroc/reconstructed_score_K_auroc/
   residual_score_K_auroc/recon_cos/drop_original_minus_reconstructed each
   n/mean/std/min/max/values}, n6_reference{summary fields},
@@ -39,6 +41,16 @@ from typing import Any, Dict, List, Optional
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+# Release layout. The public artifact ships aggregated JSONs under results/,
+# not the raw per-seed run tree (runs/... does not exist here). The per-seed
+# base dir and the cached N=6 aggregate are resolved relative to results/.
+RELEASE_BASE = Path("results/dark_subspace/generated/sae_dark_subspace")
+RELEASE_N6_AGG = Path("results/dark_subspace/generated/sae_noise_floor/p69_aggregate.json")
+# Committed harmonised record. When the raw per-seed results.json files are not
+# shipped (release layout), per-seed metrics are reconstructed from the embedded
+# rows of this file so the script reproduces the canonical N=5 record in-repo.
+RELEASE_HARMONIZED = Path("results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json")
 
 # N=6 cohort. Pattern A keeps the first 5; drops seed 47 (the cohort tail).
 P69_SEED_DIRS_FULL = [
@@ -95,10 +107,45 @@ def _summary(values: List[Optional[float]]) -> Dict[str, Any]:
     }
 
 
-def _extract_row(seed_dir: str, seed_label: str, base: Path) -> Dict[str, Any]:
-    """Pull a single seed's canonical metrics from results.json."""
+def _load_embedded_rows(harmonized_path: Path) -> Dict[str, Dict[str, Any]]:
+    """Per-seed metrics keyed by seed_dir, read from the committed harmonised JSON.
+
+    Used as the in-repo fallback when the raw per-seed results.json files are
+    not shipped (release layout). Combines rows_kept + rows_dropped so the full
+    N=6 cohort can be reconstructed.
+    """
+    if not harmonized_path.exists():
+        return {}
+    d = _load(harmonized_path)
+    rows = list(d.get("rows_kept", [])) + list(d.get("rows_dropped", []))
+    return {r["seed_dir"]: r for r in rows if "seed_dir" in r}
+
+
+def _extract_row(seed_dir: str, seed_label: str, base: Path,
+                 embedded: Optional[Dict[str, Dict[str, Any]]] = None) -> Dict[str, Any]:
+    """Pull a single seed's canonical metrics from results.json.
+
+    When the raw per-seed results.json is absent (release layout ships
+    aggregates, not the runs/ tree) and an ``embedded`` fallback table is
+    supplied, the metrics are read from the committed harmonised JSON instead,
+    so the script reproduces the canonical N=5 record in-repo rather than
+    emitting a silent MISSING row.
+    """
     res_path = base / seed_dir / "results.json"
     if not res_path.exists():
+        if embedded and seed_dir in embedded:
+            r = embedded[seed_dir]
+            return {
+                "seed_dir": seed_dir,
+                "seed_label": seed_label,
+                "results_path": r.get("results_path", str(res_path)),
+                "original_score_K_auroc": r.get("original_score_K_auroc"),
+                "reconstructed_score_K_auroc": r.get("reconstructed_score_K_auroc"),
+                "residual_score_K_auroc": r.get("residual_score_K_auroc"),
+                "recon_cos": r.get("recon_cos"),
+                "drop_original_minus_reconstructed": r.get("drop_original_minus_reconstructed"),
+                "source_note": "reconstructed from committed p69_n5_harmonized JSON (raw run absent in release)",
+            }
         return {"seed_dir": seed_dir, "seed_label": seed_label, "MISSING": True}
     res = _load(res_path)
     orig = res.get("original", {}).get("score_K_auroc")
@@ -235,18 +282,27 @@ def main() -> None:
     )
     ap.add_argument("--repo-root", type=Path, default=REPO_ROOT)
     ap.add_argument("--json", action="store_true", help="Print full JSON payload to stdout (alongside human table).")
+    ap.add_argument(
+        "--out", type=Path, default=None,
+        help="Output path for the recomputed payload. Defaults to a NON-committed "
+             "verification file (results/dark_subspace/paper_claims/"
+             "p69_n5_harmonized_recomputed.json) so a reproduction run never "
+             "overwrites the committed p69_n5_harmonized_2026-05-06.json.")
     args = ap.parse_args()
 
-    base = args.repo_root / "runs/dark_subspace/sae_dark_subspace"
-    n6_path = args.repo_root / "runs/dark_subspace/sae_noise_floor/p69_aggregate.json"
+    # Release layout: resolve per-seed base and N=6 aggregate under results/.
+    base = args.repo_root / RELEASE_BASE
+    n6_path = args.repo_root / RELEASE_N6_AGG
+    # In-repo fallback table for when the raw per-seed runs/ tree is not shipped.
+    embedded = _load_embedded_rows(args.repo_root / RELEASE_HARMONIZED)
 
     rows_keep: List[Dict[str, Any]] = []
     for d, lab in zip(P69_SEED_DIRS_KEEP, P69_SEED_LABELS_KEEP):
-        rows_keep.append(_extract_row(d, lab, base))
+        rows_keep.append(_extract_row(d, lab, base, embedded))
 
     rows_drop: List[Dict[str, Any]] = []
     for d, lab in zip(P69_SEED_DIRS_DROP, P69_SEED_LABELS_DROP):
-        rows_drop.append(_extract_row(d, lab, base))
+        rows_drop.append(_extract_row(d, lab, base, embedded))
 
     n5_summary = _compute_cluster(rows_keep)
 
@@ -321,9 +377,14 @@ def main() -> None:
     print(f"  reason: {materiality['reason']}")
     print(f"  threshold: |Δ_mean| < {materiality['threshold']} across all metrics")
 
-    out_dir = args.repo_root / "results/dark_subspace/paper_claims"
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / "p69_n5_harmonized_2026-05-06.json"
+    # Default to a NON-committed verification path so a reproduction run never
+    # overwrites the committed canonical record (p69_n5_harmonized_2026-05-06.json).
+    if args.out is not None:
+        out_path = args.out
+    else:
+        out_path = (args.repo_root / "results/dark_subspace/paper_claims"
+                    / "p69_n5_harmonized_recomputed.json")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(payload, indent=2))
     print(f"\nwrote {out_path}")
 
