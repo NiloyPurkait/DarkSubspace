@@ -184,7 +184,7 @@ banner("Bottom block of Table 2.claim source check (member-only SAE rows)")
 
 # Paper Table 2 bottom block:
 # Pythia-1B   0.660 / 0.515 / [.49,.54] / -14pp / 0.676 / 0.771
-# GPT-Neo-2.7B 0.615 / 0.571 / [.55,.60] / -4pp / 0.699 / 0.998
+# GPT-Neo-2.7B 0.616 / 0.572 / [.55,.60] / -4pp / 0.699 / 0.998
 # OPT-6.7B    0.774 / 0.557 / [.53,.58] / -22pp / 0.866 / 0.533
 # Pythia-12B  0.707 / 0.564 / [.54,.59] / -14pp / 0.814 / 0.985
 # Qwen2-7B    0.638 / 0.526 / [.50,.55] / -11pp / 0.849 / 0.850
@@ -192,7 +192,7 @@ banner("Bottom block of Table 2.claim source check (member-only SAE rows)")
 
 table2_bottom = [
     ("Pythia-1B (paper L8 0.660/0.515/0.676/0.771)", "p1b_epoch5"),
-    ("GPT-Neo-2.7B (paper 0.615/0.571/0.699/0.998)", "neo_epoch5"),
+    ("GPT-Neo-2.7B (paper 0.616/0.572/0.699/0.998)", "neo_epoch5"),
     ("OPT-6.7B (paper 0.774/0.557/0.866/0.533)", "opt67_epoch5"),
     ("Pythia-12B L24 (paper 0.707/0.564/0.814/0.985)", "p12b_epoch5"),
     ("Pythia-12B L18 (paper says L18 16pp drop)", "p12b_epoch5_layer18"),
