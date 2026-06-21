@@ -1003,7 +1003,7 @@ banner("Privacy-aware SAE score_K (generated/sae_dark_subspace/*_ft_dk*, tab:fre
 FRESH_PROBE_PAPER = {
     "p69_ft_dk0.1": {"original": 0.803, "sae_reconstructed": 0.803, "residual": 0.520},
     "p69_ft_dk1.0": {"original": 0.803, "sae_reconstructed": 0.798, "residual": 0.537},
-    "neo_ft_dk1.0": {"original": 0.615, "sae_reconstructed": 0.612, "residual": 0.565},
+    "neo_ft_dk1.0": {"original": 0.616, "sae_reconstructed": 0.612, "residual": 0.565},
 }
 for tag, paper_vals in FRESH_PROBE_PAPER.items():
     p = GENERATED / "sae_dark_subspace" / tag / "results.json"

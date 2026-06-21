@@ -117,13 +117,19 @@ def fig1_dark_subspace_heatmap():
         [table[k]["orig"], table[k]["recon"], table[k]["resid"]] for k in keys
     ])
 
+    # Round-half-up annotations to match the canonical tables (e.g. Qwen2 residual
+    # 0.8485 -> 0.849). The +1e-9 corrects float-repr underflow (0.8485 is stored as
+    # 0.84849999...). Annotations only; the colour mapping still uses the raw data.
+    annot_vals = np.floor((data + 1e-9) * 1000.0 + 0.5) / 1000.0
+    annot_labels = np.array([[f"{v:.3f}" for v in row] for row in annot_vals])
+
     fig, ax = plt.subplots(figsize=(6.5, 3.5))
 
     norm = TwoSlopeNorm(vmin=0.50, vcenter=0.65, vmax=1.0)
     cmap = sns.diverging_palette(10, 220, s=80, l=55, as_cmap=True)
 
     sns.heatmap(
-        data, annot=True, fmt=".3f",
+        data, annot=annot_labels, fmt="",
         xticklabels=components, yticklabels=models,
         cmap=cmap, norm=norm,
         linewidths=0.6, linecolor="white",
