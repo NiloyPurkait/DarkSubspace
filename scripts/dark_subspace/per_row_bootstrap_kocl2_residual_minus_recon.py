@@ -8,7 +8,7 @@ anchors to residual > reconstruction.
 
 Used in the appendix per-row bootstrap table.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/per_row_bootstrap_kocl2_residual_minus_recon.py
+    .venv/bin/python scripts/dark_subspace/per_row_bootstrap_kocl2_residual_minus_recon.py
 
 Inputs.
   Same nine cohort rows as `per_row_bootstrap_kocl2.py` (seven cohort plus two

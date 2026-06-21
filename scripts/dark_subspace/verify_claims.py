@@ -25,7 +25,7 @@ scripts under ``scripts/dark_subspace/`` against their own cluster setup.
 
 Reproduce::
 
-    env/bin/python3 scripts/dark_subspace/verify_claims.py
+    .venv/bin/python scripts/dark_subspace/verify_claims.py
 """
 
 from __future__ import annotations

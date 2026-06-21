@@ -6,7 +6,7 @@ activations, measuring membership AUROC and verbatim extraction at each k.
 
 Used in Section "Results" (R:84-87) and the feature-ablation control
 appendix of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/feature_ablation_dark_subspace.py --model-path <ft_model> --bcd-dir <bcd_dir> --sae-path <sae> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id>
+Reproduce: .venv/bin/python scripts/dark_subspace/feature_ablation_dark_subspace.py --model-path <ft_model> --bcd-dir <bcd_dir> --sae-path <sae> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id>
 
 Protocol
 --------

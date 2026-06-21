@@ -10,7 +10,7 @@ membership and recall to ``runs/dark_subspace/behavioral_channels/<condition>/or
 Used in Methods §3.2 (channel decomposition), Results §4.1 (geometry), and
 Appendix `app:bcd_details`.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/behavioral_channels.py \\
+    .venv/bin/python scripts/dark_subspace/behavioral_channels.py \\
         --model-path runs/controlled_ft/run_20260306_055225/ft_epoch5/model \\
         --member-texts data/memcirc_ctrl_ft/member.jsonl \\
         --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \\

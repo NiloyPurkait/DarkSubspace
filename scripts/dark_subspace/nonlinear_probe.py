@@ -9,7 +9,7 @@ class of probe substantially out-performs the other.
 Used in Appendix `app:nonlinear` (`tab:nonlinear`) of the paper.
 
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/nonlinear_probe.py \\
+    .venv/bin/python scripts/dark_subspace/nonlinear_probe.py \\
         --activations runs/dark_subspace/canonical_activations/<model_tag>/activations.npz \\
         --output-dir runs/dark_subspace/nonlinear_probe/<model_tag> \\
         --layer 16 --n-folds 5 --seed 42

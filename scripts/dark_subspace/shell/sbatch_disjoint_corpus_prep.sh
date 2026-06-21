@@ -23,7 +23,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../../.."
 mkdir -p logs data/memcirc_ctrl_disjoint
 
-PY=env/bin/python3
+PY=.venv/bin/python
 
 ${PY} scripts/dark_subspace/build_disjoint_owt_corpus.py \
     --member data/memcirc_ctrl_ft/member.jsonl \

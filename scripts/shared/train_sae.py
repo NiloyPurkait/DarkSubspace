@@ -10,7 +10,7 @@ Used in Section 2.2 (SAE training protocol) of the paper.
 
 Reproduce::
 
-    env/bin/python3 scripts/shared/train_sae.py \\
+    .venv/bin/python scripts/shared/train_sae.py \\
         --model EleutherAI/pythia-6.9b --layers 16 \\
         --d-model-mult 4 --l1-coeff 5e-4 \\
         --train-tokens 200000000 --seed 42 \\
@@ -724,6 +724,37 @@ def main() -> int:
         help="Target feature firing rate for load balancing (default 0.01 = 1%%).",
     )
 
+    # TopK activation (Gao et al. 2024 k-Sparse Autoencoders).
+    # When set, encoder uses TopK activation instead of L1; l1_coeff is ignored.
+    ap.add_argument(
+        "--topk",
+        type=int,
+        default=None,
+        help="If set, use TopK activation (Gao 2024) with K activations per token. Overrides L1 sparsity.",
+    )
+
+    # JumpReLU activation (Rajamanoharan et al. 2024 / Gemma Scope recipe).
+    # Per-feature learned threshold; replaces L1 with an STE-differentiable L0
+    # penalty scaled by the existing l1_coeff. Mutually exclusive with --topk.
+    ap.add_argument(
+        "--jumprelu",
+        action="store_true",
+        help="If set, use JumpReLU activation (Rajamanoharan 2024) with per-feature learned thresholds. "
+        "Reuses l1_coeff as the L0 sparsity coefficient. Mutually exclusive with --topk.",
+    )
+    ap.add_argument(
+        "--jumprelu-theta-init",
+        type=float,
+        default=1e-3,
+        help="JumpReLU initial per-feature threshold in activation units (Gemma Scope ~1e-3).",
+    )
+    ap.add_argument(
+        "--jumprelu-bandwidth",
+        type=float,
+        default=1e-3,
+        help="JumpReLU STE rectangle bandwidth eps (Gemma Scope kernel width ~1e-3).",
+    )
+
     ap.add_argument("--train-tokens", type=int, default=2_000_000)
     ap.add_argument("--tokens-per-step", type=int, default=8192)
     ap.add_argument("--seq-len", type=int, default=256)
@@ -813,6 +844,10 @@ def main() -> int:
     ap.add_argument("--mode", type=str, choices=["none", "quick", "paper"], default="none")
 
     args = ap.parse_args()
+
+    # JumpReLU and TopK are mutually exclusive activation regimes.
+    if getattr(args, "jumprelu", False) and args.topk is not None:
+        ap.error("--jumprelu and --topk are mutually exclusive; pick one activation regime.")
 
     # Mode presets (gated; do not silently change legacy behaviour).
     if args.mode == "paper":
@@ -908,7 +943,14 @@ def main() -> int:
             arch_tag += "_tied"
         if args.l1_form == "mean":
             arch_tag += "_l1mean"
-        
+        if args.topk is not None:
+            arch_tag += f"_topk{int(args.topk)}"
+        # JumpReLU arch_tag: single leading underscore, mirroring _topk exactly.
+        # Note: downstream globs must use the SAME single-underscore
+        # join (NOT `__jumprelu`) or they will silently fail to match the run dir.
+        if args.jumprelu:
+            arch_tag += "_jumprelu"
+
         run_name = f"train_sae__{args.model.replace('/', '_')}__layer{layer_idx}__mult{args.d_model_mult}__{l1_tag}{arch_tag}"
         
         # Handle resume: use existing run_dir if resuming
@@ -969,6 +1011,10 @@ def main() -> int:
                 tied_weights=args.tied_weights,  # Tied weights ablation
                 aux_coeff=float(args.aux_coeff),  # Load balancing
                 aux_target_firing_rate=float(args.aux_target_firing_rate),
+                topk=(int(args.topk) if args.topk is not None else None),
+                jumprelu=bool(args.jumprelu),
+                jumprelu_theta_init=float(args.jumprelu_theta_init),
+                jumprelu_bandwidth=float(args.jumprelu_bandwidth),
                 use_bias=True,
                 normalize_decoder=True,
             )

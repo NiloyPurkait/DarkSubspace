@@ -7,7 +7,7 @@ Generates the body and appendix headline figures (``score_distributions_simple.p
 ``sae_quality_vs_drop.pdf``) from JSON via ``figure_data_loader``.
 
 Used in Methods, Results, and Appendix of the paper.
-Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_figures.py``
+Reproduce: ``.venv/bin/python scripts/dark_subspace/plot_figures.py``
 (writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 
 All numeric values are sourced via ``figure_data_loader`` (no hardcoded

@@ -11,7 +11,7 @@ A:1146-1150) of the paper.
 
 Reproduce::
 
-    env/bin/python3 scripts/dark_subspace/p12b_multiseed_query.py [--json] \\
+    .venv/bin/python scripts/dark_subspace/p12b_multiseed_query.py [--json] \\
         [--seeds 47,48,49,50,51] [--include-anchor]
 
 Reads only the canonical schema keys: ``original``, ``sae_reconstructed``,

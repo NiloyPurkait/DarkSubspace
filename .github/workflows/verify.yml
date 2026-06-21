@@ -31,3 +31,21 @@ jobs:
         run: |
           python3 -m pip install --quiet pytest
           python3 -m pytest tests/ -q --no-header --tb=short
+
+  import-smoke:
+    name: Package install and import smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install package
+        run: pip install -e .
+
+      - name: Import package
+        run: python -c "import sae_mia_audit"

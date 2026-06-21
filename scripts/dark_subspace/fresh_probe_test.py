@@ -7,7 +7,7 @@ conditions and emits the shuffle permutation null calibration.
 
 Used in Section "Results" (R:124-127) and Appendix ``app:fresh_probe_v2``
 (A:807-825) of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/fresh_probe_test.py --model-path <ft_model> --sae-path <sae> --bcd-dir <bcd_dir> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id>
+Reproduce: .venv/bin/python scripts/dark_subspace/fresh_probe_test.py --model-path <ft_model> --sae-path <sae> --bcd-dir <bcd_dir> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id>
 
 Breaks the circularity where d_K is used for both SAE optimisation
 (`finetune_sae_dk.py` minimises `mean((residual @ d_K)^2)`) and evaluation

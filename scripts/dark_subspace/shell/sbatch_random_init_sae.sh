@@ -28,7 +28,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../../.."
 mkdir -p logs runs/sae/random_init_p69_layer16_v2
 
-PY=env/bin/python3
+PY=.venv/bin/python
 P69_MODEL="runs/controlled_ft/run_20260306_055225/ft_epoch5/model"
 P69_BCD="runs/dark_subspace/behavioral_channels/p69_epoch5"
 REF_SAE="runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260413_184801/sae_final.pt"

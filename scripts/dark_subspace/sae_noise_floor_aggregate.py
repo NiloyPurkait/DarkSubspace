@@ -9,7 +9,7 @@ writes ``runs/dark_subspace/sae_noise_floor/p69_aggregate.json``.
 Used in the Introduction headline, Methods note on noise floor, and the
 appendix six-seed cohort table.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/sae_noise_floor_aggregate.py
+    .venv/bin/python scripts/dark_subspace/sae_noise_floor_aggregate.py
 
 Per-seed inputs (CPU-only post-processing of existing data, no GPU needed).
   ``runs/dark_subspace/sae_dark_subspace/p69_mixed_sae_seed{42_postfix,43..47}/results.json``

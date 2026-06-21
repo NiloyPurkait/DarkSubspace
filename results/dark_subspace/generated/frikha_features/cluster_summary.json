@@ -1,0 +1,1132 @@
+{
+  "experiment": "frikha_feature_selection",
+  "experiment_name": "frikha_baseline_p69",
+  "n_seeds": 5,
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "per_seed": [
+    {
+      "seed": 42,
+      "results_path": "results/dark_subspace/generated/frikha_features/frikha_baseline_p69/results.json",
+      "sae_path": "runs/sae/p69_mixed_sae_seed42/sae_final.pt",
+      "model": "p69_mixed_seed42",
+      "baseline_no_ablation": {
+        "score_K_auroc_original": 0.803088,
+        "score_K_auroc_recon": 0.591183,
+        "score_K_auroc_residual": 0.7831980000000001,
+        "latent_probe_auroc_5fold": 0.526275
+      },
+      "sae_stats": {
+        "mean_active_features": 11.164,
+        "total_features": 16384,
+        "sparsity": 0.000681396484375
+      },
+      "criteria": {
+        "top_k_magnitude": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.645273,
+            "score_K_auroc_residual_post_ablation": 0.786161,
+            "latent_probe_auroc_5fold": 0.526665,
+            "extraction_drop_vs_recon_baseline": -0.05408999999999997,
+            "residual_probe_delta_vs_baseline": 0.00039000000000000146
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.7682459999999999,
+            "score_K_auroc_residual_post_ablation": 0.7802389999999999,
+            "latent_probe_auroc_5fold": 0.5161225,
+            "extraction_drop_vs_recon_baseline": -0.17706299999999986,
+            "residual_probe_delta_vs_baseline": -0.010152500000000009
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.782981,
+            "score_K_auroc_residual_post_ablation": 0.7788075,
+            "latent_probe_auroc_5fold": 0.5105275,
+            "extraction_drop_vs_recon_baseline": -0.19179800000000002,
+            "residual_probe_delta_vs_baseline": -0.015747500000000025
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.7706235,
+            "score_K_auroc_residual_post_ablation": 0.7844690000000001,
+            "latent_probe_auroc_5fold": 0.5109,
+            "extraction_drop_vs_recon_baseline": -0.1794405,
+            "residual_probe_delta_vs_baseline": -0.015375000000000028
+          }
+        },
+        "mean_diff": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.618314,
+            "score_K_auroc_residual_post_ablation": 0.777048,
+            "latent_probe_auroc_5fold": 0.52017,
+            "extraction_drop_vs_recon_baseline": -0.027131000000000016,
+            "residual_probe_delta_vs_baseline": -0.006105000000000027
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.767368,
+            "score_K_auroc_residual_post_ablation": 0.780657,
+            "latent_probe_auroc_5fold": 0.5164925000000001,
+            "extraction_drop_vs_recon_baseline": -0.17618500000000004,
+            "residual_probe_delta_vs_baseline": -0.009782499999999916
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.7626749999999999,
+            "score_K_auroc_residual_post_ablation": 0.7839929999999999,
+            "latent_probe_auroc_5fold": 0.5025225,
+            "extraction_drop_vs_recon_baseline": -0.17149199999999987,
+            "residual_probe_delta_vs_baseline": -0.023752500000000065
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.7422909999999999,
+            "score_K_auroc_residual_post_ablation": 0.789563,
+            "latent_probe_auroc_5fold": 0.487615,
+            "extraction_drop_vs_recon_baseline": -0.1511079999999999,
+            "residual_probe_delta_vs_baseline": -0.03866000000000003
+          }
+        },
+        "steering_probe": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.5911860000000001,
+            "score_K_auroc_residual_post_ablation": 0.7831980000000001,
+            "latent_probe_auroc_5fold": 0.525315,
+            "extraction_drop_vs_recon_baseline": -3.000000000086267e-06,
+            "residual_probe_delta_vs_baseline": -0.0009600000000000719
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.618509,
+            "score_K_auroc_residual_post_ablation": 0.7767270000000001,
+            "latent_probe_auroc_5fold": 0.5210349999999999,
+            "extraction_drop_vs_recon_baseline": -0.02732599999999996,
+            "residual_probe_delta_vs_baseline": -0.0052400000000001334
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.617124,
+            "score_K_auroc_residual_post_ablation": 0.778551,
+            "latent_probe_auroc_5fold": 0.49165000000000003,
+            "extraction_drop_vs_recon_baseline": -0.025940999999999992,
+            "residual_probe_delta_vs_baseline": -0.03462500000000002
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.609696,
+            "score_K_auroc_residual_post_ablation": 0.7816810000000001,
+            "latent_probe_auroc_5fold": 0.4358350000000001,
+            "extraction_drop_vs_recon_baseline": -0.018513,
+            "residual_probe_delta_vs_baseline": -0.09043999999999996
+          }
+        }
+      }
+    },
+    {
+      "seed": 43,
+      "results_path": "results/dark_subspace/generated/frikha_features/frikha_baseline_p69_seed43/results.json",
+      "sae_path": "runs/sae/p69_mixed_sae_seed43/sae_final.pt",
+      "model": "p69_mixed_seed43",
+      "baseline_no_ablation": {
+        "score_K_auroc_original": 0.803088,
+        "score_K_auroc_recon": 0.5902459999999999,
+        "score_K_auroc_residual": 0.7851169999999998,
+        "latent_probe_auroc_5fold": 0.5209900000000001
+      },
+      "sae_stats": {
+        "mean_active_features": 10.6115,
+        "total_features": 16384,
+        "sparsity": 0.000647674560546875
+      },
+      "criteria": {
+        "top_k_magnitude": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.664353,
+            "score_K_auroc_residual_post_ablation": 0.7922410000000001,
+            "latent_probe_auroc_5fold": 0.5216399999999999,
+            "extraction_drop_vs_recon_baseline": -0.07410700000000003,
+            "residual_probe_delta_vs_baseline": 0.0006499999999998174
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.7814409999999999,
+            "score_K_auroc_residual_post_ablation": 0.779464,
+            "latent_probe_auroc_5fold": 0.511755,
+            "extraction_drop_vs_recon_baseline": -0.191195,
+            "residual_probe_delta_vs_baseline": -0.009235000000000104
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.7859479999999999,
+            "score_K_auroc_residual_post_ablation": 0.780257,
+            "latent_probe_auroc_5fold": 0.5029600000000001,
+            "extraction_drop_vs_recon_baseline": -0.19570199999999993,
+            "residual_probe_delta_vs_baseline": -0.01802999999999999
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.772462,
+            "score_K_auroc_residual_post_ablation": 0.784612,
+            "latent_probe_auroc_5fold": 0.4909899999999999,
+            "extraction_drop_vs_recon_baseline": -0.18221600000000004,
+            "residual_probe_delta_vs_baseline": -0.030000000000000138
+          }
+        },
+        "mean_diff": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.632019,
+            "score_K_auroc_residual_post_ablation": 0.7746679999999999,
+            "latent_probe_auroc_5fold": 0.51764,
+            "extraction_drop_vs_recon_baseline": -0.04177300000000006,
+            "residual_probe_delta_vs_baseline": -0.003350000000000075
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.7778149999999999,
+            "score_K_auroc_residual_post_ablation": 0.7800300000000001,
+            "latent_probe_auroc_5fold": 0.510555,
+            "extraction_drop_vs_recon_baseline": -0.18756899999999999,
+            "residual_probe_delta_vs_baseline": -0.010435000000000083
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.773973,
+            "score_K_auroc_residual_post_ablation": 0.782698,
+            "latent_probe_auroc_5fold": 0.493255,
+            "extraction_drop_vs_recon_baseline": -0.18372700000000008,
+            "residual_probe_delta_vs_baseline": -0.027735000000000065
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.7563500000000001,
+            "score_K_auroc_residual_post_ablation": 0.788478,
+            "latent_probe_auroc_5fold": 0.48572499999999996,
+            "extraction_drop_vs_recon_baseline": -0.16610400000000014,
+            "residual_probe_delta_vs_baseline": -0.0352650000000001
+          }
+        },
+        "steering_probe": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.589762,
+            "score_K_auroc_residual_post_ablation": 0.785283,
+            "latent_probe_auroc_5fold": 0.511085,
+            "extraction_drop_vs_recon_baseline": 0.00048399999999992893,
+            "residual_probe_delta_vs_baseline": -0.009905000000000053
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.589572,
+            "score_K_auroc_residual_post_ablation": 0.785126,
+            "latent_probe_auroc_5fold": 0.508025,
+            "extraction_drop_vs_recon_baseline": 0.0006739999999999524,
+            "residual_probe_delta_vs_baseline": -0.012965000000000115
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.628809,
+            "score_K_auroc_residual_post_ablation": 0.776291,
+            "latent_probe_auroc_5fold": 0.4890300000000001,
+            "extraction_drop_vs_recon_baseline": -0.038563000000000014,
+            "residual_probe_delta_vs_baseline": -0.03195999999999999
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.6208849999999999,
+            "score_K_auroc_residual_post_ablation": 0.77823,
+            "latent_probe_auroc_5fold": 0.45326000000000005,
+            "extraction_drop_vs_recon_baseline": -0.030638999999999972,
+            "residual_probe_delta_vs_baseline": -0.06773000000000001
+          }
+        }
+      }
+    },
+    {
+      "seed": 44,
+      "results_path": "results/dark_subspace/generated/frikha_features/frikha_baseline_p69_seed44/results.json",
+      "sae_path": "runs/sae/p69_mixed_sae_seed44/sae_final.pt",
+      "model": "p69_mixed_seed44",
+      "baseline_no_ablation": {
+        "score_K_auroc_original": 0.803088,
+        "score_K_auroc_recon": 0.597296,
+        "score_K_auroc_residual": 0.779579,
+        "latent_probe_auroc_5fold": 0.52436
+      },
+      "sae_stats": {
+        "mean_active_features": 11.469,
+        "total_features": 16384,
+        "sparsity": 0.00070001220703125
+      },
+      "criteria": {
+        "top_k_magnitude": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.6274230000000001,
+            "score_K_auroc_residual_post_ablation": 0.7729929999999998,
+            "latent_probe_auroc_5fold": 0.5241499999999999,
+            "extraction_drop_vs_recon_baseline": -0.030127000000000015,
+            "residual_probe_delta_vs_baseline": -0.0002100000000001545
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.7838189999999999,
+            "score_K_auroc_residual_post_ablation": 0.7759609999999999,
+            "latent_probe_auroc_5fold": 0.5099675,
+            "extraction_drop_vs_recon_baseline": -0.18652299999999988,
+            "residual_probe_delta_vs_baseline": -0.01439250000000003
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.7967179999999999,
+            "score_K_auroc_residual_post_ablation": 0.776093,
+            "latent_probe_auroc_5fold": 0.50587,
+            "extraction_drop_vs_recon_baseline": -0.19942199999999988,
+            "residual_probe_delta_vs_baseline": -0.018490000000000006
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.7827770000000001,
+            "score_K_auroc_residual_post_ablation": 0.782246,
+            "latent_probe_auroc_5fold": 0.5051875,
+            "extraction_drop_vs_recon_baseline": -0.185481,
+            "residual_probe_delta_vs_baseline": -0.019172500000000037
+          }
+        },
+        "mean_diff": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.620152,
+            "score_K_auroc_residual_post_ablation": 0.773169,
+            "latent_probe_auroc_5fold": 0.519455,
+            "extraction_drop_vs_recon_baseline": -0.022855999999999987,
+            "residual_probe_delta_vs_baseline": -0.004905000000000048
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.775788,
+            "score_K_auroc_residual_post_ablation": 0.776101,
+            "latent_probe_auroc_5fold": 0.5110975,
+            "extraction_drop_vs_recon_baseline": -0.17849199999999998,
+            "residual_probe_delta_vs_baseline": -0.013262500000000066
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.7795160000000001,
+            "score_K_auroc_residual_post_ablation": 0.7789780000000001,
+            "latent_probe_auroc_5fold": 0.48759500000000006,
+            "extraction_drop_vs_recon_baseline": -0.18222000000000005,
+            "residual_probe_delta_vs_baseline": -0.03676499999999999
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.760138,
+            "score_K_auroc_residual_post_ablation": 0.785659,
+            "latent_probe_auroc_5fold": 0.48768,
+            "extraction_drop_vs_recon_baseline": -0.16284199999999993,
+            "residual_probe_delta_vs_baseline": -0.036680000000000046
+          }
+        },
+        "steering_probe": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.5972729999999999,
+            "score_K_auroc_residual_post_ablation": 0.7795880000000001,
+            "latent_probe_auroc_5fold": 0.51624,
+            "extraction_drop_vs_recon_baseline": 2.300000000010627e-05,
+            "residual_probe_delta_vs_baseline": -0.008120000000000016
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.596985,
+            "score_K_auroc_residual_post_ablation": 0.779818,
+            "latent_probe_auroc_5fold": 0.510105,
+            "extraction_drop_vs_recon_baseline": 0.00031100000000006123,
+            "residual_probe_delta_vs_baseline": -0.014255000000000018
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.6175299999999999,
+            "score_K_auroc_residual_post_ablation": 0.7757840000000001,
+            "latent_probe_auroc_5fold": 0.478185,
+            "extraction_drop_vs_recon_baseline": -0.020233999999999863,
+            "residual_probe_delta_vs_baseline": -0.04617500000000002
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.609787,
+            "score_K_auroc_residual_post_ablation": 0.778469,
+            "latent_probe_auroc_5fold": 0.43544,
+            "extraction_drop_vs_recon_baseline": -0.012490999999999919,
+            "residual_probe_delta_vs_baseline": -0.08892000000000005
+          }
+        }
+      }
+    },
+    {
+      "seed": 45,
+      "results_path": "results/dark_subspace/generated/frikha_features/frikha_baseline_p69_seed45/results.json",
+      "sae_path": "runs/sae/p69_mixed_sae_seed45/sae_final.pt",
+      "model": "p69_mixed_seed45",
+      "baseline_no_ablation": {
+        "score_K_auroc_original": 0.803088,
+        "score_K_auroc_recon": 0.5981270000000001,
+        "score_K_auroc_residual": 0.772327,
+        "latent_probe_auroc_5fold": 0.520725
+      },
+      "sae_stats": {
+        "mean_active_features": 11.803,
+        "total_features": 16384,
+        "sparsity": 0.00072039794921875
+      },
+      "criteria": {
+        "top_k_magnitude": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.624859,
+            "score_K_auroc_residual_post_ablation": 0.765087,
+            "latent_probe_auroc_5fold": 0.520395,
+            "extraction_drop_vs_recon_baseline": -0.026731999999999978,
+            "residual_probe_delta_vs_baseline": -0.00032999999999994145
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.778772,
+            "score_K_auroc_residual_post_ablation": 0.777482,
+            "latent_probe_auroc_5fold": 0.5075100000000001,
+            "extraction_drop_vs_recon_baseline": -0.18064499999999994,
+            "residual_probe_delta_vs_baseline": -0.013214999999999866
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.791999,
+            "score_K_auroc_residual_post_ablation": 0.7775210000000001,
+            "latent_probe_auroc_5fold": 0.50383,
+            "extraction_drop_vs_recon_baseline": -0.19387199999999993,
+            "residual_probe_delta_vs_baseline": -0.016894999999999993
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.783032,
+            "score_K_auroc_residual_post_ablation": 0.7819510000000001,
+            "latent_probe_auroc_5fold": 0.50155,
+            "extraction_drop_vs_recon_baseline": -0.18490499999999988,
+            "residual_probe_delta_vs_baseline": -0.019174999999999942
+          }
+        },
+        "mean_diff": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.619822,
+            "score_K_auroc_residual_post_ablation": 0.765965,
+            "latent_probe_auroc_5fold": 0.5183500000000001,
+            "extraction_drop_vs_recon_baseline": -0.02169499999999991,
+            "residual_probe_delta_vs_baseline": -0.002374999999999905
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.6456679999999999,
+            "score_K_auroc_residual_post_ablation": 0.7505,
+            "latent_probe_auroc_5fold": 0.5064050000000001,
+            "extraction_drop_vs_recon_baseline": -0.04754099999999983,
+            "residual_probe_delta_vs_baseline": -0.014319999999999888
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.636508,
+            "score_K_auroc_residual_post_ablation": 0.755759,
+            "latent_probe_auroc_5fold": 0.492795,
+            "extraction_drop_vs_recon_baseline": -0.03838099999999989,
+            "residual_probe_delta_vs_baseline": -0.02793000000000001
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.621877,
+            "score_K_auroc_residual_post_ablation": 0.7602369999999999,
+            "latent_probe_auroc_5fold": 0.47862,
+            "extraction_drop_vs_recon_baseline": -0.023749999999999938,
+            "residual_probe_delta_vs_baseline": -0.042105000000000004
+          }
+        },
+        "steering_probe": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.598279,
+            "score_K_auroc_residual_post_ablation": 0.772096,
+            "latent_probe_auroc_5fold": 0.5121,
+            "extraction_drop_vs_recon_baseline": -0.00015199999999992997,
+            "residual_probe_delta_vs_baseline": -0.008624999999999994
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.5981839999999999,
+            "score_K_auroc_residual_post_ablation": 0.772133,
+            "latent_probe_auroc_5fold": 0.5109199999999999,
+            "extraction_drop_vs_recon_baseline": -5.6999999999862716e-05,
+            "residual_probe_delta_vs_baseline": -0.009805000000000064
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.607485,
+            "score_K_auroc_residual_post_ablation": 0.772329,
+            "latent_probe_auroc_5fold": 0.46560000000000007,
+            "extraction_drop_vs_recon_baseline": -0.009357999999999977,
+            "residual_probe_delta_vs_baseline": -0.055124999999999924
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.700564,
+            "score_K_auroc_residual_post_ablation": 0.790198,
+            "latent_probe_auroc_5fold": 0.413835,
+            "extraction_drop_vs_recon_baseline": -0.10243699999999989,
+            "residual_probe_delta_vs_baseline": -0.10688999999999999
+          }
+        }
+      }
+    },
+    {
+      "seed": 46,
+      "results_path": "results/dark_subspace/generated/frikha_features/frikha_baseline_p69_seed46/results.json",
+      "sae_path": "runs/sae/p69_mixed_sae_seed46/sae_final.pt",
+      "model": "p69_mixed_seed46",
+      "baseline_no_ablation": {
+        "score_K_auroc_original": 0.803088,
+        "score_K_auroc_recon": 0.5923280000000001,
+        "score_K_auroc_residual": 0.7835460000000001,
+        "latent_probe_auroc_5fold": 0.537
+      },
+      "sae_stats": {
+        "mean_active_features": 11.381,
+        "total_features": 16384,
+        "sparsity": 0.00069464111328125
+      },
+      "criteria": {
+        "top_k_magnitude": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.6459629999999998,
+            "score_K_auroc_residual_post_ablation": 0.7876380000000001,
+            "latent_probe_auroc_5fold": 0.5370299999999999,
+            "extraction_drop_vs_recon_baseline": -0.053634999999999766,
+            "residual_probe_delta_vs_baseline": 2.999999999986347e-05
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.760149,
+            "score_K_auroc_residual_post_ablation": 0.7828060000000001,
+            "latent_probe_auroc_5fold": 0.5321075000000001,
+            "extraction_drop_vs_recon_baseline": -0.1678209999999999,
+            "residual_probe_delta_vs_baseline": -0.004892499999999966
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.77772,
+            "score_K_auroc_residual_post_ablation": 0.78077,
+            "latent_probe_auroc_5fold": 0.5276925,
+            "extraction_drop_vs_recon_baseline": -0.1853919999999999,
+            "residual_probe_delta_vs_baseline": -0.009307500000000024
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.764443,
+            "score_K_auroc_residual_post_ablation": 0.785713,
+            "latent_probe_auroc_5fold": 0.514085,
+            "extraction_drop_vs_recon_baseline": -0.1721149999999999,
+            "residual_probe_delta_vs_baseline": -0.02291500000000002
+          }
+        },
+        "mean_diff": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.6459629999999998,
+            "score_K_auroc_residual_post_ablation": 0.7876380000000001,
+            "latent_probe_auroc_5fold": 0.5370299999999999,
+            "extraction_drop_vs_recon_baseline": -0.053634999999999766,
+            "residual_probe_delta_vs_baseline": 2.999999999986347e-05
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.7567659999999999,
+            "score_K_auroc_residual_post_ablation": 0.7833669999999999,
+            "latent_probe_auroc_5fold": 0.5301,
+            "extraction_drop_vs_recon_baseline": -0.16443799999999986,
+            "residual_probe_delta_vs_baseline": -0.006900000000000017
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.756388,
+            "score_K_auroc_residual_post_ablation": 0.78528,
+            "latent_probe_auroc_5fold": 0.521605,
+            "extraction_drop_vs_recon_baseline": -0.16405999999999987,
+            "residual_probe_delta_vs_baseline": -0.015395000000000048
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.73951,
+            "score_K_auroc_residual_post_ablation": 0.7896460000000001,
+            "latent_probe_auroc_5fold": 0.5070675,
+            "extraction_drop_vs_recon_baseline": -0.14718199999999992,
+            "residual_probe_delta_vs_baseline": -0.02993250000000003
+          }
+        },
+        "steering_probe": {
+          "top_1": {
+            "k": 1,
+            "score_K_auroc_recon_post_ablation": 0.592101,
+            "score_K_auroc_residual_post_ablation": 0.783586,
+            "latent_probe_auroc_5fold": 0.532605,
+            "extraction_drop_vs_recon_baseline": 0.00022700000000008824,
+            "residual_probe_delta_vs_baseline": -0.004395000000000038
+          },
+          "top_5": {
+            "k": 5,
+            "score_K_auroc_recon_post_ablation": 0.592318,
+            "score_K_auroc_residual_post_ablation": 0.7835420000000002,
+            "latent_probe_auroc_5fold": 0.5338350000000001,
+            "extraction_drop_vs_recon_baseline": 1.0000000000065512e-05,
+            "residual_probe_delta_vs_baseline": -0.0031649999999999734
+          },
+          "top_50": {
+            "k": 50,
+            "score_K_auroc_recon_post_ablation": 0.613356,
+            "score_K_auroc_residual_post_ablation": 0.782992,
+            "latent_probe_auroc_5fold": 0.4947749999999999,
+            "extraction_drop_vs_recon_baseline": -0.021027999999999936,
+            "residual_probe_delta_vs_baseline": -0.042225000000000124
+          },
+          "top_200": {
+            "k": 200,
+            "score_K_auroc_recon_post_ablation": 0.603602,
+            "score_K_auroc_residual_post_ablation": 0.785485,
+            "latent_probe_auroc_5fold": 0.45635000000000003,
+            "extraction_drop_vs_recon_baseline": -0.011273999999999895,
+            "residual_probe_delta_vs_baseline": -0.08065
+          }
+        }
+      }
+    }
+  ],
+  "cluster_summary": {
+    "baseline_no_ablation": {
+      "score_K_auroc_original": {
+        "n": 5,
+        "mean": 0.803088,
+        "std": 0.0,
+        "min": 0.803088,
+        "max": 0.803088
+      },
+      "score_K_auroc_recon": {
+        "n": 5,
+        "mean": 0.593836,
+        "std": 0.003625770745648473,
+        "min": 0.5902459999999999,
+        "max": 0.5981270000000001
+      },
+      "score_K_auroc_residual": {
+        "n": 5,
+        "mean": 0.7807534,
+        "std": 0.005128331141804309,
+        "min": 0.772327,
+        "max": 0.7851169999999998
+      },
+      "latent_probe_auroc_5fold": {
+        "n": 5,
+        "mean": 0.5258700000000001,
+        "std": 0.006644667975151205,
+        "min": 0.520725,
+        "max": 0.537
+      }
+    },
+    "sae_stats": {
+      "mean_active_features": {
+        "n": 5,
+        "mean": 11.2857,
+        "std": 0.44148522059067885,
+        "min": 10.6115,
+        "max": 11.803
+      },
+      "sparsity": {
+        "n": 5,
+        "mean": 0.000688824462890625,
+        "std": 2.69461194208178e-05,
+        "min": 0.000647674560546875,
+        "max": 0.00072039794921875
+      }
+    },
+    "criteria_grid": {
+      "top_k_magnitude": {
+        "top_1": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.6415742,
+            "std": 0.016058259469817968,
+            "min": 0.624859,
+            "max": 0.664353
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.780824,
+            "std": 0.011338427845164499,
+            "min": 0.765087,
+            "max": 0.7922410000000001
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.525976,
+            "std": 0.006632276569926774,
+            "min": 0.520395,
+            "max": 0.5370299999999999
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.04773819999999995,
+            "std": 0.019505422520417235,
+            "min": -0.07410700000000003,
+            "max": -0.026731999999999978
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": 0.00010599999999991728,
+            "std": 0.0004099756090305463,
+            "min": -0.00032999999999994145,
+            "max": 0.0006499999999998174
+          }
+        },
+        "top_5": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.7744853999999999,
+            "std": 0.009979151732487094,
+            "min": 0.760149,
+            "max": 0.7838189999999999
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7791904,
+            "std": 0.0026265298970315023,
+            "min": 0.7759609999999999,
+            "max": 0.7828060000000001
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.5154925,
+            "std": 0.00980650246647601,
+            "min": 0.5075100000000001,
+            "max": 0.5321075000000001
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.1806493999999999,
+            "std": 0.008988033533537837,
+            "min": -0.191195,
+            "max": -0.1678209999999999
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.010377499999999994,
+            "std": 0.0037286990861424983,
+            "min": -0.01439250000000003,
+            "max": -0.004892499999999966
+          }
+        },
+        "top_50": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.7870731999999999,
+            "std": 0.007462911610088907,
+            "min": 0.77772,
+            "max": 0.7967179999999999
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7786896999999999,
+            "std": 0.001930457510539879,
+            "min": 0.776093,
+            "max": 0.78077
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.5101760000000001,
+            "std": 0.010220510414113364,
+            "min": 0.5029600000000001,
+            "max": 0.5276925
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.19323719999999994,
+            "std": 0.005204527375276253,
+            "min": -0.19942199999999988,
+            "max": -0.1853919999999999
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.015694000000000007,
+            "std": 0.00372515628866762,
+            "min": -0.018490000000000006,
+            "max": -0.009307500000000024
+          }
+        },
+        "top_200": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.7746675,
+            "std": 0.008085286281264262,
+            "min": 0.764443,
+            "max": 0.783032
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7837982,
+            "std": 0.0016278954819029252,
+            "min": 0.7819510000000001,
+            "max": 0.785713
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.5045425,
+            "std": 0.009007197816191258,
+            "min": 0.4909899999999999,
+            "max": 0.514085
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.18083149999999998,
+            "std": 0.005432318703831744,
+            "min": -0.185481,
+            "max": -0.1721149999999999
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.021327500000000034,
+            "std": 0.005532674534074867,
+            "min": -0.030000000000000138,
+            "max": -0.015375000000000028
+          }
+        }
+      },
+      "mean_diff": {
+        "top_1": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.627254,
+            "std": 0.011814488287691445,
+            "min": 0.618314,
+            "max": 0.6459629999999998
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7756976,
+            "std": 0.00785133952265474,
+            "min": 0.765965,
+            "max": 0.7876380000000001
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.522529,
+            "std": 0.008164859459904932,
+            "min": 0.51764,
+            "max": 0.5370299999999999
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.03341799999999995,
+            "std": 0.013847780110905806,
+            "min": -0.053634999999999766,
+            "max": -0.02169499999999991
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.0033410000000000384,
+            "std": 0.0023655163284154036,
+            "min": -0.006105000000000027,
+            "max": 2.999999999986347e-05
+          }
+        },
+        "top_5": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.7446809999999999,
+            "std": 0.05596835884676273,
+            "min": 0.6456679999999999,
+            "max": 0.7778149999999999
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.774131,
+            "std": 0.013462871480482938,
+            "min": 0.7505,
+            "max": 0.7833669999999999
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.51493,
+            "std": 0.009206989362707,
+            "min": 0.5064050000000001,
+            "max": 0.5301
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.15084499999999995,
+            "std": 0.058334403335424695,
+            "min": -0.18756899999999999,
+            "max": -0.04754099999999983
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.010939999999999995,
+            "std": 0.0029468134272464352,
+            "min": -0.014319999999999888,
+            "max": -0.006900000000000017
+          }
+        },
+        "top_50": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.741812,
+            "std": 0.05956630443883524,
+            "min": 0.636508,
+            "max": 0.7795160000000001
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7773416,
+            "std": 0.012292647855527312,
+            "min": 0.755759,
+            "max": 0.78528
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.4995545,
+            "std": 0.013448399114764534,
+            "min": 0.48759500000000006,
+            "max": 0.521605
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.14797599999999994,
+            "std": 0.0617930960423574,
+            "min": -0.18372700000000008,
+            "max": -0.03838099999999989
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.026315500000000037,
+            "std": 0.007740153906738526,
+            "min": -0.03676499999999999,
+            "max": -0.015395000000000048
+          }
+        },
+        "top_200": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.7240332,
+            "std": 0.057785594967085,
+            "min": 0.621877,
+            "max": 0.760138
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7827166,
+            "std": 0.01266958603506843,
+            "min": 0.7602369999999999,
+            "max": 0.7896460000000001
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.4893415,
+            "std": 0.010582793759211229,
+            "min": 0.47862,
+            "max": 0.5070675
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.13019719999999996,
+            "std": 0.06002443799986804,
+            "min": -0.16610400000000014,
+            "max": -0.023749999999999938
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.03652850000000004,
+            "std": 0.004493529932024475,
+            "min": -0.042105000000000004,
+            "max": -0.02993250000000003
+          }
+        }
+      },
+      "steering_probe": {
+        "top_1": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.5937202,
+            "std": 0.0038117046973761984,
+            "min": 0.589762,
+            "max": 0.598279
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7807502000000001,
+            "std": 0.005263688079664288,
+            "min": 0.772096,
+            "max": 0.785283
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.519469,
+            "std": 0.009243244424984108,
+            "min": 0.511085,
+            "max": 0.532605
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": 0.00011580000000002144,
+            "std": 0.00024615990737726287,
+            "min": -0.00015199999999992997,
+            "max": 0.00048399999999992893
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.006401000000000034,
+            "std": 0.0036676855781268745,
+            "min": -0.009905000000000053,
+            "max": -0.0009600000000000719
+          }
+        },
+        "top_5": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.5991136,
+            "std": 0.011388579204624246,
+            "min": 0.589572,
+            "max": 0.618509
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7794692000000001,
+            "std": 0.005245193962095246,
+            "min": 0.772133,
+            "max": 0.785126
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.516784,
+            "std": 0.010776400373037402,
+            "min": 0.508025,
+            "max": 0.5338350000000001
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.005277599999999949,
+            "std": 0.01232882104258149,
+            "min": -0.02732599999999996,
+            "max": 0.0006739999999999524
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.009086000000000061,
+            "std": 0.004799273903414986,
+            "min": -0.014255000000000018,
+            "max": -0.0031649999999999734
+          }
+        },
+        "top_50": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.6168608,
+            "std": 0.007801695886151896,
+            "min": 0.607485,
+            "max": 0.628809
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7771894,
+            "std": 0.003934777033073142,
+            "min": 0.772329,
+            "max": 0.782992
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.48384800000000006,
+            "std": 0.011960170671859123,
+            "min": 0.46560000000000007,
+            "max": 0.4947749999999999
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.023024799999999956,
+            "std": 0.010588874808023773,
+            "min": -0.038563000000000014,
+            "max": -0.009357999999999977
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.04202200000000002,
+            "std": 0.009286235512843704,
+            "min": -0.055124999999999924,
+            "max": -0.03195999999999999
+          }
+        },
+        "top_200": {
+          "score_K_auroc_recon_post_ablation": {
+            "n": 5,
+            "mean": 0.6289068,
+            "std": 0.04054028267908352,
+            "min": 0.603602,
+            "max": 0.700564
+          },
+          "score_K_auroc_residual_post_ablation": {
+            "n": 5,
+            "mean": 0.7828126,
+            "std": 0.005070341635432459,
+            "min": 0.77823,
+            "max": 0.790198
+          },
+          "latent_probe_auroc_5fold": {
+            "n": 5,
+            "mean": 0.43894400000000006,
+            "std": 0.017031753212749426,
+            "min": 0.413835,
+            "max": 0.45635000000000003
+          },
+          "extraction_drop_vs_recon_baseline": {
+            "n": 5,
+            "mean": -0.03507079999999994,
+            "std": 0.038432218101483534,
+            "min": -0.10243699999999989,
+            "max": -0.011273999999999895
+          },
+          "residual_probe_delta_vs_baseline": {
+            "n": 5,
+            "mean": -0.086926,
+            "std": 0.014341897712645971,
+            "min": -0.10688999999999999,
+            "max": -0.06773000000000001
+          }
+        }
+      }
+    },
+    "directional_pattern_check": {
+      "latent_probe_near_chance": true,
+      "latent_probe_mean": 0.5258700000000001,
+      "latent_probe_std": 0.006644667975151205,
+      "latent_probe_seed_range": [
+        0.520725,
+        0.537
+      ],
+      "residual_auroc_stable_post_ablation": true,
+      "residual_auroc_max_deviation_from_baseline": 0.02182700000000004
+    }
+  },
+  "cluster_verdict": "signal not in SAE feature dictionary (5/5 seeds, latent probe AUROC 0.5259 \u00b1 0.0066, range [0.5207, 0.5370] all within chance band [0.45, 0.55])",
+  "anomaly_flags": []
+}

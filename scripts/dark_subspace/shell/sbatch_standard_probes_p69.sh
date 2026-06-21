@@ -34,7 +34,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../../.."
 mkdir -p logs
 
-PY=env/bin/python3
+PY=.venv/bin/python
 P69_MODEL="runs/controlled_ft/run_20260306_055225/ft_epoch5/model"
 SAE_PATH="runs/sae/train_sae__runs_controlled_ft_run_20260306_055225_ft_epoch5_model__layer16__mult4__l10.0005__20260413_184801/sae_final.pt"
 MEMBER="data/memcirc_ctrl_ft/member.jsonl"

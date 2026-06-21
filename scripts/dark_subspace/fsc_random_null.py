@@ -6,7 +6,7 @@ classifier features versus a random-subset null distribution and produces
 the FSC random-null table.
 
 Used in Section "Results" (R:77-88) and Appendix `app:fsc` (A:489-525) of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/fsc_random_null.py [--n-random 1000] [--json]
+Reproduce: .venv/bin/python scripts/dark_subspace/fsc_random_null.py [--n-random 1000] [--json]
 
 For each model with channel-decomposition results, samples N random subsets of size |CF|
 from the full SAE dictionary, computes FSC for each, and reports:

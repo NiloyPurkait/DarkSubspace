@@ -5,7 +5,7 @@ Random-k feature ablation null distribution. Calibrates the targeted top-k
 ablation against random matched-size feature subsets.
 
 Used in Appendix (A:709, "top-k feature ablation protocol") of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/feature_ablation_random_k.py --model-path <ft_model> --bcd-dir <bcd_dir> --sae-path <sae> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id> --seeds 0 1 2 3 4 --k-values 1 5 10 20 50 100
+Reproduce: .venv/bin/python scripts/dark_subspace/feature_ablation_random_k.py --model-path <ft_model> --bcd-dir <bcd_dir> --sae-path <sae> --member-texts <member.jsonl> --nonmember-texts <nonmember.jsonl> --layer <L> --output-dir <out> --model-id <id> --seeds 0 1 2 3 4 --k-values 1 5 10 20 50 100
 
 Companion to `feature_ablation_dark_subspace.py`. Instead of ranking SAE
 features by their point-biserial correlation with membership and ablating

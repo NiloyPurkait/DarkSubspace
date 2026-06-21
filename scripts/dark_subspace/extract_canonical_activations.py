@@ -9,7 +9,7 @@ ablation, low-FPR, and baseline-attack scripts read identical inputs.
 Used in infrastructure (held-out partition probe and downstream ablation
 scripts depend on these activations).
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/extract_canonical_activations.py \\
+    .venv/bin/python scripts/dark_subspace/extract_canonical_activations.py \\
         --model-path runs/controlled_ft/run_20260306_055225/ft_epoch5/model \\
         --member-texts data/memcirc_ctrl_ft/member.jsonl \\
         --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \\

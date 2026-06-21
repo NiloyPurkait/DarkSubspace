@@ -31,7 +31,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/../../.."
 
-PYTHON="env/bin/python3"
+PYTHON=".venv/bin/python"
 SCRIPT="scripts/dark_subspace/subspace_ablation_eval.py"
 ROSTER="scripts/dark_subspace/configs/subspace_ablation_roster.json"
 DATA_MEM="data/memcirc_ctrl_ft/member.jsonl"

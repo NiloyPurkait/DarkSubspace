@@ -7,7 +7,7 @@ bootstrap CIs.
 
 Used in the per-method results paragraph and Appendix app:tpr_paraphrase of
 the paper. Reproduce:
-    env/bin/python3 scripts/dark_subspace/tpr_at_low_fpr.py --all
+    .venv/bin/python scripts/dark_subspace/tpr_at_low_fpr.py --all
 
 CPU only. No GPU dependency.
 
@@ -33,7 +33,7 @@ Output schema (tpr_at_0.1pct_fpr.json).
     source             str (absolute path to per_text_scores.json read)
 
 Single-model usage:
-    env/bin/python3 scripts/dark_subspace/tpr_at_low_fpr.py --model p69
+    .venv/bin/python scripts/dark_subspace/tpr_at_low_fpr.py --model p69
 """
 
 import _bootstrap  # noqa: F401

@@ -69,6 +69,9 @@ def test_no_internal_paths_leak() -> None:
         ("cluster home directory", re.compile(r"/home/u\d{6,}")),
         ("legacy memcirc run path", re.compile(r"runs/memcirc/")),
         ("unresolved <runs> placeholder", re.compile(r"<runs>/sae-mia-audit")),
+        ("cluster node name", re.compile(r"\b(smitten|lumber|ultramarine|cinereous|topaz)\b")),
+        ("internal slurm job id", re.compile(r"\bjob \d{4,}\b")),
+        ("internal workflow code", re.compile(r"\bCodex\b|\bE-NEW-1\b|\bWave-M\b|\bEXP-\d\b")),
     ]
     extensions = {
         ".md", ".py", ".json", ".sh", ".yml", ".yaml", ".toml", ".cff",

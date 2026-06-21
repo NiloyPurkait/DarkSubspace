@@ -5,7 +5,7 @@ Computes the activation-norm AUROC at the best layer per model and produces
 the GPT-family vs LLaMA-family norm-direction split.
 
 Used in Section Results and Table tab:norm_direction of the paper.
-Reproduce: env/bin/python3 scripts/dark_subspace/norm_baseline.py \
+Reproduce: .venv/bin/python scripts/dark_subspace/norm_baseline.py \
     --model-path <ft_model_dir> \
     --member-texts data/memcirc_ctrl_ft/member.jsonl \
     --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \

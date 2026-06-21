@@ -12,7 +12,7 @@ paper.
 
 Reproduce::
 
-    env/bin/python3 scripts/dark_subspace/aggregate_multiseed.py --model all
+    .venv/bin/python scripts/dark_subspace/aggregate_multiseed.py --model all
 """
 from __future__ import annotations
 

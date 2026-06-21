@@ -9,7 +9,7 @@ across eight models.
 Used in Methods (recall label validation), Appendix `app:bcd_details`,
 and the adversarial-robustness recall-label discussion.
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/recall_label_validation.py
+    .venv/bin/python scripts/dark_subspace/recall_label_validation.py
 
 Reads pre-computed extractability predictor results to report Pearson and
 Spearman correlations between per-text loss and per-text ROUGE-L scores.

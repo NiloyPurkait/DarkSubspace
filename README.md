@@ -1,8 +1,16 @@
 # The Dark Subspace of Fine-Tuning Memorisation
 
-Code and results artefact for an anonymous double-blind workshop submission.
+[![CI](https://github.com/NiloyPurkait/DarkSubspace/actions/workflows/verify.yml/badge.svg)](https://github.com/NiloyPurkait/DarkSubspace/actions/workflows/verify.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 
-This repository contains the paper-specific experiment code, a curated set of JSON results, and a CPU-only verifier that checks the paper-cited numerical claims against the included JSON records. The manuscript is distributed separately and is not in this repository.
+Code and results artefact for **The Dark Subspace of Fine-Tuning Memorisation**, accepted as a Spotlight at the ICML 2026 Workshop on Mechanistic Interpretability (Seoul, 2026).
+
+<p align="center">
+  <img src="assets/figures/residual_audit_overview.png" width="86%" alt="The membership signal an SAE discards during reconstruction is recovered from the reconstruction residual.">
+</p>
+
+A sparse autoencoder trained on fine-tuned activations discards membership-identifying signal during reconstruction, yet that signal stays linearly recoverable from the reconstruction residual. We call the residual subspace that carries it the dark subspace. This repository contains the paper-specific experiment code, a curated set of JSON results, the camera-ready figures under `assets/figures/`, and a CPU-only verifier that checks the paper-cited numerical claims against the included JSON records. The manuscript is distributed separately and is not in this repository.
 
 ## Quickstart
 
@@ -15,9 +23,11 @@ python3 scripts/dark_subspace/verify_claims.py
 Expected output (final summary line).
 
 ```text
-Asserted check summary: N/N pass, 0 fail
+Asserted check summary: 255/255 pass, 0 fail
 All asserted checks pass within tolerance.
 ```
+
+A `Makefile` wraps the common entry points (`make verify`, `make headline`, `make test`, `make figures`). Data and checkpoint provisioning is documented in `DATA.md`, and the submission-to-camera-ready delta is in `CHANGELOG.md`.
 
 For full experiment scripts, install the package dependencies first, then run any script with `--help` to inspect its CLI.
 
@@ -51,6 +61,9 @@ python3 -m venv .venv
 | `scripts/dark_subspace/shell/` | SLURM wrappers for GPU jobs and multi-seed arrays. |
 | `scripts/shared/` | Shared SAE training, plotting style, path bootstrap, and utility code. |
 | `src/sae_mia_audit/` | Reusable Python package used by the paper scripts. |
+| `assets/figures/` | Camera-ready figures in PDF and PNG, regenerable from the JSON tree and the hero-figure generator. |
+| `tests/` | Artefact-integrity tests, including a no-internal-path-leak check. |
+| `DATA.md`, `Makefile`, `CHANGELOG.md` | Data and checkpoint provisioning, convenience targets, and the release history. |
 
 Large inputs, generated checkpoints, and manuscript source are not included in the repository. Full reproduction expects the controlled fine-tuning corpora, model checkpoints, and SAE checkpoints at the paths documented in the relevant scripts.
 
@@ -96,12 +109,13 @@ Rows are grouped into **main claims** (the headline argument, channel decomposit
 | Results §4.2 ("SAE reconstruction fails to preserve membership signal recoverable from the residual"), Table `tab:dark_subspace` | Pythia-6.9B N=5 mixed-data SAE reconstruction reduction | `scripts/dark_subspace/p69_n5_harmonize.py` | `results/dark_subspace/paper_claims/p69_n5_harmonized_2026-05-06.json`. Five SAEs (seeds 42, 43, 44, 45, 46) at identical hyperparameters (layer 16, multiplier 4, L1 5e-4, 200M tokens, dead-feature resampling). The seed list matches the Pythia-1B multi-seed cohort. The N=6 aggregate is also bundled at `paper_claims/p69_n6_complete.json`. Per-metric mean shifts between N=5 and N=6 are below 0.005 on all reported metrics. |
 | Results §4.2, Table `tab:dark_subspace` (Pythia-6.9B member-only N=5 row) | Pythia-6.9B N=5 member-only SAE reconstruction reduction | Aggregated from per-seed `runs/dark_subspace/sae_dark_subspace/p69_member_only_sae_seed{42..46}/results.json` (per-seed runs not bundled, regenerate from `scripts/shared/train_sae.py` + `scripts/dark_subspace/sae_dark_subspace.py`) | `results/dark_subspace/paper_claims/p69_member_only_n5.json`. Five SAEs trained on member-only documents at the same hyperparameters as the mixed cohort. The `cluster_summary_n5` block carries the per-seed mean, min, and max for the table cell values. |
 | Appendix `app:p12b_replication`, Table `tab:dark_subspace` | Pythia-12B mixed-data SAE multi-seed replication, full five-seed cohort (47, 48, 49, 50, 51) | `scripts/dark_subspace/p12b_multiseed_query.py`, `scripts/dark_subspace/shell/sbatch_p12b_multiseed_array.sh` (covers seeds 47 to 51 via `--array=0-4`) | `results/dark_subspace/generated/sae_dark_subspace/p12b_mixed_sae_seed{47,48,49,50,51}/results.json`. All five per-seed `results.json` files are bundled. The underlying SAE checkpoints are not bundled and regenerate from the array script on rerun. |
-| Appendix `app:koc2_bootstrap` ("Paired Bootstrap for the Directional Sign-Test Settings") and Table `tab:koc2_bootstrap_per_row` | Per-row paired-bootstrap CIs for the directional-sign-test cohort plus the cohort-level sign test on five inverting rows (anchors recorded but not entered into the cohort sign test). Two Qwen2 mult=4 secondary seeds are reported separately | `scripts/dark_subspace/per_row_bootstrap_kocl2.py` | `results/dark_subspace/paper_claims/cohort_bootstrap.json`. The file's `cohort_rows` array carries seven entries (five inverting plus two anchors). The `qwen2_mult4_secondary_seeds` array carries the two extra Qwen2 rows. The `sign_test` block records `n_inverting_cohort_rows=5` and the cohort one-sided binomial $p \approx 0.03125$. The cohort sign test is distinct from the body sign test on `tab:dark_subspace` (n=7). See the next row. |
+| Appendix `app:koc2_bootstrap` ("Paired Bootstrap for the Directional Sign-Test Settings"), Table `tab:koc2_bootstrap_per_row` (Margin column) | Per-row paired-bootstrap CIs and the Margin column, defined as Residual minus Reconstruction. All nine per-row margins are positive, one-sided $p \approx 2^{-9} \approx 0.002$ | `scripts/dark_subspace/per_row_bootstrap_kocl2_residual_minus_recon.py` | `results/dark_subspace/paper_claims/k_oc2_bootstrap_residual_minus_reconstruction_2026-05-05.json`. The `cohort_rows` and `qwen2_mult4_secondary_seeds` arrays carry the nine per-row Residual-minus-Reconstruction margins, and `across_all_9_rows.n_margin_positive` records 9 of 9 positive. |
+| Appendix `app:koc2_bootstrap` cohort directional sign test | Cohort-level sign test on the five inverting rows, with the Margin defined as Residual minus Original. One-sided binomial $p \approx 2^{-5} \approx 0.03125$ | `scripts/dark_subspace/per_row_bootstrap_kocl2.py` | `results/dark_subspace/paper_claims/cohort_bootstrap.json`. Its `margin_observed` is Residual minus Original, a different contrast from the per-row Margin column above, so two of its seven rows are negative. The `sign_test` block records `n_inverting_cohort_rows=5` and the cohort one-sided binomial $p \approx 0.03125$. This is distinct from the body sign test on `tab:dark_subspace` (n=7, next row). |
 | Results §4.2 (paragraph beginning "Every validity-gate-passing setting shows residual above SAE-Recon...") and Appendix `app:koc2_bootstrap` paragraph "Binomial sign-test arithmetic" | Body binomial sign test on the seven gate-passing rows of `tab:dark_subspace` (no $\dagger$ or $\ddagger$). Full set p$\approx$0.008, non-Pythia subset (n=4) p$\approx$0.0625 | `scripts/dark_subspace/verify_claims.py` (asserted-check section "Body sign test on `tab:dark_subspace` gate-passing rows") | `results/dark_subspace/paper_claims/tab_dark_subspace_sign_test.json`. The body sign test uses the seven `tab:dark_subspace` gate-passing rows as its denominator. The cohort sign test (previous row) uses the five inverting cohort rows. The two denominators overlap but are not identical. The JSON's `relationship_to_cohort_bootstrap` field documents the difference. |
-| Results §4.3 ("Four alternative explanations fail to account for the residual signal"), Appendix `tab:fsc_values` | FSC against $S_K$ for classifier features and full dictionary, with random-subset null and feature-ablation controls | `scripts/dark_subspace/fsc_random_null.py`, `scripts/dark_subspace/feature_ablation_dark_subspace.py`, `scripts/dark_subspace/feature_ablation_random_k.py`, `scripts/dark_subspace/behavioral_channels.py` | `results/dark_subspace/paper_claims/fsc_values.json` (bundled, all 8 model rows of `tab:fsc_values` mirroring the canonical `behavioral_channels.py` `sae_alignment.json` output for each model). The verifier asserts that disk and paper agree to within 0.0015 on $\mathrm{FSC}(\SK, \mathrm{CF})$ and exactly on $n_{\mathrm{CF}}$, $\mathrm{FSC}(\SK, \mathrm{all})$, $\mathrm{FSC}(\SR, \mathrm{all})$. Per-model `behavioral_channels/*/sae_alignment.json` outputs regenerate on rerun and are not bundled because they carry SAE checkpoint references. The feature-ablation per-cell records are at `results/dark_subspace/generated/sae_dark_subspace/p69_feature_ablation/results.json` and the per-model classifier-feature extractability predictors at `results/dark_subspace/generated/bcd_extractability/<model_tag>/extractability_predictor.json`. |
+| Appendix Table `tab:fsc_values` (feature-sufficiency criterion, an alternative-explanation test) | FSC against $S_K$ for classifier features and full dictionary, with random-subset null and feature-ablation controls | `scripts/dark_subspace/fsc_random_null.py`, `scripts/dark_subspace/feature_ablation_dark_subspace.py`, `scripts/dark_subspace/feature_ablation_random_k.py`, `scripts/dark_subspace/behavioral_channels.py` | `results/dark_subspace/paper_claims/fsc_values.json` (bundled, all 8 model rows of `tab:fsc_values` mirroring the canonical `behavioral_channels.py` `sae_alignment.json` output for each model). The verifier asserts that disk and paper agree to within 0.0015 on $\mathrm{FSC}(\SK, \mathrm{CF})$ and exactly on $n_{\mathrm{CF}}$, $\mathrm{FSC}(\SK, \mathrm{all})$, $\mathrm{FSC}(\SR, \mathrm{all})$. Per-model `behavioral_channels/*/sae_alignment.json` outputs regenerate on rerun and are not bundled because they carry SAE checkpoint references. The feature-ablation per-cell records are at `results/dark_subspace/generated/sae_dark_subspace/p69_feature_ablation/results.json` and the per-model classifier-feature extractability predictors at `results/dark_subspace/generated/bcd_extractability/<model_tag>/extractability_predictor.json`. |
 | Methods §3.5 / Results §4.4 (`tab:dd_full`, `tab:dd_extraction`, `tab:epoch_dd`, `app:per_model_dd`) extraction-detection separation under subspace erasure | Membership AUROC, mean member loss, exact-match rate, and extraction ROUGE-L under $S_K$/$S_R$ erasure (Methods Eq. 3) | `scripts/dark_subspace/dd_table_render.py` renders the table from per-cell records produced by the GPU pipeline (model load, basis fit, forward-pass erasure hook, decoded continuations, ROUGE-L scoring). See the script docstring for the per-cell record schema. | `results/dark_subspace/paper_claims/extraction_detection_separation.json`. Encodes the manuscript-rendered cell values for `tab:dd_full` (4 model rows × 2 metrics × 4 conditions), `tab:dd_extraction` (8 model rows × 4 conditions, ROUGE-L), and `tab:epoch_dd` (3 epochs × 2 metrics × 4 conditions). The per-cell GPU-pipeline records carry SAE checkpoint references and decoded-text arrays and are not bundled. |
 | Methods §3.5 ("Interventions separate extraction from detection"), Results §4.5, Appendix Table `tab:kpc_kten_cells` | K-PC residual ablation at K=10 and K=5 (with random-rotation, matched-Gaussian, and column-mask controls) | `scripts/dark_subspace/subspace_ablation_eval.py` | `results/dark_subspace/generated/causal_ablation/p12b_errPC_K10/results.json`, `results/dark_subspace/generated/causal_ablation_K5/p12b_errPC_K5/results.json` (paths use `errPC` as the engineering label for K-PC, see "Naming notes" above) |
-| Results §4.4 ("Feature edits do not close the residual membership gap"), Figure `fig:privacy_aware`, Appendix Table `tab:fresh_probe_v2` | Privacy-aware SAE comparison ($d_K$-penalised SAE versus standard SAE) | `scripts/dark_subspace/finetune_sae_dk.py`, `scripts/dark_subspace/fresh_probe_test.py` | `results/dark_subspace/generated/sae_dark_subspace/p69_ft_dk{0.1,1.0}/results.json` |
+| Figure `fig:privacy_aware`, Appendix Table `tab:fresh_probe_v2` (privacy-aware $d_K$-penalised SAE comparison) | Privacy-aware SAE comparison ($d_K$-penalised SAE versus standard SAE) | `scripts/dark_subspace/finetune_sae_dk.py`, `scripts/dark_subspace/fresh_probe_test.py` | `results/dark_subspace/generated/sae_dark_subspace/p69_ft_dk{0.1,1.0}/results.json` |
 
 ### Supporting claims and controls
 
@@ -120,6 +134,8 @@ Rows are grouped into **main claims** (the headline argument, channel decomposit
 | Results §4.6, Appendix `app:tpr_paraphrase` | Word-order paraphrase orientation flip and paraphrase TPR at 1% and 5% FPR | `scripts/dark_subspace/paraphrase_sensitivity.py` | `results/dark_subspace/generated/paraphrase_sensitivity/{p69,qwen2,p12b}/results.json` |
 | Appendix `tab:tpr_at_0p1pct_fpr`, `app:tpr_paraphrase` | TPR at 0.1% FPR for residual $d_K$ across four models | `scripts/dark_subspace/tpr_at_low_fpr.py` (consumes per-text score arrays from the matching `sae_dark_subspace.py` outputs) | `results/dark_subspace/generated/tpr_low_fpr/{p69,p12b,neo,qwen2}/results.json` (bundled). Each file records `tpr_point`, `tpr_boot_mean`, `tpr_ci_lo`, `tpr_ci_hi` from $n_{\mathrm{boot}}=10000$ bootstrap with seed 12345, plus `fpr_target=0.001` and `n_member=n_nonmember=1000`. The per-text score arrays themselves are not bundled and regenerate from `sae_dark_subspace.py` on rerun. |
 | Results §4.6, Appendix `app:standard_probes` | Standard published MIA probes (loss attack, MIN-K%, zlib) under reconstruction/residual decomposition | `scripts/dark_subspace/standard_mia_probe_decomposition.py` | `results/dark_subspace/generated/standard_mia_probes/p69_dark_subspace_replication/results.json` |
+| Appendix `app:topk_scope` ("TopK SAEs Do Not Reproduce the Residual Ordering"), reviewer scope test | TopK SAE scope test on Pythia-6.9B layer 16 multiplier 4, with $K \in \{32, 64, 128\}$ at five seeds each (15 settings). Residual exceeds reconstruction in 0 of 15, mean reconstruction cosine 0.983, mean reduction about 0.037 versus about 0.21 for the L1 SAE | `scripts/dark_subspace/aggregate_topk_scope.py` (aggregator), `scripts/dark_subspace/shell/sbatch_topk_p69_scope_array.sh` (trains the 15 TopK SAEs via `scripts/shared/train_sae.py --topk`), `sbatch_topk_p69_scope_eval_array.sh` (per-cell decomposition) | `results/dark_subspace/generated/topk_scope/cluster_summary.json`. The `cross_K_summary` block records `n_total=15`, `recon_cosine_mean=0.983`, `delta_recon_mean=0.037`, `sign_test_residual_gt_recon="0/15"`, and `cosine_ge_0p90_pass="15/15"`. |
+| Appendix `app:frikha_features` ("Feature Selection Does Not Reach the Residual Membership Signal"), reviewer scope test | PrivacyScalpel-style feature-selection audit on Pythia-6.9B under the L1 SAE. A logistic detector on the full SAE code reaches AUROC 0.526. Across 60 feature-selection settings (three criteria by four depths by five seeds) the residual membership detector moves by at most 0.0218, while verbatim extraction drops by about 0.19 | `scripts/dark_subspace/frikha_baseline_ablation.py` (per-seed grid), `scripts/dark_subspace/frikha_n5_aggregate.py` (aggregator), `scripts/dark_subspace/shell/sbatch_frikha_baseline_p69.sh` and `sbatch_frikha_baseline_p69_array.sh` | `results/dark_subspace/generated/frikha_features/cluster_summary.json`. `cluster_summary.baseline_no_ablation.latent_probe_auroc_5fold.mean` records 0.526 and `cluster_summary.directional_pattern_check.residual_auroc_max_deviation_from_baseline` records 0.0218. |
 | Appendix `tab:nonlinear` ("Non-Linear Probing Comparison") | MLP-vs-linear probe AUROC at the analysis layer | `scripts/dark_subspace/nonlinear_probe.py` (consumes mean-pooled activations from `extract_canonical_activations.py`) | Regenerates to `results/dark_subspace/generated/nonlinear_probe/<model_tag>/results.json` on rerun. Not bundled. |
 | Appendix `app:length_baseline` ("Length-Feature Baseline") | Length-feature membership classifier on the controlled split | `scripts/dark_subspace/length_baseline.py` (consumes the member and non-member text JSONLs, CPU-only) | Regenerates to `results/dark_subspace/generated/length_baseline/<model_tag>/results.json` on rerun. Not bundled. |
 | Appendix `app:label_shuffled_null` ("Label-Shuffled Permutation Test") | Permutation null on $\cos(d_K, d_R)$ under shuffled member/non-member labels | `scripts/dark_subspace/label_shuffled_null.py` (consumes mean-pooled activations and the saved $d_R$ from the channel-decomposition output) | Regenerates to `results/dark_subspace/generated/label_shuffled_null/<model_tag>/results.json` on rerun. Not bundled. |
@@ -139,10 +155,11 @@ Two paper tables summarise hyperparameter and SAE-quality settings rather than e
 
 ### Figures
 
-Figures are regenerated from the JSON tree under `results/dark_subspace/` by the plotting scripts under `scripts/dark_subspace/`. The rendered figure files themselves are not in the repository.
+The camera-ready figures are shipped under `assets/figures/` in PDF and PNG. Every data figure also regenerates from the JSON tree under `results/dark_subspace/` via the plotting scripts under `scripts/dark_subspace/`, and the hero concept figure regenerates from its own generator.
 
 | Figure(s) | Producing script |
 | --- | --- |
+| `fig:residual_audit` (hero concept figure) | `scripts/dark_subspace/make_residual_audit_overview.py` (writes to `assets/figures/`) |
 | `fig:score_distributions`, `fig:score_distributions_full` | `scripts/dark_subspace/plot_score_distributions.py` (writes both the body 1x3 simple variant and the appendix 2x3 full variant) |
 | `fig:privacy_aware` | `scripts/dark_subspace/plot_privacy_aware_comparison.py` |
 | `fig:layer_trajectories`, `fig:arch_and_scaling`, `fig:dark_subspace_heatmap`, `fig:fsc`, `fig:epoch`, `fig:norm_direction`, `fig:layer_heatmap`, `fig:sae_quality_scatter` | `scripts/dark_subspace/plot_figures.py`, `scripts/dark_subspace/plot_advanced_figures.py` |
@@ -187,12 +204,12 @@ The paper-cited values were produced under `SeedConfig.deterministic=False` (the
 ## Citation
 
 ```bibtex
-@inproceedings{anonymous2026darksubspace,
-  title  = {The Dark Subspace of Fine-Tuning Memorisation},
-  author = {Anonymous},
-  booktitle = {Anonymous workshop submission},
-  year   = {2026},
-  note   = {Anonymous double-blind submission}
+@inproceedings{purkait2026darksubspace,
+  title     = {The Dark Subspace of Fine-Tuning Memorisation},
+  author    = {Purkait, Niloy and N\'apoles, Gonzalo and Brighton, Henry and Keuleers, Emmanuel},
+  booktitle = {Mechanistic Interpretability Workshop at the 43rd International Conference on Machine Learning (ICML)},
+  year      = {2026},
+  note      = {Spotlight. Code: \url{https://github.com/NiloyPurkait/DarkSubspace}}
 }
 ```
 

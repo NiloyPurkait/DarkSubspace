@@ -24,7 +24,7 @@ set -eu
 cd "$(dirname "$0")/../../.."
 mkdir -p logs runs/dark_subspace/causal_ablation_K5
 
-env/bin/python3 scripts/dark_subspace/subspace_ablation_eval.py \
+.venv/bin/python scripts/dark_subspace/subspace_ablation_eval.py \
   --roster scripts/dark_subspace/configs/subspace_ablation_roster.json \
   --member-texts data/memcirc_ctrl_ft/member.jsonl \
   --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \

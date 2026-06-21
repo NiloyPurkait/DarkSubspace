@@ -27,7 +27,7 @@ set -eu
 cd "$(dirname "$0")/../../.."
 mkdir -p logs
 
-env/bin/python3 scripts/dark_subspace/behavioral_channels.py \
+.venv/bin/python scripts/dark_subspace/behavioral_channels.py \
   --model-path EleutherAI/pythia-6.9b \
   --member-texts data/memcirc_ctrl_ft/member.jsonl \
   --nonmember-texts data/memcirc_ctrl_ft/nonmember.jsonl \

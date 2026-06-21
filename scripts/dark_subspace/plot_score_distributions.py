@@ -5,7 +5,7 @@ Generates ``figures/score_distributions_simple.pdf`` and the four-panel full
 version for the Pythia-6.9B mixed-data SAE pooled score distribution comparison.
 
 Used in Results (main body) and Appendix of the paper.
-Reproduce: ``env/bin/python3 scripts/dark_subspace/plot_score_distributions.py``
+Reproduce: ``.venv/bin/python scripts/dark_subspace/plot_score_distributions.py``
 (writes PDF and PNG, 300 DPI, to ``outputs/figures/`` unless ``FIGDIR`` is set).
 
 Outputs:

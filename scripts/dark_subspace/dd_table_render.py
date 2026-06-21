@@ -18,13 +18,13 @@ Results §4.4 (Feature edits do not close the residual membership gap),
 and the corresponding appendix tables.
 
 Reproduce:
-    env/bin/python3 scripts/dark_subspace/dd_table_render.py \\
+    .venv/bin/python scripts/dark_subspace/dd_table_render.py \\
         --records-dir results/dark_subspace/generated/double_dissociation \\
         --table dd_full
-    env/bin/python3 scripts/dark_subspace/dd_table_render.py \\
+    .venv/bin/python scripts/dark_subspace/dd_table_render.py \\
         --records-dir results/dark_subspace/generated/double_dissociation \\
         --table dd_extraction
-    env/bin/python3 scripts/dark_subspace/dd_table_render.py \\
+    .venv/bin/python scripts/dark_subspace/dd_table_render.py \\
         --records-dir results/dark_subspace/generated/double_dissociation_epochs \\
         --table epoch_dd
 

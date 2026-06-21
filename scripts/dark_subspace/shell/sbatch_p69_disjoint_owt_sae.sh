@@ -30,7 +30,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../../.."
 mkdir -p logs
 
-PY=env/bin/python3
+PY=.venv/bin/python
 P69_MODEL="runs/controlled_ft/run_20260306_055225/ft_epoch5/model"
 P69_BCD="runs/dark_subspace/behavioral_channels/p69_epoch5"
 DISJOINT_CORPUS="data/memcirc_ctrl_disjoint/mixed_disjoint.jsonl"
