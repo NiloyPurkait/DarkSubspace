@@ -54,6 +54,7 @@ dev = [
 sae-mia-audit = "sae_mia_audit.cli:app"
 
 [project.urls]
+Paper = "https://openreview.net/forum?id=5wI8OkQJxi"
 Repository = "https://github.com/NiloyPurkait/DarkSubspace"
 Homepage = "https://github.com/NiloyPurkait/DarkSubspace"
 

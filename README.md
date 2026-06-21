@@ -1,10 +1,11 @@
 # The Dark Subspace of Fine-Tuning Memorisation
 
+[![Paper](https://img.shields.io/badge/Paper-OpenReview-b31b1b.svg)](https://openreview.net/forum?id=5wI8OkQJxi)
 [![CI](https://github.com/NiloyPurkait/DarkSubspace/actions/workflows/verify.yml/badge.svg)](https://github.com/NiloyPurkait/DarkSubspace/actions/workflows/verify.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 
-Code and results artefact for **The Dark Subspace of Fine-Tuning Memorisation**, accepted as a Spotlight at the ICML 2026 Workshop on Mechanistic Interpretability (Seoul, 2026).
+Code and results artefact for **The Dark Subspace of Fine-Tuning Memorisation** ([paper](https://openreview.net/forum?id=5wI8OkQJxi)), accepted as a Spotlight at the ICML 2026 Workshop on Mechanistic Interpretability (Seoul, 2026).
 
 <p align="center">
   <img src="assets/figures/residual_audit_overview.png" width="86%" alt="The membership signal an SAE discards during reconstruction is recovered from the reconstruction residual.">
@@ -209,6 +210,7 @@ The paper-cited values were produced under `SeedConfig.deterministic=False` (the
   author    = {Purkait, Niloy and N\'apoles, Gonzalo and Keuleers, Emmanuel and Brighton, Henry},
   booktitle = {Mechanistic Interpretability Workshop at the 43rd International Conference on Machine Learning (ICML)},
   year      = {2026},
+  url       = {https://openreview.net/forum?id=5wI8OkQJxi},
   note      = {Spotlight. Code: \url{https://github.com/NiloyPurkait/DarkSubspace}}
 }
 ```
